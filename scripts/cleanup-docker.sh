@@ -4,6 +4,7 @@ set -euo pipefail
 REMOVE_APP_IMAGE="${REMOVE_APP_IMAGE:-OFF}"
 APP_IMAGE_NAME="${APP_IMAGE_NAME:-qt-app-image:latest}"
 PRUNE_BUILD_CACHE="${PRUNE_BUILD_CACHE:-ON}"
+PRUNE_DOCKER_SYSTEM="${PRUNE_DOCKER_SYSTEM:-OFF}"
 
 if ! command -v docker >/dev/null 2>&1; then
     echo "Error: docker is not installed or not in PATH"
@@ -19,9 +20,14 @@ fi
 
 if [[ "${PRUNE_BUILD_CACHE}" == "ON" ]]; then
     echo "==> Pruning Docker build cache"
-    docker builder prune -f >/dev/null
+    docker builder prune -a -f >/dev/null
 else
     echo "==> Skipping Docker build cache prune"
 fi
 
-echo "==> Cleanup finished"
+if [[ "${PRUNE_DOCKER_SYSTEM}" == "ON" ]]; then
+    echo "==> Pruning Docker system (images, containers, and networks)"
+    docker system prune -a -f >/dev/null
+else
+    echo "==> Skipping Docker system prune"
+fi
