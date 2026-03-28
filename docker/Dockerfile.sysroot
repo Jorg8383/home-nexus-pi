@@ -1,0 +1,63 @@
+# arm64 Trixie base 2025-10-01-raspios-trixie-arm64
+# 32 bit os will fail for this case
+FROM arm64v8/debian:trixie
+
+# Use bash and enable pipefail so piped commands (e.g. with tee logging) fail the build correctly
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Optional: keep a build log
+RUN touch /build.log
+
+# Use Trixie repositories
+RUN { \
+  set -e; \
+  printf '%s\n' \
+    'deb http://deb.debian.org/debian trixie main contrib non-free-firmware' \
+    'deb http://deb.debian.org/debian trixie-updates main contrib non-free-firmware' \
+    'deb http://security.debian.org/debian-security trixie-security main contrib non-free-firmware' \
+    > /etc/apt/sources.list; \
+  apt-get update; \
+  apt-get -y full-upgrade; \
+  apt-get install -y --no-install-recommends \
+    # toolchain & basics (native arm64, no cross toolchains needed)
+    build-essential ninja-build cmake git wget python3 pkg-config gfortran \
+    # graphics / xcb / mesa / egl / gbm
+    libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev \
+    libxrandr-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxss-dev libxtst-dev \
+    libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev \
+    libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev \
+    libxcb-randr0-dev libxcb-render-util0-dev libxcb-util-dev libxcb-xinerama0-dev \
+    libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor-dev libxcb-xinput-dev \
+    libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev mesa-common-dev libgbm-dev libglx-dev \
+    libdrm-dev libglew-dev libglu1-mesa-dev \
+    # sound
+    libasound2-dev libpulse-dev \
+    # gstreamer
+    gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav \
+    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev \
+    # codecs / ffmpeg
+    libavcodec-dev libavformat-dev libswscale-dev libavutil-dev \
+    libxvidcore-dev libx264-dev libx265-dev libvpx-dev \
+    # misc libs often needed by Qt/WebKit/etc
+    libudev-dev libinput-dev libts-dev libmtdev-dev \
+    libjpeg-dev libpng-dev libtiff-dev libfontconfig1-dev libfreetype6-dev \
+    libssl-dev libdbus-1-dev libglib2.0-dev libsqlite3-dev \
+    libicu-dev libpq-dev libcups2-dev \
+    libsnappy-dev libnss3-dev libsrtp2-dev \
+    flex bison gperf ruby \
+    libbz2-dev libreadline-dev liblzma-dev libffi-dev libgdbm-dev \
+    libexpat1-dev libisl-dev zlib1g-dev \
+    autoconf automake libtool m4 gettext \
+    libopenblas-dev libblas-dev liblapack-dev liblapacke-dev \
+    v4l-utils libv4l-dev \
+  ; \
+  apt-get clean; rm -rf /var/lib/apt/lists/*; \
+} 2>&1 | tee -a /build.log
+
+WORKDIR /build
+
+# Copy sysroot into tar
+RUN tar czf rasp.tar.gz -C / lib usr/include usr/lib etc/alternatives
