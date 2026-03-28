@@ -11,6 +11,10 @@ if ! command -v docker >/dev/null 2>&1; then
     exit 1
 fi
 
+echo "Docker disk usage before cleanup:"
+docker system df
+echo
+
 if [[ "${REMOVE_APP_IMAGE}" == "ON" ]]; then
     echo "==> Removing app image: ${APP_IMAGE_NAME}"
     docker rmi "${APP_IMAGE_NAME}" >/dev/null 2>&1 || true
@@ -31,3 +35,8 @@ if [[ "${PRUNE_DOCKER_SYSTEM}" == "ON" ]]; then
 else
     echo "==> Skipping Docker system prune"
 fi
+
+echo
+echo "Docker disk usage after cleanup:"
+docker system df
+
