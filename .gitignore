@@ -1,7 +1,81 @@
-# C++ objects and libs
+# ------------------------------------------------------------
+# Editor / OS / temp files
+# ------------------------------------------------------------
+*~
+*.autosave
+*.orig
+*.rej
+.#*
+*.*#
+.*.swp
+.DS_Store
+Thumbs.db
+.directory
+
+# ------------------------------------------------------------
+# Qt Creator user-specific files
+# ------------------------------------------------------------
+*.pro.user*
+*.qbs.user*
+*.qmlproject.user*
+CMakeLists.txt.user*
+*creator.user*
+app/HomeNexus/.qtcreator/
+
+# ------------------------------------------------------------
+# Build directories and generated artifacts
+# ------------------------------------------------------------
+/artifacts/
+/build*/
+**/build/
+cmake-build-*/
+*build-*/
+
+# ------------------------------------------------------------
+# CMake / Ninja
+# ------------------------------------------------------------
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+build.ninja
+.ninja_deps
+.ninja_log
+Testing/
+.cmake/
+
+# ------------------------------------------------------------
+# Qt generated files
+# ------------------------------------------------------------
+.moc/
+.obj/
+.pch/
+.rcc/
+.uic/
+.qt/
+.qtc/
+
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*_plugin_import.cpp
+*_qmlcache.qrc
+*.qmlc
+*.jsc
+*.qm
+*.prl
+
+/.qmake.cache
+/.qmake.stash
+
+# ------------------------------------------------------------
+# Binary / library outputs
+# ------------------------------------------------------------
+*.o
+*.obj
 *.slo
 *.lo
-*.o
 *.a
 *.la
 *.lai
@@ -9,46 +83,21 @@
 *.so.*
 *.dll
 *.dylib
+*.exe
 
-# Qt-es
-object_script.*.Release
-object_script.*.Debug
-*_plugin_import.cpp
-/.qmake.cache
-/.qmake.stash
-*.pro.user
-*.pro.user.*
-*.qbs.user
-*.qbs.user.*
-*.moc
-moc_*.cpp
-moc_*.h
-qrc_*.cpp
-ui_*.h
-*.qmlc
-*.jsc
-Makefile*
-*build-*
-*.qm
-*.prl
 
-# Qt unit tests
-target_wrapper.*
+# ------------------------------------------------------------
+# Debug / crash / misc generated files
+# ------------------------------------------------------------
+*.core
+core
+*.debug
+*.res
+*.rc
+tags
 
-# QtCreator
-*.autosave
-
-# QtCreator Qml
-*.qmlproject.user
-*.qmlproject.user.*
-
-# QtCreator CMake
-CMakeLists.txt.user*
-
-# QtCreator 4.8< compilation database
-compile_commands.json
-
-# QtCreator local machine specific files for imported projects
-*creator.user*
-
-*_qmlcache.qrc
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+*.pyc
+__pycache__/
