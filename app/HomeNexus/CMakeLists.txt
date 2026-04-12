@@ -16,8 +16,19 @@ qt_add_qml_module(appHomeNexus
     URI HomeNexus
     QML_FILES
         Main.qml
+        pages/home/HomeRootPage.qml
+        pages/climate/ClimateRootPage.qml
+        pages/climate/ClimateIndoorsPage.qml
+        pages/plants/PlantsRootPage.qml
+        pages/plants/PlantDetailPage01.qml
+        pages/settings/SettingsRootPage.qml
+        pages/settings/NetworkSettingsPage.qml
+
     RESOURCES
         assets/BrushedMetal.jpg
+        QML_FILES components/AppHeader.qml
+        QML_FILES
+        QML_FILES pages/climate/ClimateForecastPage.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
