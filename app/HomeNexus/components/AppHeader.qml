@@ -11,6 +11,10 @@ ToolBar {
 
     signal backRequested()
 
+    background: Rectangle {
+        color: "#26282a"
+    }
+
     contentItem: RowLayout {
         anchors.fill: parent
         spacing: 12

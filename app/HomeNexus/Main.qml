@@ -54,7 +54,13 @@ ApplicationWindow {
         TabButton {text: "Home"}
         TabButton {text: "Climate"}
         TabButton {text: "Plants"}
-        TabButton {text: "Settings"}
+        TabButton {
+            text: "Settings"
+            Component.onCompleted: {
+                console.log(palette.button)
+                console.log(palette.buttonText)
+            }
+        }
     }
 
     // ----- Content---------------------------------------------------
