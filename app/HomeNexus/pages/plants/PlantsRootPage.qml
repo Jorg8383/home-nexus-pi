@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 Page {
     id: root
-    title: "plants"
+    title: "Plants"
     background: null
 
     required property StackView stackView

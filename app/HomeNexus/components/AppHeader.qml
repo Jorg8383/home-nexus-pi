@@ -12,9 +12,19 @@ ToolBar {
 
     signal backRequested()
 
+    height: Style.appSizes.headerHeight
+
     background: Rectangle {
         color: Style.appColors.headerBackground
         height: Style.appSizes.headerHeight
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            height: 1
+            color: Style.appColors.surfaceBright
+        }
     }
 
     contentItem: RowLayout {
