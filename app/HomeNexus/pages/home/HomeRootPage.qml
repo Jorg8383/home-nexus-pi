@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "../../components"
+
 Page {
     id: root
     title: "Home"
@@ -28,6 +30,11 @@ Page {
             wrapMode: Text.WordWrap
             Layout.preferredWidth: 320
             Layout.alignment: Qt.AlignHCenter
+        }
+
+        AppButton {
+            text: "Cancel"
+            onClicked: console.log("Cancel button clicked!")
         }
     }
 }

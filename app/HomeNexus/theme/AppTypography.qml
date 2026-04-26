@@ -7,4 +7,5 @@ QtObject {
     readonly property int fontSizeSubtitle: 16
     readonly property int fontSizeTitle: 20
     readonly property int fontSizeHeadline: 24
+    readonly property int fontSizeButton: 16
 }

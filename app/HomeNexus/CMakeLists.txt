@@ -29,6 +29,7 @@ qt_add_qml_module(appHomeNexus
         theme/AppRadius.qml
         components/AppHeader.qml
         components/AppTabButton.qml
+        components/AppButton.qml
         pages/home/HomeRootPage.qml
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorsPage.qml

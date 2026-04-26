@@ -21,4 +21,8 @@ QtObject {
     readonly property color tabButtonInactiveText: textBright
 
     readonly property color headerText: textBright
+
+    // Controls
+    readonly property color buttonBackground: surfaceBright
+    readonly property color buttonText: textDark
 }
