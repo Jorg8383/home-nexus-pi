@@ -47,20 +47,15 @@ ApplicationWindow {
     // ----- Footer ---------------------------------------------------
     footer: TabBar {
         id: footerTabBar
-        currentIndex: window.currentSectionIndex
+        width: parent.width
 
+        currentIndex: window.currentSectionIndex
         onCurrentIndexChanged: window.currentSectionIndex = currentIndex
 
-        TabButton {text: "Home"}
-        TabButton {text: "Climate"}
-        TabButton {text: "Plants"}
-        TabButton {
-            text: "Settings"
-            Component.onCompleted: {
-                console.log(palette.button)
-                console.log(palette.buttonText)
-            }
-        }
+        AppTabButton {text: "Home"}
+        AppTabButton {text: "Climate"}
+        AppTabButton {text: "Plants"}
+        AppTabButton {text: "Settings"}
     }
 
     // ----- Content---------------------------------------------------

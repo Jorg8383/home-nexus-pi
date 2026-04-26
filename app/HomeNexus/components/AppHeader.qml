@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
+import HomeNexus
 
 
 ToolBar {
@@ -12,29 +13,62 @@ ToolBar {
     signal backRequested()
 
     background: Rectangle {
-        color: "#26282a"
+        color: Style.appColors.headerBackground
+        height: Style.appSizes.headerHeight
     }
 
     contentItem: RowLayout {
         anchors.fill: parent
-        spacing: 12
+        spacing: 0
 
-        ToolButton {
-            text: "\u2190" // Unicode left arrow
-            visible: root.backButtonVisible
-            onClicked: root.backRequested()
-        }
-
-        Label {
-            text: root.title
-            font.pixelSize: 20
-            elide: Text.ElideRight // handles text overflow --> "this is a long title ..."
+        // Left section
+        Item {
             Layout.fillWidth: true
-            verticalAlignment: Text.AlignVCenter
-            font.bold: true
-            font.weight: Font.DemiBold
+            Layout.fillHeight: true
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: Style.appLayout.spacingM
+                layoutDirection: Qt.LeftToRight
+
+                ToolButton {
+                    text: "\u2190" // Unicode left arrow
+                    visible: root.backButtonVisible
+                    onClicked: root.backRequested()
+                }
+            }
+
         }
+
+        // Centre section
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            Text {
+                anchors.centerIn: parent
+                text: root.title
+                color: Style.appColors.headerText
+                font.pixelSize: Style.appTypography.fontSizeTitle
+                font.bold: true
+                font.weight: Font.DemiBold
+                elide: Text.ElideRight
+            }
+        }
+
+        // Rigth section
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.rightMargin: Style.appLayout.spacingM
+                layoutDirection: Qt.RightToLeft
+
+                // Placeholder for future WiFi icons, etc
+            }
+        }
+
     }
-
-
 }
