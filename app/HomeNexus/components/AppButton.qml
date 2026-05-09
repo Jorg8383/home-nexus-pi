@@ -6,8 +6,8 @@ Button {
     id: root
 
     property color baseColor: Style.appColors.buttonBackground
-    property color borderLight: Qt.lighter(baseColor, 1.35)
-    property color borderDark: Qt.darker(baseColor, 1.45)
+    property color borderLight: Qt.lighter(baseColor, 1.2)
+    property color borderDark: Qt.darker(baseColor, 1.4)
 
     implicitWidth: 120
     implicitHeight: 48
@@ -28,7 +28,7 @@ Button {
 
         Rectangle {
             anchors.fill: parent
-            anchors.margins: 2
+            anchors.margins: 3
             radius: parent.radius - 2
             color: root.baseColor
         }
