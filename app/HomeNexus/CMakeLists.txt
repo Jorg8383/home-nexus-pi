@@ -41,6 +41,24 @@ qt_add_qml_module(appHomeNexus
 
     RESOURCES
         assets/BrushedMetal.jpg
+        assets/weather/clear-day.svg
+        assets/weather/clear-night.svg
+        assets/weather/cloudy.svg
+        assets/weather/fog.svg
+        assets/weather/haze.svg
+        assets/weather/mist.svg
+        assets/weather/not-available.svg
+        assets/weather/overcast-day-rain.svg
+        assets/weather/overcast-night-rain.svg
+        assets/weather/overcast.svg
+        assets/weather/partly-cloudy-day-rain.svg
+        assets/weather/partly-cloudy-day.svg
+        assets/weather/partly-cloudy-night-rain.svg
+        assets/weather/partly-cloudy-night.svg
+        assets/weather/snow.svg
+        assets/weather/thunderstorms-day-rain.svg
+        assets/weather/thunderstorms-night-rain.svg
+        assets/weather/icon0.svg
 )
 
 
@@ -56,7 +74,8 @@ set_target_properties(appHomeNexus PROPERTIES
 )
 
 target_link_libraries(appHomeNexus
-    PRIVATE Qt6::Quick
+    PRIVATE
+        Qt6::Quick
 )
 
 include(GNUInstallDirs)

@@ -1,40 +1,26 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import HomeNexus
 
 Page {
     id: root
     title: "Weather Forecast"
     background: null
 
-    ColumnLayout {
-        anchors.centerIn: parent
-        spacing: 12
+    Rectangle {
+        x: 30
+        y: 80
+        width: parent.width - 60
+        height: parent.height - 110
+        color: Style.appColors.cardBackground
 
-        Label {
-            text: "Forecast"
-            font.pixelSize: 24
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Label {
-            text: "Today: --"
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Label {
-            text: "Tomorrow: --"
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Label {
-            text: "Next days: --"
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Label {
-            text: "Later fetched from OpenWeather API"
-            Layout.alignment: Qt.AlignHCenter
+        Image {
+            anchors.centerIn: parent
+            source: Style.assetsPath + "weather/clear-day.svg"
+            width: 200
+            height: 200
         }
     }
+
 }

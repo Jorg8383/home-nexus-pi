@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
+import HomeNexus
 
 import "components"
 import "pages/home"
@@ -29,7 +30,7 @@ ApplicationWindow {
     // ---- Background ------------------------------------------------
     background: Image {
         id: backgroundImage
-        source: Qt.resolvedUrl("assets/BrushedMetal.jpg")
+        source: Style.assetsPath + "BrushedMetal.jpg"
         fillMode: Image.PreserveAspectCrop
     }
     // ----- Header ---------------------------------------------------
@@ -59,6 +60,7 @@ ApplicationWindow {
     }
 
     // ----- Content---------------------------------------------------
+
     property int currentSectionIndex: 0
 
     property StackView activeStack: {

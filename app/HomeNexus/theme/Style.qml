@@ -8,5 +8,8 @@ QtObject {
     readonly property AppRadius appRadius: AppRadius {}
     readonly property AppSizes appSizes: AppSizes {}
     readonly property AppTypography appTypography: AppTypography {}
+
+    readonly property string assetsPath: "qrc:/qt/qml/HomeNexus/assets/"
+
 }
 
