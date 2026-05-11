@@ -38,6 +38,7 @@ qt_add_qml_module(appHomeNexus
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
         pages/settings/NetworkSettingsPage.qml
+        data/StaticForecastModel.qml
 
     RESOURCES
         assets/BrushedMetal.jpg
