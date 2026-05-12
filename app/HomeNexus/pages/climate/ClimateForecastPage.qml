@@ -3,6 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import HomeNexus
 
+import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
+
 Page {
     id: root
     title: "Weather Forecast"
@@ -16,8 +18,9 @@ Page {
         color: Style.appColors.cardBackground
 
         Image {
+            id: weatherIcon
             anchors.centerIn: parent
-            source: Style.assetsPath + "weather/clear-day.svg"
+            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName("01d")
             width: 200
             height: 200
         }

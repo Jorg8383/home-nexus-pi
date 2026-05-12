@@ -16,6 +16,10 @@ set_source_files_properties(theme/Style.qml PROPERTIES
     QT_QML_SINGLETON_TYPE TRUE
 )
 
+set_source_files_properties(utils/WeatherIconMapper.js PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+
 qt_add_qml_module(appHomeNexus
     URI HomeNexus
     VERSION 1.0
@@ -39,6 +43,7 @@ qt_add_qml_module(appHomeNexus
         pages/settings/SettingsRootPage.qml
         pages/settings/NetworkSettingsPage.qml
         data/StaticForecastModel.qml
+        utils/WeatherIconMapper.js
 
     RESOURCES
         assets/BrushedMetal.jpg
