@@ -46,8 +46,6 @@ qt_add_qml_module(appHomeNexus
         assets/weather/clear-night.svg
         assets/weather/cloudy.svg
         assets/weather/fog.svg
-        assets/weather/haze.svg
-        assets/weather/mist.svg
         assets/weather/not-available.svg
         assets/weather/overcast-day-rain.svg
         assets/weather/overcast-night-rain.svg
@@ -56,10 +54,10 @@ qt_add_qml_module(appHomeNexus
         assets/weather/partly-cloudy-day.svg
         assets/weather/partly-cloudy-night-rain.svg
         assets/weather/partly-cloudy-night.svg
-        assets/weather/snow.svg
+        assets/weather/rain.svg
         assets/weather/thunderstorms-day-rain.svg
         assets/weather/thunderstorms-night-rain.svg
-        assets/weather/icon0.svg
+        assets/weather/snow.svg
 )
 
 
