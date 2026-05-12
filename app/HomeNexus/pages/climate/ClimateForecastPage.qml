@@ -5,25 +5,40 @@ import HomeNexus
 
 import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
+
+
 Page {
     id: root
     title: "Weather Forecast"
     background: null
 
-    Rectangle {
-        x: 30
-        y: 80
-        width: parent.width - 60
-        height: parent.height - 110
-        color: Style.appColors.cardBackground
+    AppCard {
+        id: forecastCard
 
-        Image {
-            id: weatherIcon
-            anchors.centerIn: parent
-            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName("01d")
-            width: 200
-            height: 200
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        anchors.leftMargin: Style.appLayout.marginsL
+        anchors.rightMargin : Style.appLayout.marginsL
+        anchors.bottomMargin: Style.appLayout.marginsL
+
+        height: 230
+
+        ListView {
+            id: forecastListView
+
+            anchors.fill: parent
+
+            orientation: ListView.Horizontal
+            spacing: Style.appLayout.spacingM
+            clip: true
+
+            model: StaticForecastModel {}
+
+            delegate: ForecastDelegate {
+                height: forecastCard.height - 2 * Style.appLayout.paddingS
+            }
         }
     }
-
 }

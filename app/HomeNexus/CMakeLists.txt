@@ -35,11 +35,12 @@ qt_add_qml_module(appHomeNexus
         components/AppTabButton.qml
         components/AppButton.qml
         components/AppCard.qml
-        components/AppDelegateCard.qml
+
         pages/home/HomeRootPage.qml
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorsPage.qml
         pages/climate/ClimateForecastPage.qml
+        pages/climate/ForecastDelegate.qml
         pages/plants/PlantsRootPage.qml
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
