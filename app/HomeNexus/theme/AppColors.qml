@@ -3,6 +3,7 @@ import QtQuick
 QtObject {
     // Base palette
     readonly property color cardBackground: "#80000000" // black with 50% opacity
+    readonly property color cardDelegateBackground: "#FF000000" // black with 100% opacity
 
     readonly property color surfaceDark: "#FF202020"
     readonly property color surfaceBright: "#FFE6E6E6"
