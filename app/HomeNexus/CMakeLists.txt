@@ -36,6 +36,7 @@ qt_add_qml_module(appHomeNexus
         pages/climate/ClimateIndoorsPage.qml
         pages/climate/ClimateForecastPage.qml
         pages/climate/ForecastDelegate.qml
+        pages/climate/WeatherAppCard.qml
         pages/plants/PlantsRootPage.qml
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
