@@ -66,6 +66,7 @@ qt_add_qml_module(appHomeNexus
         assets/weather/thunderstorms-day-rain.svg
         assets/weather/thunderstorms-night-rain.svg
         assets/weather/snow.svg
+        assets/weather/drop-white-icon.svg
 )
 
 

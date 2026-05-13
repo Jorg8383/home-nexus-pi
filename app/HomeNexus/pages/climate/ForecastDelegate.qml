@@ -38,7 +38,7 @@ Rectangle {
         Text {
             text: root.dayNameFromTimestamp(root.dt)
             color: Style.appColors.textBright
-            font.pixelSize: Style.appTypography.fontSizeBody
+            font.pixelSize: Style.appTypography.fontSizeSubtitle
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
 
@@ -70,7 +70,7 @@ Rectangle {
         Text {
             text: Math.round(root.temp) + "°C"
             color: Style.appColors.textBright
-            font.pixelSize: Style.appTypography.fontSizeBody
+            font.pixelSize: Style.appTypography.fontSizeSubtitle
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
 
@@ -78,15 +78,24 @@ Rectangle {
         }
 
         // Precipitation probability
-        Text {
-            text: Math.round(root.pop * 100) + "%"
-            color: Style.appColors.textBright
-            font.pixelSize: Style.appTypography.fontSizeBody
-            horizontalAlignment: Text.AlignHCenter
+        RowLayout {
+             spacing: Style.appLayout.spacingS
+             Layout.alignment: Qt.AlignHCenter
 
-            Layout.fillWidth: true
+             Image {
+                 source: Style.assetsPath + "weather/" + "drop-white-icon.svg"
+                 fillMode: Image.PreserveAspectFit
+                 Layout.preferredHeight: 14
+                 Layout.preferredWidth: 14
+             }
+
+             Text {
+                 text: Math.round(root.pop * 100) + "%"
+                 color: Style.appColors.textBright
+                 font.pixelSize: Style.appTypography.fontSizeBody
+
+             }
         }
-
     }
 
     function dayNameFromTimestamp(timestamp) {
