@@ -12,33 +12,118 @@ Page {
     title: "Weather Forecast"
     background: null
 
-    AppCard {
-        id: forecastCard
+    ColumnLayout {
+        id: weatherApps
+        anchors.fill: parent
+        anchors.margins: Style.appLayout.marginsL
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        RowLayout {
 
-        anchors.leftMargin: Style.appLayout.marginsL
-        anchors.rightMargin : Style.appLayout.marginsL
-        anchors.bottomMargin: Style.appLayout.marginsL
+            spacing: Style.appLayout.spacingL
 
-        height: 230
+            // Current weather and location
+            AppCard {
+                id: currentWeather
+                Layout.preferredHeight: 100
+                Layout.fillWidth: true
+                Layout.maximumWidth: weatherApps.width / 3
+                padding: Style.appLayout.paddingXS
 
-        ListView {
-            id: forecastListView
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: Style.appLayout.spacingM
 
-            anchors.fill: parent
+                    ColumnLayout {
+                        spacing: Style.appLayout.spacingXS
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.leftMargin: Style.appLayout.marginsL
 
-            orientation: ListView.Horizontal
-            spacing: Style.appLayout.spacingM
-            clip: true
+                        // Location
+                        Text {
+                            text: qsTr("Mehrstetten")
+                            color: Style.appColors.textBright
+                            font.pixelSize: Style.appTypography.fontSizeTitle
+                            font.bold: true
+                            horizontalAlignment: Text.AlignLeft
+                            elide: Text.ElideRight
 
-            model: StaticForecastModel {}
+                            Layout.fillWidth: true
+                        }
 
-            delegate: ForecastDelegate {
-                height: forecastCard.height - 2 * Style.appLayout.paddingS
+                        // Current temperature
+                        Text {
+                            text: qsTr("8°C")
+                            color: Style.appColors.textBright
+                            font.pixelSize: Style.appTypography.fontSizeBody
+                            horizontalAlignment: Text.AlignLeft
+
+                            Layout.fillWidth: true
+                        }
+
+                        // Current weather description
+                        Text {
+                            text: qsTr("shower rain")
+                            color: Style.appColors.textBright
+                            font.pixelSize: Style.appTypography.fontSizeBody
+                            horizontalAlignment: Text.AlignLeft
+                            elide: Text.ElideRight
+
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    // Weather icon
+                    Image {
+                        id: weatherIcon
+                        source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName("10d")
+                        fillMode: Image.PreserveAspectFit
+
+                        Layout.alignment: Qt.AlignCenter
+                        Layout.preferredWidth: 80
+                        Layout.preferredHeight: 80
+                    }
+                }
+            }
+
+            // Current wind
+            AppCard {
+                id: wind
+                Layout.preferredHeight: 100
+                Layout.fillWidth: true
+            }
+
+            // Current sunrise and sunset
+            AppCard {
+                id: sunrise
+                Layout.preferredHeight: 100
+                Layout.fillWidth: true
             }
         }
+
+        // 5-day weather forecast in three hour intervals
+        AppCard {
+            id: forecastCard
+
+            Layout.preferredHeight: 230
+            Layout.fillWidth: true
+
+            ListView {
+                id: forecastListView
+
+                anchors.fill: parent
+
+                orientation: ListView.Horizontal
+                spacing: Style.appLayout.spacingM
+                clip: true
+
+                model: StaticForecastModel {}
+
+                delegate: ForecastDelegate {
+                    height: forecastCard.height - 2 * Style.appLayout.paddingS
+                }
+            }
+        }
+
     }
 }
