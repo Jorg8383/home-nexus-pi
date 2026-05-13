@@ -25,17 +25,12 @@ qt_add_qml_module(appHomeNexus
     VERSION 1.0
     QML_FILES
         Main.qml
-        theme/Style.qml
-        theme/AppColors.qml
-        theme/AppLayout.qml
-        theme/AppTypography.qml
-        theme/AppSizes.qml
-        theme/AppRadius.qml
         components/AppHeader.qml
         components/AppTabButton.qml
         components/AppButton.qml
         components/AppCard.qml
-
+        data/StaticForecastModel.qml
+        data/StaticWeatherModel.qml
         pages/home/HomeRootPage.qml
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorsPage.qml
@@ -45,7 +40,12 @@ qt_add_qml_module(appHomeNexus
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
         pages/settings/NetworkSettingsPage.qml
-        data/StaticForecastModel.qml
+        theme/Style.qml
+        theme/AppColors.qml
+        theme/AppLayout.qml
+        theme/AppTypography.qml
+        theme/AppSizes.qml
+        theme/AppRadius.qml
         utils/WeatherIconMapper.js
 
     RESOURCES
