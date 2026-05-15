@@ -81,7 +81,8 @@ qt_add_qml_module(appHomeNexus
         assets/climate/thumbs-down-red.svg
         assets/climate/thumbs-up-green.svg
         assets/climate/window-open-white.svg
-)
+        assets/climate/pressure-gauge-white.svg
+}
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
