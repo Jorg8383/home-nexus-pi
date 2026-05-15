@@ -5,7 +5,7 @@ import HomeNexus
 
 Page {
     id: root
-    title: "Indoor Climate"
+    title: "Conservatory Climate"
     background: null
 
     ColumnLayout {
@@ -19,10 +19,10 @@ Page {
         ClimateSensorOverview {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
-            temperature: 25
-            humidity: 48
-            pressure: 1013
-            airQuality: 80
+            temperature: 32
+            humidity: 70
+            pressure: 1203
+            airQuality: 175
         }
 
         Item {

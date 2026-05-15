@@ -6,6 +6,6 @@ QtObject {
     readonly property int fontSizeBody: 16
     readonly property int fontSizeSubtitle: 18
     readonly property int fontSizeTitle: 20
-    readonly property int fontSizeHeadline: 24
+    readonly property int fontSizeHeadline: 28
     readonly property int fontSizeButton: 16
 }

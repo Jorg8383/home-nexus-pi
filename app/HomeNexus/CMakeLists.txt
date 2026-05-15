@@ -20,6 +20,10 @@ set_source_files_properties(utils/WeatherIconMapper.js PROPERTIES
     QT_QML_SKIP_QMLDIR_ENTRY TRUE
 )
 
+set_source_files_properties(utils/ClimateIconMapper.js PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+
 qt_add_qml_module(appHomeNexus
     URI HomeNexus
     VERSION 1.0
@@ -29,9 +33,13 @@ qt_add_qml_module(appHomeNexus
         components/AppTabButton.qml
         components/AppButton.qml
         components/AppCard.qml
+        components/ClimateMetricCard.qml
+        components/ClimateSensorOverview.qml
         data/StaticForecastModel.qml
         data/StaticWeatherModel.qml
         pages/home/HomeRootPage.qml
+        pages/climate/ClimateConservatoryPage.qml
+
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorPage.qml
         pages/climate/ClimateWeatherPage.qml
@@ -48,6 +56,7 @@ qt_add_qml_module(appHomeNexus
         theme/AppSizes.qml
         theme/AppRadius.qml
         utils/WeatherIconMapper.js
+        utils/ClimateIconMapper.js
 
     RESOURCES
         assets/BrushedMetal.jpg
@@ -82,7 +91,7 @@ qt_add_qml_module(appHomeNexus
         assets/climate/thumbs-up-green.svg
         assets/climate/window-open-white.svg
         assets/climate/pressure-gauge-white.svg
-}
+)
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -22,7 +22,7 @@ Page {
         Button {
             text: "Indoor Climate"
             Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("ClimateIndoorsPage.qml")
+            onClicked: root.stackView.push("ClimateIndoorPage.qml")
         }
 
         Button {
