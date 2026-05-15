@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import HomeNexus
 
 Page {
     id: root
@@ -9,20 +10,18 @@ Page {
 
     required property StackView stackView
 
-    ColumnLayout {
+    Image {
+        source: Style.assetsPath + "under-construction.svg"
+        height: 200
+        width: 200
+        fillMode: Image.PreserveAspectFit
+
         anchors.centerIn: parent
-        spacing: 16
-
-        Label {
-            text: "Plants Overview"
-            font.pixelSize: 24
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Button {
-            text: "Open Plant Details"
-            Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("PlantDetailPage01.qml")
-        }
     }
+
+
+    // Button {
+    //     text: "Open Plant Details"
+    //     onClicked: root.stackView.push("PlantDetailPage01.qml")
+    // }
 }

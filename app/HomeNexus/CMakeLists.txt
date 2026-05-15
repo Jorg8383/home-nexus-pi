@@ -40,9 +40,7 @@ qt_add_qml_module(appHomeNexus
         pages/climate/WindAppCard.qml
         pages/climate/SunAppCard.qml
         pages/plants/PlantsRootPage.qml
-        pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
-        pages/settings/NetworkSettingsPage.qml
         theme/Style.qml
         theme/AppColors.qml
         theme/AppLayout.qml
@@ -53,6 +51,7 @@ qt_add_qml_module(appHomeNexus
 
     RESOURCES
         assets/BrushedMetal.jpg
+        assets/under-construction.svg
         assets/weather/clear-day.svg
         assets/weather/clear-night.svg
         assets/weather/cloudy.svg

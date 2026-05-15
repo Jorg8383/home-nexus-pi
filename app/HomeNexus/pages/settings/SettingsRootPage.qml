@@ -9,20 +9,17 @@ Page {
 
     required property StackView stackView
 
-    ColumnLayout {
+    Image {
+        source: Style.assetsPath + "under-construction.svg"
+        height: 200
+        width: 200
+        fillMode: Image.PreserveAspectFit
+
         anchors.centerIn: parent
-        spacing: 16
-
-        Label {
-            text: "Settings Overview"
-            font.pixelSize: 24
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Button {
-            text: "Open Settings Details"
-            Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("NetworkSettingsPage.qml")
-        }
     }
+
+    // Button {
+    //     text: "Open Settings Details"
+    //     onClicked: root.stackView.push("NetworkSettingsPage.qml")
+    // }
 }
