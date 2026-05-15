@@ -34,9 +34,10 @@ qt_add_qml_module(appHomeNexus
         pages/home/HomeRootPage.qml
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorsPage.qml
-        pages/climate/ClimateForecastPage.qml
+        pages/climate/ClimateWeatherPage.qml
         pages/climate/ForecastDelegate.qml
         pages/climate/WeatherAppCard.qml
+        pages/climate/WindAppCard.qml
         pages/plants/PlantsRootPage.qml
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
@@ -68,6 +69,7 @@ qt_add_qml_module(appHomeNexus
         assets/weather/thunderstorms-night-rain.svg
         assets/weather/snow.svg
         assets/weather/drop-white-icon.svg
+        assets/weather/wind-arrow-white.svg
 )
 
 

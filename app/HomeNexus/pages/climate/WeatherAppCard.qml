@@ -6,6 +6,13 @@ import HomeNexus
 import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
 AppCard {
+    id: root
+
+    property string location: "Mehrstetten"
+    property string description: "shower rain"
+    property string icon: "10d"
+    property real temperature: 8.3
+
     padding: Style.appLayout.paddingXS
 
     RowLayout {
@@ -20,7 +27,7 @@ AppCard {
 
             // Location
             Text {
-                text: qsTr("Mehrstetten")
+                text: root.location
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeTitle
                 font.bold: true
@@ -32,7 +39,7 @@ AppCard {
 
             // Current temperature
             Text {
-                text: qsTr("8°C")
+                text: Math.round(root.temperature) + " °C"
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeBody
                 horizontalAlignment: Text.AlignLeft
@@ -42,7 +49,7 @@ AppCard {
 
             // Current weather description
             Text {
-                text: qsTr("shower rain")
+                text: qsTr(root.description)
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeBody
                 horizontalAlignment: Text.AlignLeft
@@ -55,7 +62,7 @@ AppCard {
         // Weather icon
         Image {
             id: weatherIcon
-            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName("10d")
+            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName(root.icon)
             fillMode: Image.PreserveAspectFit
 
             Layout.alignment: Qt.AlignCenter

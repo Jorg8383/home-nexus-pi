@@ -28,7 +28,7 @@ Page {
         Button {
             text: "Weather Forecast"
             Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("ClimateForecastPage.qml")
+            onClicked: root.stackView.push("ClimateWeatherPage.qml")
         }
     }
 }

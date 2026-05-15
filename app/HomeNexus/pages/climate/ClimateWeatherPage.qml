@@ -30,10 +30,11 @@ Page {
             }
 
             // Current wind
-            AppCard {
+            WindAppCard {
                 id: wind
                 Layout.preferredHeight: 100
                 Layout.fillWidth: true
+                Layout.maximumWidth: weatherApps.width / 3
             }
 
             // Current sunrise and sunset
@@ -41,6 +42,7 @@ Page {
                 id: sunrise
                 Layout.preferredHeight: 100
                 Layout.fillWidth: true
+                Layout.maximumWidth: weatherApps.width / 3
             }
         }
 
