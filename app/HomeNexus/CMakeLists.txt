@@ -33,7 +33,7 @@ qt_add_qml_module(appHomeNexus
         data/StaticWeatherModel.qml
         pages/home/HomeRootPage.qml
         pages/climate/ClimateRootPage.qml
-        pages/climate/ClimateIndoorsPage.qml
+        pages/climate/ClimateIndoorPage.qml
         pages/climate/ClimateWeatherPage.qml
         pages/climate/ForecastDelegate.qml
         pages/climate/WeatherAppCard.qml
@@ -72,6 +72,14 @@ qt_add_qml_module(appHomeNexus
         assets/weather/wind-arrow-white.svg
         assets/weather/sunrise50x50.png
         assets/weather/sunset50x50.png
+        assets/climate/humidity-white.svg
+        assets/climate/propeller-white.svg
+        assets/climate/temperature-high.svg
+        assets/climate/temperature-low.svg
+        assets/climate/temperature-medium.svg
+        assets/climate/thumbs-down-red.svg
+        assets/climate/thumbs-up-green.svg
+        assets/climate/window-open-white.svg
 )
 
 
