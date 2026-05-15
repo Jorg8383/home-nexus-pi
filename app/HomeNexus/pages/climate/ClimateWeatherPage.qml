@@ -38,8 +38,8 @@ Page {
             }
 
             // Current sunrise and sunset
-            AppCard {
-                id: sunrise
+            SunAppCard {
+                id: solarEvents
                 Layout.preferredHeight: 100
                 Layout.fillWidth: true
                 Layout.maximumWidth: weatherApps.width / 3

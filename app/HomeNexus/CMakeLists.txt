@@ -38,6 +38,7 @@ qt_add_qml_module(appHomeNexus
         pages/climate/ForecastDelegate.qml
         pages/climate/WeatherAppCard.qml
         pages/climate/WindAppCard.qml
+        pages/climate/SunAppCard.qml
         pages/plants/PlantsRootPage.qml
         pages/plants/PlantDetailPage01.qml
         pages/settings/SettingsRootPage.qml
@@ -70,6 +71,8 @@ qt_add_qml_module(appHomeNexus
         assets/weather/snow.svg
         assets/weather/drop-white-icon.svg
         assets/weather/wind-arrow-white.svg
+        assets/weather/sunrise50x50.png
+        assets/weather/sunset50x50.png
 )
 
 
