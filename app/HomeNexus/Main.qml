@@ -53,10 +53,10 @@ ApplicationWindow {
         currentIndex: window.currentSectionIndex
         onCurrentIndexChanged: window.currentSectionIndex = currentIndex
 
-        AppTabButton {text: "Home"}
-        AppTabButton {text: "Climate"}
-        AppTabButton {text: "Plants"}
-        AppTabButton {text: "Settings"}
+        AppTabButton {iconName: "home-icon"}
+        AppTabButton {iconName: "climate-icon"}
+        AppTabButton {iconName: "plant-icon"}
+        AppTabButton {iconName: "setting-icon"}
     }
 
     // ----- Content---------------------------------------------------

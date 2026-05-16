@@ -94,6 +94,14 @@ qt_add_qml_module(appHomeNexus
         assets/climate/greenhouse-white.svg
         assets/climate/room-white.svg
         assets/climate/weather-white.svg
+        assets/tabbar/climate-icon-white.svg
+        assets/tabbar/climate-icon-dark.svg
+        assets/tabbar/home-icon-white.svg
+        assets/tabbar/home-icon-dark.svg
+        assets/tabbar/plant-icon-white.svg
+        assets/tabbar/plant-icon-dark.svg
+        assets/tabbar/setting-icon-white.svg
+        assets/tabbar/setting-icon-dark.svg
 )
 
 
