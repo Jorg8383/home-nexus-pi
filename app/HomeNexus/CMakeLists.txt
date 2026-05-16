@@ -38,7 +38,7 @@ qt_add_qml_module(appHomeNexus
         data/StaticForecastModel.qml
         data/StaticWeatherModel.qml
         pages/home/HomeRootPage.qml
-        pages/climate/ClimateConservatoryPage.qml
+        pages/climate/ClimateGreenhousePage.qml
 
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorPage.qml

@@ -5,7 +5,7 @@ import HomeNexus
 
 Page {
     id: root
-    title: "Conservatory Climate"
+    title: "Greenhouse Climate"
     background: null
 
     ColumnLayout {
