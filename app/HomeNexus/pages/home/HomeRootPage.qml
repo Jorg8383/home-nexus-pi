@@ -31,7 +31,7 @@ Page {
         clip: true
 
         contentWidth: flickable.width
-        contentHeight: homeGrid.implicitHeight
+        contentHeight: homeGrid.height
 
         flickableDirection: Flickable.VerticalFlick
         boundsBehavior: Flickable.StopAtBounds
@@ -40,7 +40,7 @@ Page {
             id: contentWrapper
 
             width: flickable.width
-            implicitHeight: homeGrid.implicitHeight
+            height: homeGrid.implicitHeight
 
             GridLayout {
                 id: homeGrid
@@ -74,8 +74,8 @@ Page {
 
                 AppMetricCard {
                     title: qsTr("Indoor Air Quality")
-                    value: ""
-                    unit: ""
+                    value: root.airQualityIndoor.toFixed(0)
+                    unit: "IAQ"
                     iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityIndoor)
 
                     Layout.preferredWidth: homeGrid.preferredCardWidth
@@ -83,8 +83,8 @@ Page {
 
                 AppMetricCard {
                     title: qsTr("Greenhouse Air Quality")
-                    value: ""
-                    unit: ""
+                    value: root.airQualityGreenhouse.toFixed(0)
+                    unit: "IAQ"
                     iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityGreenhouse)
 
                     Layout.preferredWidth: homeGrid.preferredCardWidth
