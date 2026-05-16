@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import HomeNexus
 
 Page {
     id: root
@@ -9,26 +10,26 @@ Page {
 
     required property StackView stackView
 
-    ColumnLayout {
+    RowLayout {
         anchors.centerIn: parent
-        spacing: 16
+        spacing: Style.appLayout.spacingXL
 
-        Label {
-            text: "Climate Overview"
-            font.pixelSize: 24
-            Layout.alignment: Qt.AlignHCenter
+        AppTopicCard {
+            title: qsTr("Greenhouse")
+            iconSource: Style.assetsPath + "/climate/greenhouse-white.svg"
+            onActivated: root.stackView.push("ClimateGreenhousePage.qml")
         }
 
-        Button {
-            text: "Indoor Climate"
-            Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("ClimateIndoorPage.qml")
+        AppTopicCard {
+            title: qsTr("Indoor")
+            iconSource: Style.assetsPath + "/climate/room-white.svg"
+            onActivated: root.stackView.push("ClimateIndoorPage.qml")
         }
 
-        Button {
-            text: "Weather Forecast"
-            Layout.alignment: Qt.AlignHCenter
-            onClicked: root.stackView.push("ClimateWeatherPage.qml")
+        AppTopicCard {
+            title: qsTr("Weather")
+            iconSource: Style.assetsPath + "/climate/weather-white.svg"
+            onActivated: root.stackView.push("ClimateWeatherPage.qml")
         }
     }
 }

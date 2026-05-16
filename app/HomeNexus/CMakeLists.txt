@@ -35,11 +35,11 @@ qt_add_qml_module(appHomeNexus
         components/AppCard.qml
         components/ClimateMetricCard.qml
         components/ClimateSensorOverview.qml
+        components/AppTopicCard.qml
         data/StaticForecastModel.qml
         data/StaticWeatherModel.qml
         pages/home/HomeRootPage.qml
         pages/climate/ClimateGreenhousePage.qml
-
         pages/climate/ClimateRootPage.qml
         pages/climate/ClimateIndoorPage.qml
         pages/climate/ClimateWeatherPage.qml
@@ -91,6 +91,9 @@ qt_add_qml_module(appHomeNexus
         assets/climate/thumbs-up-green.svg
         assets/climate/window-open-white.svg
         assets/climate/pressure-gauge-white.svg
+        assets/climate/greenhouse-white.svg
+        assets/climate/room-white.svg
+        assets/climate/weather-white.svg
 )
 
 
