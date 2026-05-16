@@ -57,7 +57,7 @@ Rectangle {
 
         // Weather icon
         Image {
-            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName(root.icon)
+            source: Style.assetsPath + WeatherIconMapper.fileName(root.icon)
             fillMode: Image.PreserveAspectFit
             asynchronous: true
 

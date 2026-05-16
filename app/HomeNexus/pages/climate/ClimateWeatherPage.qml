@@ -5,8 +5,6 @@ import HomeNexus
 
 import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
-
-
 Page {
     id: root
     title: qsTr("Weather")

@@ -62,7 +62,7 @@ AppCard {
         // Weather icon
         Image {
             id: weatherIcon
-            source: Style.assetsPath + "weather/" + WeatherIconMapper.fileName(root.icon)
+            source: Style.assetsPath + WeatherIconMapper.fileName(root.icon)
             fillMode: Image.PreserveAspectFit
 
             Layout.alignment: Qt.AlignCenter

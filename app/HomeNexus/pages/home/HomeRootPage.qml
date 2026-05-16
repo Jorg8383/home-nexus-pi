@@ -1,40 +1,122 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import HomeNexus
 
-import "../../components"
+import "../../utils/ClimateIconMapper.js" as ClimateIconMapper
+import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
 Page {
     id: root
-    title: "Home"
+    title: qsTr("Home")
     background: null
 
-    ColumnLayout {
-        anchors.centerIn: parent
-        spacing: 16
+    property real temperatureIndoor: 22.0
+    property real temperatureOutdoor: 25.0
+    property real temperatureGreenhouse: 30.0
+    property real airQualityIndoor: 60.0
+    property real airQualityGreenhouse: 150.0
+    property real humidityIndoor: 40.939
+    property real humidityGreenhouse: 68.34
+    property real windSpeed: 7.889
+    property string weatherIcon: "10d"
 
-        Label {
-            text: "Home Dashboard"
-            font.pixelSize: 24
-            Layout.alignment: Qt.AlignHCenter
-        }
 
-        Label {
-            text: "Flat overview page"
-            Layout.alignment: Qt.AlignHCenter
-        }
+    Flickable {
+        id: flickable
 
-        Label {
-            text: "Later: weather, climate summary, plant alerts, irrigation status"
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
-            Layout.preferredWidth: 320
-            Layout.alignment: Qt.AlignHCenter
-        }
+        anchors.fill: parent
+        anchors.margins: Style.appLayout.marginsXL
 
-        AppButton {
-            text: "Cancel"
-            onClicked: console.log("Cancel button clicked!")
+        clip: true
+
+        contentWidth: flickable.width
+        contentHeight: homeGrid.implicitHeight
+
+        flickableDirection: Flickable.VerticalFlick
+        boundsBehavior: Flickable.StopAtBounds
+
+        Item {
+            id: contentWrapper
+
+            width: flickable.width
+            implicitHeight: homeGrid.implicitHeight
+
+            GridLayout {
+                id: homeGrid
+
+                readonly property int preferredCardWidth: 300
+
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                columns: 2
+                rowSpacing: Style.appLayout.spacingL
+                columnSpacing: Style.appLayout.spacingL
+
+
+                AppMetricCard {
+                    title: qsTr("Indoor Temperature")
+                    value: root.temperatureIndoor.toFixed(1)
+                    unit: "°C"
+                    iconSource: Style.assetsPath + ClimateIconMapper.temperatureIcon(root.temperatureIndoor)
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Greenhouse Temperature")
+                    value: root.temperatureGreenhouse.toFixed(1)
+                    unit: "°C"
+                    iconSource: Style.assetsPath + ClimateIconMapper.temperatureIcon(root.temperatureGreenhouse)
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Indoor Air Quality")
+                    value: ""
+                    unit: ""
+                    iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityIndoor)
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Greenhouse Air Quality")
+                    value: ""
+                    unit: ""
+                    iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityGreenhouse)
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Indoor Humidity")
+                    value: root.humidityIndoor.toFixed(1)
+                    unit: "%"
+                    iconSource: Style.assetsPath + "climate/humidity-white.svg"
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Greenhouse Humidity")
+                    value: root.humidityGreenhouse.toFixed(1)
+                    unit: "%"
+                    iconSource: Style.assetsPath + "climate/humidity-white.svg"
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+
+                AppMetricCard {
+                    title: qsTr("Weather")
+                    value: root.temperatureOutdoor.toFixed(1)
+                    unit: "°C"
+                    iconSource: Style.assetsPath + WeatherIconMapper.fileName(root.weatherIcon)
+
+                    Layout.preferredWidth: homeGrid.preferredCardWidth
+                }
+            }
         }
     }
 }
