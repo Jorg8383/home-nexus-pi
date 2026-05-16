@@ -24,6 +24,10 @@ set_source_files_properties(utils/ClimateIconMapper.js PROPERTIES
     QT_QML_SKIP_QMLDIR_ENTRY TRUE
 )
 
+set_source_files_properties(utils/AirQualityMapper.js PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+
 qt_add_qml_module(appHomeNexus
     URI HomeNexus
     VERSION 1.0
@@ -57,6 +61,7 @@ qt_add_qml_module(appHomeNexus
         theme/AppRadius.qml
         utils/WeatherIconMapper.js
         utils/ClimateIconMapper.js
+        utils/AirQualityMapper.js
 
     RESOURCES
         assets/BrushedMetal.jpg

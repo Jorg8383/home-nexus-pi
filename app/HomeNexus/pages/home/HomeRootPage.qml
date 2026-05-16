@@ -5,6 +5,7 @@ import HomeNexus
 
 import "../../utils/ClimateIconMapper.js" as ClimateIconMapper
 import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
+import "../../utils/AirQualityMapper.js" as AirQualityMapper
 
 Page {
     id: root
@@ -15,7 +16,7 @@ Page {
     property real temperatureOutdoor: 25.0
     property real temperatureGreenhouse: 30.0
     property real airQualityIndoor: 60.0
-    property real airQualityGreenhouse: 150.0
+    property real airQualityGreenhouse: 210.0
     property real humidityIndoor: 40.939
     property real humidityGreenhouse: 68.34
     property real windSpeed: 7.889
@@ -74,8 +75,8 @@ Page {
 
                 AppMetricCard {
                     title: qsTr("Indoor Air Quality")
-                    value: root.airQualityIndoor.toFixed(0)
-                    unit: "IAQ"
+                    value: AirQualityMapper.iaqText(root.airQualityIndoor)
+                    unit: ""
                     iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityIndoor)
 
                     Layout.preferredWidth: homeGrid.preferredCardWidth
@@ -83,8 +84,8 @@ Page {
 
                 AppMetricCard {
                     title: qsTr("Greenhouse Air Quality")
-                    value: root.airQualityGreenhouse.toFixed(0)
-                    unit: "IAQ"
+                    value: AirQualityMapper.iaqText(root.airQualityGreenhouse)
+                    unit: ""
                     iconSource: Style.assetsPath + ClimateIconMapper.airQualityIcon(root.airQualityGreenhouse)
 
                     Layout.preferredWidth: homeGrid.preferredCardWidth

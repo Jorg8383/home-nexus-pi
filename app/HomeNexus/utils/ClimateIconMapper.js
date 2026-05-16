@@ -15,7 +15,7 @@ function airQualityIcon(airQualityIndex)
 {
     if (airQualityIndex <= 100)
         return "climate/thumbs-up-green.svg"
-    else if (airQualityIndex <= 200)
+    else if (airQualityIndex <= 150)
         return "climate/thumbs-down-orange.svg"
     else
         return "climate/thumbs-down-red.svg"
