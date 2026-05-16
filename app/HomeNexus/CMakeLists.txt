@@ -33,7 +33,7 @@ qt_add_qml_module(appHomeNexus
         components/AppTabButton.qml
         components/AppButton.qml
         components/AppCard.qml
-        components/ClimateMetricCard.qml
+        components/AppMetricCard.qml
         components/ClimateSensorOverview.qml
         components/AppTopicCard.qml
         data/StaticForecastModel.qml

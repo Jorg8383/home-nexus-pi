@@ -24,7 +24,7 @@ GridLayout {
 
     readonly property int preferredCardWidth: 300
 
-    ClimateMetricCard {
+    AppMetricCard {
         title: root.temperatureTitle
         value: root.temperature.toFixed(1)
         unit: "°C"
@@ -33,7 +33,7 @@ GridLayout {
         Layout.preferredWidth: root.preferredCardWidth
     }
 
-    ClimateMetricCard {
+    AppMetricCard {
         title: root.humidityTitle
         value: root.humidity.toFixed(0)
         unit: "%"
@@ -42,7 +42,7 @@ GridLayout {
         Layout.preferredWidth: root.preferredCardWidth
     }
 
-    ClimateMetricCard {
+    AppMetricCard {
         title: root.airQualityTitle
         value: root.airQuality.toFixed(0)
         unit: "IAQ"
@@ -51,7 +51,7 @@ GridLayout {
         Layout.preferredWidth: root.preferredCardWidth
     }
 
-    ClimateMetricCard {
+    AppMetricCard {
         title: root.pressureTitle
         value: root.pressure.toFixed(0)
         unit: "hPa"
