@@ -12,14 +12,14 @@ qt_add_executable(appHomeNexus
     main.cpp
 )
 
-set_source_files_properties(theme/Style.qml PROPERTIES
+set_source_files_properties(ui/theme/Style.qml PROPERTIES
     QT_QML_SINGLETON_TYPE TRUE
 )
 
 set_source_files_properties(
-    utils/WeatherIconMapper.js
-    utils/ClimateIconMapper.js
-    utils/AirQualityMapper.js
+    ui/utils/WeatherIconMapper.js
+    ui/utils/ClimateIconMapper.js
+    ui/utils/AirQualityMapper.js
     PROPERTIES
         QT_QML_SKIP_QMLDIR_ENTRY TRUE
 )
@@ -29,35 +29,35 @@ qt_add_qml_module(appHomeNexus
     VERSION 1.0
     QML_FILES
         Main.qml
-        components/AppHeader.qml
-        components/AppTabButton.qml
-        components/AppButton.qml
-        components/AppCard.qml
-        components/AppMetricCard.qml
-        components/ClimateSensorOverview.qml
-        components/AppTopicCard.qml
-        data/StaticForecastModel.qml
-        data/StaticWeatherModel.qml
-        pages/home/HomeRootPage.qml
-        pages/climate/ClimateGreenhousePage.qml
-        pages/climate/ClimateRootPage.qml
-        pages/climate/ClimateIndoorPage.qml
-        pages/climate/ClimateWeatherPage.qml
-        pages/climate/ForecastDelegate.qml
-        pages/climate/WeatherAppCard.qml
-        pages/climate/WindAppCard.qml
-        pages/climate/SunAppCard.qml
-        pages/plants/PlantsRootPage.qml
-        pages/settings/SettingsRootPage.qml
-        theme/Style.qml
-        theme/AppColors.qml
-        theme/AppLayout.qml
-        theme/AppTypography.qml
-        theme/AppSizes.qml
-        theme/AppRadius.qml
-        utils/WeatherIconMapper.js
-        utils/ClimateIconMapper.js
-        utils/AirQualityMapper.js
+        ui/components/AppHeader.qml
+        ui/components/AppTabButton.qml
+        ui/components/AppButton.qml
+        ui/components/AppCard.qml
+        ui/components/AppMetricCard.qml
+        ui/components/ClimateSensorOverview.qml
+        ui/components/AppTopicCard.qml
+        ui/data/StaticForecastModel.qml
+        ui/data/StaticWeatherModel.qml
+        ui/pages/home/HomeRootPage.qml
+        ui/pages/climate/ClimateGreenhousePage.qml
+        ui/pages/climate/ClimateRootPage.qml
+        ui/pages/climate/ClimateIndoorPage.qml
+        ui/pages/climate/ClimateWeatherPage.qml
+        ui/pages/climate/ForecastDelegate.qml
+        ui/pages/climate/WeatherAppCard.qml
+        ui/pages/climate/WindAppCard.qml
+        ui/pages/climate/SunAppCard.qml
+        ui/pages/plants/PlantsRootPage.qml
+        ui/pages/settings/SettingsRootPage.qml
+        ui/theme/Style.qml
+        ui/theme/AppColors.qml
+        ui/theme/AppLayout.qml
+        ui/theme/AppTypography.qml
+        ui/theme/AppSizes.qml
+        ui/theme/AppRadius.qml
+        ui/utils/WeatherIconMapper.js
+        ui/utils/ClimateIconMapper.js
+        ui/utils/AirQualityMapper.js
 
     RESOURCES
         assets/BrushedMetal.jpg

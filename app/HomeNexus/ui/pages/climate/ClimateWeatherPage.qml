@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import HomeNexus
 
+
 import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
 Page {

@@ -3,11 +3,11 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import HomeNexus
 
-import "components"
-import "pages/home"
-import "pages/climate"
-import "pages/plants"
-import "pages/settings"
+import "ui/components"
+import "ui/pages/home"
+import "ui/pages/climate"
+import "ui/pages/plants"
+import "ui/pages/settings"
 
 ApplicationWindow {
     id: window
