@@ -87,9 +87,8 @@ qt_add_qml_module(appHomeNexus
         assets/climate/temperature-high.svg
         assets/climate/temperature-low.svg
         assets/climate/temperature-medium.svg
-        assets/climate/thumbs-down-orange.svg
-        assets/climate/thumbs-down-red.svg
-        assets/climate/thumbs-up-green.svg
+        assets/climate/emoji-sad-white.svg
+        assets/climate/emoji-smiley-white.svg
         assets/climate/window-open-white.svg
         assets/climate/pressure-gauge-white.svg
         assets/climate/greenhouse-white.svg

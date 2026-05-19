@@ -13,10 +13,8 @@ function temperatureIcon(temperature)
 
 function airQualityIcon(airQualityIndex)
 {
-    if (airQualityIndex <= 100)
-        return "climate/thumbs-up-green.svg"
-    else if (airQualityIndex <= 150)
-        return "climate/thumbs-down-orange.svg"
+    if (airQualityIndex <= 150)
+        return "climate/emoji-smiley-white.svg"
     else
-        return "climate/thumbs-down-red.svg"
+        return "climate/emoji-sad-white.svg"
 }
