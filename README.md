@@ -118,6 +118,8 @@ The project follows a modular architecture where the QML frontend is separated f
 
 A simplified component interaction looks like this:
 
+![Hone-Nexus-Pi project components](docs/images/home-nexus-pi-components.png)
+
 ## Technology Stack
 
 ### Programming Languages
