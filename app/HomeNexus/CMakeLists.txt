@@ -5,9 +5,25 @@ project(HomeNexus VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS
+    Quick
+    Core
+    Network
+    Test
+)
 
 qt_standard_project_setup(REQUIRES 6.8)
+
+# Enable CTest integration, which also creates the BUILD_TESTING option
+include(CTest)
+
+# Backend libraries
+add_subdirectory(src)
+
+# Tests
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 
 qt_add_executable(appHomeNexus
     main.cpp
@@ -103,6 +119,7 @@ qt_add_qml_module(appHomeNexus
         assets/tabbar/plant-icon-dark.svg
         assets/tabbar/setting-icon-white.svg
         assets/tabbar/setting-icon-dark.svg
+        SOURCES
 )
 
 
@@ -120,9 +137,11 @@ set_target_properties(appHomeNexus PROPERTIES
 target_link_libraries(appHomeNexus
     PRIVATE
         Qt6::Quick
+        HomeNexusWeather
 )
 
 include(GNUInstallDirs)
+
 install(TARGETS appHomeNexus
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
