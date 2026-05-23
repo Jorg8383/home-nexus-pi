@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram id="weather-uml" name="Weather UML Architecture">
+    <mxGraphModel dx="857" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WeatherViewModel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherViewModel&lt;/b&gt;&lt;hr&gt;+ currentTemperature : double&lt;br&gt;+ currentHumidity : int&lt;br&gt;+ currentPressure : int&lt;br&gt;+ currentDescription : QString&lt;br&gt;+ currentIcon : QString&lt;br&gt;+ isUpdating : bool&lt;div&gt;+ errorMessage : QString&lt;hr&gt;+ refresh()&lt;br&gt;+ forecastModel() : ForecastListModel&lt;/div&gt;" vertex="1">
+          <mxGeometry height="250" width="330" x="570" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="WeatherService" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherService&lt;/b&gt;&lt;hr/&gt;- currentWeatherTimer : QTimer&lt;br/&gt;- forecastTimer : QTimer&lt;hr/&gt;+ start()&lt;br/&gt;+ stop()&lt;br/&gt;+ refreshCurrentWeather()&lt;br/&gt;+ refreshForecast()&lt;br/&gt;+ currentWeatherUpdated(CurrentWeather)&lt;br/&gt;+ forecastUpdated(WeatherForecast)&lt;br/&gt;+ errorOccurred(WeatherError)" vertex="1">
+          <mxGeometry height="270" width="330" x="570" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="OpenWeatherClient" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;OpenWeatherClient&lt;/b&gt;&lt;hr/&gt;- networkManager : QNetworkAccessManager&lt;br/&gt;- config : WeatherConfig&lt;hr/&gt;+ fetchCurrentWeather()&lt;br/&gt;+ fetchForecast()&lt;br/&gt;+ currentWeatherReplyReceived(QByteArray)&lt;br/&gt;+ forecastReplyReceived(QByteArray)&lt;br/&gt;+ networkErrorOccurred(WeatherError)" vertex="1">
+          <mxGeometry height="250" width="370" x="90" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="OpenWeatherParser" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;OpenWeatherParser&lt;/b&gt;&lt;hr/&gt;+ parseCurrentWeather(QByteArray) : CurrentWeather&lt;br/&gt;+ parseForecast(QByteArray) : WeatherForecast" vertex="1">
+          <mxGeometry height="130" width="370" x="550" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="WeatherRepository" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherRepository&lt;/b&gt;&lt;hr/&gt;- currentWeather : CurrentWeather&lt;br/&gt;- forecast : WeatherForecast&lt;br/&gt;- lastCurrentWeatherUpdate : QDateTime&lt;br/&gt;- lastForecastUpdate : QDateTime&lt;hr/&gt;+ saveCurrentWeather(CurrentWeather)&lt;br/&gt;+ saveForecast(WeatherForecast)&lt;br/&gt;+ currentWeather() : CurrentWeather&lt;br/&gt;+ forecast() : WeatherForecast&lt;br/&gt;+ hasCurrentWeather() : bool&lt;br/&gt;+ hasForecast() : bool" vertex="1">
+          <mxGeometry height="280" width="380" x="1000" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ForecastListModel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;ForecastListModel&lt;/b&gt;&lt;hr/&gt;- entries : QList&amp;lt;ForecastEntry&amp;gt;&lt;hr/&gt;+ rowCount() : int&lt;br/&gt;+ data(index, role) : QVariant&lt;br/&gt;+ setForecast(WeatherForecast)" vertex="1">
+          <mxGeometry height="160" width="330" x="1010" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="CurrentWeather" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;CurrentWeather&lt;/b&gt;&lt;hr/&gt;+ temperature : double&lt;br/&gt;+ feelsLike : double&lt;br/&gt;+ humidity : int&lt;br/&gt;+ pressure : int&lt;br/&gt;+ windSpeed : double&lt;br/&gt;+ description : QString&lt;br/&gt;+ iconId : QString&lt;br/&gt;+ timestamp : QDateTime" vertex="1">
+          <mxGeometry height="230" width="300" x="1040" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="WeatherForecast" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherForecast&lt;/b&gt;&lt;hr/&gt;+ entries : QList&amp;lt;ForecastEntry&amp;gt;&lt;br/&gt;+ cityName : QString&lt;br/&gt;+ updatedAt : QDateTime" vertex="1">
+          <mxGeometry height="130" width="310" x="1560" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="ForecastEntry" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;ForecastEntry&lt;/b&gt;&lt;hr/&gt;+ timestamp : QDateTime&lt;br/&gt;+ temperature : double&lt;br/&gt;+ feelsLike : double&lt;br/&gt;+ humidity : int&lt;br/&gt;+ pressure : int&lt;br/&gt;+ windSpeed : double&lt;br/&gt;+ description : QString&lt;br/&gt;+ iconId : QString&lt;br/&gt;+ precipitationProbability : double" vertex="1">
+          <mxGeometry height="250" width="330" x="1550" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WeatherConfig" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherConfig&lt;/b&gt;&lt;hr/&gt;+ apiKey : QString&lt;br/&gt;+ city : QString&lt;br/&gt;+ countryCode : QString&lt;br/&gt;+ units : QString&lt;br/&gt;+ language : QString" vertex="1">
+          <mxGeometry height="160" width="300" x="130" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="WeatherError" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;align=left;spacingLeft=8;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;WeatherError&lt;/b&gt;&lt;hr/&gt;+ type : WeatherErrorType&lt;br/&gt;+ message : QString&lt;br/&gt;+ httpStatusCode : int" vertex="1">
+          <mxGeometry height="120" width="310" x="530" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_vm_service" edge="1" parent="1" source="WeatherViewModel" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherService" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_vm_model" edge="1" parent="1" source="WeatherViewModel" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="ForecastListModel" value="exposes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_service_client" edge="1" parent="1" source="WeatherService" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="OpenWeatherClient" value="requests data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_service_parser" edge="1" parent="1" source="WeatherService" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="OpenWeatherParser" value="parses replies">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_service_repo" edge="1" parent="1" source="WeatherService" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherRepository" value="updates cache">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_client_config" edge="1" parent="1" source="OpenWeatherClient" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherConfig" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_client_error" edge="1" parent="1" source="OpenWeatherClient" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherError" value="reports">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_parser_current" edge="1" parent="1" source="OpenWeatherParser" style="endArrow=open;html=1;rounded=0;strokeWidth=2;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;" target="CurrentWeather" value="creates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_parser_forecast" edge="1" parent="1" source="OpenWeatherParser" style="endArrow=open;html=1;rounded=0;strokeWidth=2;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherForecast" value="creates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_repo_current" edge="1" parent="1" source="WeatherRepository" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="CurrentWeather" value="stores">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_repo_forecast" edge="1" parent="1" source="WeatherRepository" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="WeatherForecast" value="stores">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_forecast_entry" edge="1" parent="1" source="WeatherForecast" style="endArrow=diamondThin;endFill=1;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="ForecastEntry" value="contains many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_model_entry" edge="1" parent="1" source="ForecastListModel" style="endArrow=open;html=1;rounded=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" target="ForecastEntry" value="exposes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
