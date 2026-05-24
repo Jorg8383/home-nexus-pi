@@ -119,7 +119,6 @@ qt_add_qml_module(appHomeNexus
         assets/tabbar/plant-icon-dark.svg
         assets/tabbar/setting-icon-white.svg
         assets/tabbar/setting-icon-dark.svg
-        SOURCES
 )
 
 
