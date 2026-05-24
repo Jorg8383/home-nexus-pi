@@ -54,7 +54,7 @@ cat > "${APP_REMOTE_DIR}/run-app.sh" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 export LD_LIBRARY_PATH="${QT_INSTALL_DIR}/lib:\${LD_LIBRARY_PATH:-}"
-exec "${APP_REMOTE_DIR}/${APP_BINARY_NAME}"
+exec "${APP_REMOTE_DIR}/${APP_BINARY_NAME}" --embedded
 EOF
 
 chmod +x "${APP_REMOTE_DIR}/run-app.sh"
