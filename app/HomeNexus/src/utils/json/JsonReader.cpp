@@ -4,7 +4,12 @@ bool HomeNexusUtils::JsonReader::readObject(const QJsonObject &parent, const QSt
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
-    if (!value.isObject())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isObject())
     {
         qWarning() << "Expected" << path << "to be an object";
         return false;
@@ -24,7 +29,12 @@ bool HomeNexusUtils::JsonReader::readObjectAt(const QJsonArray &array, qsizetype
     }
 
     const QJsonValue value = array.at(index);
-    if (!value.isObject())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isObject())
     {
         qWarning() << "Expected" << path << "to be an array";
         return false;
@@ -39,7 +49,12 @@ bool HomeNexusUtils::JsonReader::readArray(const QJsonObject &parent, const QStr
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isArray())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isArray())
     {
         qWarning() << "Expected" << path << "to be an array";
         return false;
@@ -54,7 +69,12 @@ bool HomeNexusUtils::JsonReader::readDouble(const QJsonObject &parent, const QSt
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isDouble())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isDouble())
     {
         qWarning() << "Expected" << path << "to be a double";
         return false;
@@ -69,7 +89,12 @@ bool HomeNexusUtils::JsonReader::readString(const QJsonObject &parent, const QSt
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isString())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isString())
     {
         qWarning() << "Expected" << path << "to be a string";
         return false;
@@ -84,7 +109,12 @@ bool HomeNexusUtils::JsonReader::readBool(const QJsonObject &parent, const QStri
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isBool())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isBool())
     {
         qWarning() << "Expected" << path << "to be a bool";
         return false;
@@ -99,7 +129,12 @@ bool HomeNexusUtils::JsonReader::readInt(const QJsonObject &parent, const QStrin
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isDouble())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isDouble())
     {
         qWarning() << "Expected" << path << "to be a number";
         return false;
@@ -128,7 +163,12 @@ bool HomeNexusUtils::JsonReader::readInt64(const QJsonObject &parent, const QStr
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
 
-    if (!value.isDouble())
+    if (value.isUndefined())
+    {
+        qWarning() << "Expected" << path << "to exist";
+        return false;
+    }
+    else if (!value.isDouble())
     {
         qWarning() << "Expected" << path << "to be a number";
         return false;
