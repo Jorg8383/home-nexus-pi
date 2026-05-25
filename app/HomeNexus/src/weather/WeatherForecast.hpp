@@ -7,10 +7,5 @@
 
 struct WeatherForecast
 {
-    QString cityName;
-    QString countryCode;
-
-    QDateTime updatedTimestampUtc;
-
     QVector<ForecastEntry> entries;
 };

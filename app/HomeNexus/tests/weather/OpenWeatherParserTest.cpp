@@ -78,9 +78,6 @@ void OpenWeatherParserTest::parsesValidForecastData()
 
     QVERIFY(success);
 
-    QCOMPARE(result.cityName, QStringLiteral("Mehrstetten"));
-    QCOMPARE(result.countryCode, QStringLiteral("DE"));
-
     QCOMPARE(result.entries.size(), 40);
 
     const ForecastEntry& firstEntry = result.entries.at(0);
@@ -92,11 +89,8 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(firstEntry.temperature, 21.48);
     QCOMPARE(firstEntry.humidity, 88);
     QCOMPARE(firstEntry.pop, 0.0);
-    QCOMPARE(firstEntry.windSpeed, 1.96);
-    QCOMPARE(firstEntry.windDegrees, 14.0);
 
-    QCOMPARE(firstEntry.timeForecast, QTime(21, 0, 0));
-    QCOMPARE(firstEntry.timezone, 7200);
+    QCOMPARE(firstEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
 
     const ForecastEntry& rainEntry = result.entries.at(21);
 
@@ -107,11 +101,8 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.temperature, 23.05);
     QCOMPARE(rainEntry.humidity, 63);
     QCOMPARE(rainEntry.pop, 1.0);
-    QCOMPARE(rainEntry.windSpeed, 3.03);
-    QCOMPARE(rainEntry.windDegrees, 15.0);
 
-    QCOMPARE(rainEntry.timeForecast, QTime(12, 0, 0));
-    QCOMPARE(rainEntry.timezone, 7200);
+    QCOMPARE(rainEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
 }
 //---------------------------------------------------------------------------
 

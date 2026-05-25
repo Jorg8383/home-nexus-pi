@@ -17,12 +17,6 @@ struct ForecastEntry
     int humidity = 0;
     // Probability of precipitation. The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
     double pop = 0.0;
-    // Wind speed. Unit Default: meter/sec, Metric: meter/sec
-    double windSpeed = 0.0;
-    // Wind direction, degrees (meteorological)
-    double windDegrees = 0.0;
     // Time of data forecasted
-    QTime timeForecast;
-    // Shift in seconds from UTC
-    int timezone = 0;
+    QDateTime timeForecastUtc;
 };
