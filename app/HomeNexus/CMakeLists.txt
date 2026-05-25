@@ -17,7 +17,6 @@ qt_standard_project_setup(REQUIRES 6.8)
 # Enable CTest integration, which also creates the BUILD_TESTING option
 include(CTest)
 
-# Backend libraries
 add_subdirectory(src)
 
 # Tests

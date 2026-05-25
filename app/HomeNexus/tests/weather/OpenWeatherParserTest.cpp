@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QByteArray>
 #include <QString>
+#include <QDateTime>
 
 #include "OpenWeatherParser.hpp"
 
@@ -21,7 +22,7 @@ private:
 private slots:
     void initTestCase();
     void parsesValidCurrentWeatherData();
-    void parsesVaidForecastData();
+    void parsesValidForecastData();
 };
 
 //---------------------------------------------------------------------------
@@ -47,12 +48,13 @@ void OpenWeatherParserTest::initTestCase()
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidCurrentWeatherData()
 {
-    const auto result = OpenWeatherParser::parseCurrentWeather(m_jsonWeather);
+    CurrentWeather result;
+    const auto success = OpenWeatherParser::parseCurrentWeather(m_jsonWeather, result);
+
+    QVERIFY(success);
 
     QCOMPARE(result.longitude, 9.5639);
     QCOMPARE(result.latitude, 48.3739);
-    QCOMPARE(result.cityName, QStringLiteral("Mehrstetten"));
-    QCOMPARE(result.countryCode, QStringLiteral("DE"));
     QCOMPARE(result.weatherMain, QStringLiteral("Clear"));
     QCOMPARE(result.weatherDescription, QStringLiteral("clear sky"));
     QCOMPARE(result.weatherIcon, QStringLiteral("01d"));
@@ -61,17 +63,20 @@ void OpenWeatherParserTest::parsesValidCurrentWeatherData()
     QCOMPARE(result.humidity, 100);
     QCOMPARE(result.windSpeed, 1.89);
     QCOMPARE(result.windDegrees, 67);
-    QCOMPARE(result.timestampUtc, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
+    QCOMPARE(result.timestamp, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
     QCOMPARE(result.timezone, 7200);
-    QCOMPARE(result.sunriseUtc, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
-    QCOMPARE(result.sunsetUtc, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
+    QCOMPARE(result.sunrise, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
+    QCOMPARE(result.sunset, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
 
 }
 
 //---------------------------------------------------------------------------
-void OpenWeatherParserTest::parsesVaidForecastData()
+void OpenWeatherParserTest::parsesValidForecastData()
 {
-    const auto result = OpenWeatherParser::parseForecast(m_jsonForecast);
+    WeatherForecast result;
+    const auto success = OpenWeatherParser::parseForecast(m_jsonForecast, result);
+
+    QVERIFY(success);
 
     QCOMPARE(result.cityName, QStringLiteral("Mehrstetten"));
     QCOMPARE(result.countryCode, QStringLiteral("DE"));

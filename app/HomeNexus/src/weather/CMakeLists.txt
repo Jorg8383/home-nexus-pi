@@ -13,6 +13,7 @@ target_link_libraries(HomeNexusWeather
         Qt6::Core
     PRIVATE
         Qt6::Network
+        HomeNexusUtils
 )
 
 target_include_directories(HomeNexusWeather
