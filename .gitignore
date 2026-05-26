@@ -11,6 +11,7 @@
 .DS_Store
 Thumbs.db
 .directory
+*.ini
 
 # ------------------------------------------------------------
 # Qt Creator user-specific files
