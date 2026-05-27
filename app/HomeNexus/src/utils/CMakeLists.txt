@@ -1,6 +1,6 @@
 add_library(HomeNexusUtils STATIC
-    json/JsonReader.hpp
-    json/JsonReader.cpp
+    JsonReader.hpp
+    JsonReader.cpp
     IOpenWeatherConfig.hpp
     AppConfig.hpp
     AppConfig.cpp

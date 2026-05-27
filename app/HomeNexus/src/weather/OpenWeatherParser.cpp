@@ -7,7 +7,7 @@
 #include <QDateTime>
 #include <QTimeZone>
 #include "OpenWeatherParser.hpp"
-#include "json/JsonReader.hpp"
+#include "JsonReader.hpp"
 #include "ForecastEntry.hpp"
 
 using HomeNexusUtils::JsonReader;
