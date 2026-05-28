@@ -22,8 +22,14 @@ QT_TARBALL="${QT_TARBALL:-${ARTIFACTS_DIR}/qt-pi-binaries.tar.gz}"
 # Change the app name as required
 APP_LOCAL_PATH="${APP_LOCAL_PATH:-${ARTIFACTS_DIR}/appHomeNexus}"
 
+# Local config file. This should not be committed to Git.
+APP_CONFIG_LOCAL_PATH="${APP_CONFIG_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/config/homenexus.ini}"
+
 QT_INSTALL_DIR="${QT_INSTALL_DIR:-/usr/local/qt6}"
 APP_REMOTE_DIR="${APP_REMOTE_DIR:-/home/${PI_USER}/app}"
+APP_CONFIG_REMOTE_DIR="${APP_CONFIG_REMOTE_DIR:-/etc/homenexus}"
+APP_CONFIG_REMOTE_FILE="${APP_CONFIG_REMOTE_FILE:-${APP_CONFIG_REMOTE_DIR}/homenexus.ini}"
+
 REMOTE_SETUP_SCRIPT="${REMOTE_SETUP_SCRIPT:-${SCRIPT_DIR}/remote-setup.sh}"
 REMOTE_SETUP_PATH="/home/${PI_USER}/remote-setup.sh"
 
@@ -56,6 +62,15 @@ require_file "${QT_TARBALL}"
 require_file "${APP_LOCAL_PATH}"
 require_file "${REMOTE_SETUP_SCRIPT}"
 
+# The config is optional. The app can start without it and use defaults.
+if [[ -f "${APP_CONFIG_LOCAL_PATH}" ]]; then
+    DEPLOY_CONFIG="1"
+else
+    DEPLOY_CONFIG="0"
+    echo "Warning: Config file not found: ${APP_CONFIG_LOCAL_PATH}"
+    echo "         The app will be deployed without homenexus.ini."
+fi
+
 # ------------------------------------------------------------
 # Copy files to the Raspberry Pi
 # ------------------------------------------------------------
@@ -65,6 +80,11 @@ scp "${SCP_OPTS[@]}" "${QT_TARBALL}" "${SSH_TARGET}:/home/${PI_USER}/"
 
 echo "==> Copying app binary to target"
 scp "${SCP_OPTS[@]}" "${APP_LOCAL_PATH}" "${SSH_TARGET}:/home/${PI_USER}/"
+
+if [[ "${DEPLOY_CONFIG}" == "1" ]]; then
+    echo "==> Copying config file to target"
+    scp "${SCP_OPTS[@]}" "${APP_CONFIG_LOCAL_PATH}" "${SSH_TARGET}:/home/${PI_USER}/homenexus.ini"
+fi
 
 echo "==> Copying remote setup script to target"
 scp "${SCP_OPTS[@]}" "${REMOTE_SETUP_SCRIPT}" "${SSH_TARGET}:${REMOTE_SETUP_PATH}"
@@ -79,6 +99,7 @@ ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" \
     "/home/${PI_USER}/$(basename "${QT_TARBALL}")" \
     "${QT_INSTALL_DIR}" \
     "${APP_REMOTE_DIR}" \
-    "$(basename "${APP_LOCAL_PATH}")"
-
+    "$(basename "${APP_LOCAL_PATH}")" \
+    "${APP_CONFIG_REMOTE_FILE}" \
+    "${DEPLOY_CONFIG}"
 echo "==> Done"
