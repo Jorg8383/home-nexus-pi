@@ -11,7 +11,12 @@
 .DS_Store
 Thumbs.db
 .directory
-*.ini
+
+# ------------------------------------------------------------
+# Config files
+# ------------------------------------------------------------
+app/HomeNexus/config/homenexus.ini
+!app/HomeNexus/config/homenexus.example.ini
 
 # ------------------------------------------------------------
 # Qt Creator user-specific files
