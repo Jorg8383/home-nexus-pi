@@ -32,7 +32,6 @@ private:
     void loadFromFile(const QString &filePath);
     bool validate() const;
 
-private:
     bool m_IsValid = false;
     bool m_ConfigFileExists = false;
 

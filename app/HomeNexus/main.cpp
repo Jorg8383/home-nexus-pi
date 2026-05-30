@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationName(QStringLiteral("HomeNexus"));
     QCoreApplication::setOrganizationName(QStringLiteral("StriebelSoftware"));
+    QCoreApplication::setApplicationVersion("0.1");
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QStringLiteral("HomeNexus smart-home dashboard"));
