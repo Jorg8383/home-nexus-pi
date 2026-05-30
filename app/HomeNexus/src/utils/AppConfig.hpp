@@ -19,7 +19,6 @@ public:
     // IOpenWeatherConfig
     bool hasApiKey() const override;
     QString apiKey() const override;
-    QUrl baseUrl() const override;
     QString units() const override;
     QString language() const override;
     QString city() const override;
@@ -36,7 +35,6 @@ private:
     bool m_ConfigFileExists = false;
 
     QString m_ApiKey = QString();
-    QUrl m_BaseUrl = QUrl(QStringLiteral("https://api.openweathermap.org"));
     QString m_Units = QStringLiteral("metric");
     QString m_Language = QStringLiteral("en");
     QString m_City = QStringLiteral("Ulm");

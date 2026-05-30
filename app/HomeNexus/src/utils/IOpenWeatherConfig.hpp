@@ -12,7 +12,6 @@ public:
 
     virtual bool hasApiKey() const = 0;
     virtual QString apiKey() const = 0;
-    virtual QUrl baseUrl() const = 0;
     virtual QString units() const = 0;
     virtual QString language() const = 0;
     virtual QString city() const = 0;

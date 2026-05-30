@@ -40,10 +40,6 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     m_ApiKey = settings.value(QStringLiteral("openweather/apiKey"), m_ApiKey).toString().trimmed();
 
-    m_BaseUrl = QUrl(settings.value(QStringLiteral("openweather/baseUrl"), m_BaseUrl.toString())
-                         .toString()
-                         .trimmed());
-
     m_Units = settings.value(QStringLiteral("openweather/units"), m_Units).toString().trimmed();
 
     m_Language
@@ -113,12 +109,6 @@ bool AppConfig::validate() const
 {
     bool valid = true;
 
-    if (!m_BaseUrl.isValid() || m_BaseUrl.isEmpty())
-    {
-        qWarning() << "Invalid config value: openweather/baseUrl";
-        valid = false;
-    }
-
     if (m_Units.isEmpty())
     {
         qWarning() << "Invalid config value: openweather/units";
@@ -169,11 +159,6 @@ bool AppConfig::validate() const
 QString AppConfig::apiKey() const
 {
     return m_ApiKey;
-}
-
-QUrl AppConfig::baseUrl() const
-{
-    return m_BaseUrl;
 }
 
 QString AppConfig::units() const
