@@ -6,6 +6,8 @@ add_library(HomeNexusWeather STATIC
     CurrentWeather.hpp
     ForecastEntry.hpp
     WeatherForecast.hpp
+    OpenWeatherClient.hpp
+    OpenWeatherClient.cpp
 )
 
 target_link_libraries(HomeNexusWeather
