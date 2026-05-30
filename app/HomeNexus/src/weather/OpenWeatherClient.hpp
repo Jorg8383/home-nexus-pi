@@ -3,8 +3,10 @@
 #include <QObject>
 #include <QByteArray>
 #include <QString>
+#include <QUrl>
+#include <QStringLiteral>
 #include <QNetworkAccessManager>
-#include "AppConfig.hpp"
+#include <AppConfig.hpp>
 
 class OpenWeatherClient : public QObject
 {
