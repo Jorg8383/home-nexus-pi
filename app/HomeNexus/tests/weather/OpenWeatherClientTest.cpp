@@ -6,14 +6,29 @@ class OpenWeatherClientTest : public QObject
 {
     Q_OBJECT
 
+public:
+    explicit OpenWeatherClientTest(QObject * parent = nullptr);
+
 private slots:
     void canBeCreatedWithoutParent();
     void canBeCreatedWithParent();
+
+private:
+    QNetworkAccessManager m_NetworkAccessManager;
+    AppConfig m_Config;
 };
+
+OpenWeatherClientTest::OpenWeatherClientTest(QObject *parent)
+    : QObject(parent)
+    , m_NetworkAccessManager(this)
+    , m_Config(QStringLiteral("testconfig.ini"))
+{
+
+}
 
 void OpenWeatherClientTest::canBeCreatedWithoutParent()
 {
-    OpenWeatherClient client;
+    OpenWeatherClient client(m_NetworkAccessManager, m_Config);
 
     QCOMPARE(client.parent(), nullptr);
 }
@@ -21,7 +36,7 @@ void OpenWeatherClientTest::canBeCreatedWithoutParent()
 void OpenWeatherClientTest::canBeCreatedWithParent()
 {
     QObject parent;
-    OpenWeatherClient client(&parent);
+    OpenWeatherClient client(m_NetworkAccessManager, m_Config);
 
     QCOMPARE(client.parent(), &parent);
 }
