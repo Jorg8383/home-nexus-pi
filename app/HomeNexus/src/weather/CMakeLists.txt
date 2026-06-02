@@ -8,6 +8,8 @@ add_library(HomeNexusWeather STATIC
     WeatherForecast.hpp
     OpenWeatherClient.hpp
     OpenWeatherClient.cpp
+    GeoCodingClient.hpp
+    GeoCodingClient.cpp
 )
 
 target_link_libraries(HomeNexusWeather
