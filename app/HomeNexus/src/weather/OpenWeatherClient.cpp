@@ -56,14 +56,14 @@ void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, do
 
     if (!url.isValid())
     {
-        emit errorOccurred(QStringLiteral("Invalid URL"));
+        emit errorOccurred(QStringLiteral("Invalid URL: %1").arg(url.toString()));
         return;
     }
 
     QNetworkRequest request(url);
-    request.setHeader(
-        QNetworkRequest::UserAgentHeader,
-        QStringLiteral("HomeNexus/0.1")
+    request.setRawHeader(
+        QByteArrayLiteral("Accept"),
+        QByteArrayLiteral("application/json")
         );
 
     QNetworkReply *reply = m_NetworkManager.get(request);
@@ -75,8 +75,9 @@ void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, do
     */
     connect(reply, &QNetworkReply::finished, this, [this, reply, onSuccess]()
             {
-                const auto cleanup = qScopeGuard([reply] {
-                    reply->deleteLater();
+                const auto cleanup = qScopeGuard([reply]
+                {
+                     reply->deleteLater();
                 });
 
                 if (reply->error() != QNetworkReply::NoError)
