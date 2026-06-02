@@ -183,3 +183,53 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
     forecast = tempForecast;
     return true;
 }
+
+bool OpenWeatherParser::parseGeoLocations(const QByteArray &json, QList<GeoLocation> &locations)
+{
+    QList<GeoLocation> parsedLocations;
+    QJsonParseError parseError;
+
+    const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError)
+    {
+        qWarning() << "JSON geocoding parse error:" << parseError.errorString();
+        return false;
+    }
+    if (!doc.isArray())
+    {
+        qWarning() << "Expected JSON root in direct geocoding to be an array";
+        return false;
+    }
+
+    QJsonArray rootArr;
+    rootArr = doc.array();
+
+    for (int i = 0; i < rootArr.size(); ++i)
+    {
+        GeoLocation geoLocation;
+        QJsonObject locationObj;
+        if (!JsonReader::readObjectAt(rootArr, i, locationObj, QStringLiteral("location").arg(i)))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("name"), geoLocation.cityName, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("country"), geoLocation.country, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("state"), geoLocation.state, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readDouble(locationObj, QStringLiteral("lat"), geoLocation.latitude, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readDouble(locationObj, QStringLiteral("lon"), geoLocation.longitude, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        parsedLocations.append(geoLocation);
+    }
+
+    locations = parsedLocations;
+    return true;
+}
