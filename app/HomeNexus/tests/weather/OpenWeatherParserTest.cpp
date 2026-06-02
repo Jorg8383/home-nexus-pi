@@ -6,6 +6,7 @@
 #include <QDateTime>
 
 #include "OpenWeatherParser.hpp"
+#include "GeoLocationData.hpp"
 
 
 class OpenWeatherParserTest : public QObject
@@ -17,12 +18,14 @@ private:
 
     QByteArray m_jsonWeather;
     QByteArray m_jsonForecast;
+    QByteArray m_jsonGeoLocations;
 
     // Qt test cases are declared as private slots
 private slots:
     void initTestCase();
     void parsesValidCurrentWeatherData();
     void parsesValidForecastData();
+    void parsesValidGeoLocations();
 };
 
 //---------------------------------------------------------------------------
@@ -43,6 +46,7 @@ void OpenWeatherParserTest::initTestCase()
 {
     m_jsonWeather = loadTestFile(QStringLiteral("CurrentWeather.json"));
     m_jsonForecast = loadTestFile(QStringLiteral("Forecast.json"));
+    m_jsonGeoLocations = loadTestFile(QStringLiteral("GeoLocations.json"));
 }
 
 //---------------------------------------------------------------------------
@@ -103,6 +107,31 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.pop, 1.0);
 
     QCOMPARE(rainEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+}
+
+//---------------------------------------------------------------------------
+void OpenWeatherParserTest::parsesValidGeoLocations()
+{
+    GeoLocationData result;
+    const auto success = OpenWeatherParser::parseGeoLocations(m_jsonGeoLocations, result.locations);
+
+    QVERIFY(success);
+
+    QCOMPARE(result.locations.size(), 2);
+
+    const GeoLocation& firstLocation = result.locations.at(0);
+    QCOMPARE(firstLocation.cityName, QStringLiteral("Münsingen"));
+    QCOMPARE(firstLocation.country, QStringLiteral("CH"));
+    QCOMPARE(firstLocation.state, QStringLiteral("Bern"));
+    QCOMPARE(firstLocation.latitude, 46.8739775);
+    QCOMPARE(firstLocation.longitude, 7.5631943);
+
+    const GeoLocation& secondLocation = result.locations.at(1);
+    QCOMPARE(secondLocation.cityName, QStringLiteral("Münsingen"));
+    QCOMPARE(secondLocation.country, QStringLiteral("DE"));
+    QCOMPARE(secondLocation.state, QStringLiteral("Baden-Württemberg"));
+    QCOMPARE(secondLocation.latitude, 48.4128592);
+    QCOMPARE(secondLocation.longitude, 9.4947894);
 }
 //---------------------------------------------------------------------------
 
