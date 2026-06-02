@@ -48,7 +48,7 @@ void OpenWeatherParserTest::initTestCase()
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidCurrentWeatherData()
 {
-    CurrentWeather result;
+    WeatherData result;
     const auto success = OpenWeatherParser::parseCurrentWeather(m_jsonWeather, result);
 
     QVERIFY(success);
@@ -73,7 +73,7 @@ void OpenWeatherParserTest::parsesValidCurrentWeatherData()
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidForecastData()
 {
-    WeatherForecast result;
+    ForecastData result;
     const auto success = OpenWeatherParser::parseForecast(m_jsonForecast, result);
 
     QVERIFY(success);

@@ -3,7 +3,7 @@
 #include <QDateTime>
 #include <QString>
 
-struct CurrentWeather
+struct WeatherData
 {
     // Longitude of the location
     double longitude = 0.0;

@@ -5,7 +5,7 @@
 #include <QDateTime>
 #include "ForecastEntry.hpp"
 
-struct WeatherForecast
+struct ForecastData
 {
     QVector<ForecastEntry> entries;
 };

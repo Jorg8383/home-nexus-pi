@@ -12,10 +12,10 @@
 
 using HomeNexusUtils::JsonReader;
 
-bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, CurrentWeather &weather)
+bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, WeatherData &weather)
 {
     const QString context{"CurrentWeather"};
-    CurrentWeather tempWeather;
+    WeatherData tempWeather;
     QJsonParseError parseError;
 
     const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
@@ -109,10 +109,10 @@ bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, CurrentWeath
     return true;
 }
 
-bool OpenWeatherParser::parseForecast(const QByteArray &json, WeatherForecast &forecast)
+bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &forecast)
 {
     const QString context{"Forecast"};
-    WeatherForecast tempForecast;
+    ForecastData tempForecast;
     QJsonParseError parseError;
 
     const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
