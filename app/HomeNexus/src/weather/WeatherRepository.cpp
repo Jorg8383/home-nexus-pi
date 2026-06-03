@@ -77,26 +77,12 @@ void WeatherRepository::updateWeatherForCoordinates(double latitude, double long
 void WeatherRepository::onWeatherUpdated(const WeatherData &weather)
 {
     m_WeatherData = weather;
-
-    if (!m_ErrorMessage.isEmpty())
-    {
-        m_ErrorMessage.clear();
-        emit errorMessageChanged(m_ErrorMessage);
-    }
-
     emit weatherChanged(m_WeatherData);
 }
 
 void WeatherRepository::onForecastUpdated(const ForecastData &forecast)
 {
     m_ForecastData = forecast;
-
-    if (!m_ErrorMessage.isEmpty())
-    {
-        m_ErrorMessage.clear();
-        emit errorMessageChanged(m_ErrorMessage);
-    }
-
     emit forecastChanged(m_ForecastData);
 }
 
@@ -113,6 +99,12 @@ void WeatherRepository::onLoadingChanged(bool loading)
 
     m_Loading = loading;
     emit loadingChanged(m_Loading);
+
+    if (m_Loading && !m_ErrorMessage.isEmpty())
+    {
+        m_ErrorMessage.clear();
+        emit errorMessageChanged(m_ErrorMessage);
+    }
 }
 
 void WeatherRepository::onErrorOccurred(const QString &message)
