@@ -11,9 +11,10 @@ add_library(HomeNexusWeather STATIC
     GeoCodingClient.hpp
     GeoCodingClient.cpp
     GeoLocation.hpp
-
     WeatherService.hpp
     WeatherService.cpp
+    WeatherRepository.hpp
+    WeatherRepository.cpp
 )
 
 target_link_libraries(HomeNexusWeather
