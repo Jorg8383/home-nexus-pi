@@ -4,9 +4,9 @@
 #include <QByteArray>
 #include <QString>
 #include <QDateTime>
+#include <QList>
 
 #include "OpenWeatherParser.hpp"
-#include "GeoLocationData.hpp"
 
 
 class OpenWeatherParserTest : public QObject
@@ -112,21 +112,21 @@ void OpenWeatherParserTest::parsesValidForecastData()
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidGeoLocations()
 {
-    GeoLocationData result;
-    const auto success = OpenWeatherParser::parseGeoLocations(m_jsonGeoLocations, result.locations);
+    QList<GeoLocation> locations;
+    const auto success = OpenWeatherParser::parseGeoLocations(m_jsonGeoLocations, locations);
 
     QVERIFY(success);
 
-    QCOMPARE(result.locations.size(), 2);
+    QCOMPARE(locations.size(), 2);
 
-    const GeoLocation& firstLocation = result.locations.at(0);
+    const GeoLocation& firstLocation = locations.at(0);
     QCOMPARE(firstLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(firstLocation.country, QStringLiteral("CH"));
     QCOMPARE(firstLocation.state, QStringLiteral("Bern"));
     QCOMPARE(firstLocation.latitude, 46.8739775);
     QCOMPARE(firstLocation.longitude, 7.5631943);
 
-    const GeoLocation& secondLocation = result.locations.at(1);
+    const GeoLocation& secondLocation = locations.at(1);
     QCOMPARE(secondLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(secondLocation.country, QStringLiteral("DE"));
     QCOMPARE(secondLocation.state, QStringLiteral("Baden-Württemberg"));
