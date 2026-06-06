@@ -7,5 +7,6 @@
 
 struct ForecastData
 {
+    QDateTime updatedTimestampUtc;
     QVector<ForecastEntry> entries;
 };

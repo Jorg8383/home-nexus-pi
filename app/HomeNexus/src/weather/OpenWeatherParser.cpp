@@ -180,6 +180,7 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
         tempForecast.entries.append(forecastEntry);
     }
 
+    tempForecast.updatedTimestampUtc = QDateTime::currentDateTimeUtc();
     forecast = tempForecast;
     return true;
 }
