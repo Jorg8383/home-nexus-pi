@@ -15,7 +15,7 @@ int ForecastListModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return m_Forecast.entries.length();
+    return m_Forecast.entries.size();
 }
 
 QVariant ForecastListModel::data(const QModelIndex &index, int role) const
