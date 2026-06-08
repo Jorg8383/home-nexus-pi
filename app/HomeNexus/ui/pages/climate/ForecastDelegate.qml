@@ -9,10 +9,11 @@ import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 Rectangle {
     id: root
 
-    required property int dt
-    required property real temp
-    required property real pop
+    required property string dayText
+    required property string timeText
     required property string icon
+    required property real temperature
+    required property real precipitationProbability
 
     property int padding: Style.appLayout.paddingS
     property color cardColor: Style.appColors.cardDelegateBackground
@@ -36,7 +37,7 @@ Rectangle {
 
         // Day
         Text {
-            text: root.dayNameFromTimestamp(root.dt)
+            text: root.dayText
             color: Style.appColors.textBright
             font.pixelSize: Style.appTypography.fontSizeSubtitle
             horizontalAlignment: Text.AlignHCenter
@@ -47,7 +48,7 @@ Rectangle {
 
         // Time
         Text {
-            text: root.timeTextFromTimestamp(root.dt)
+            text: root.timeText
             color: Style.appColors.textBright
             font.pixelSize: Style.appTypography.fontSizeBody
             horizontalAlignment: Text.AlignHCenter
@@ -68,7 +69,7 @@ Rectangle {
 
         // Temperature
         Text {
-            text: Math.round(root.temp) + "°C"
+            text: Math.round(root.temperature) + "°C"
             color: Style.appColors.textBright
             font.pixelSize: Style.appTypography.fontSizeSubtitle
             font.bold: true
@@ -90,21 +91,11 @@ Rectangle {
              }
 
              Text {
-                 text: Math.round(root.pop * 100) + "%"
+                 text: Math.round(root.precipitationProbability * 100) + "%"
                  color: Style.appColors.textBright
                  font.pixelSize: Style.appTypography.fontSizeBody
 
              }
         }
-    }
-
-    function dayNameFromTimestamp(timestamp) {
-        const date = new Date(timestamp * 1000)
-        return date.toLocaleDateString(Qt.locale(), "dddd")
-    }
-
-    function timeTextFromTimestamp(timestamp) {
-        const date = new Date(timestamp * 1000)
-        return date.toLocaleTimeString(Qt.locale(), "hh:mm")
     }
 }
