@@ -58,11 +58,17 @@ public:
 
     ForecastListModel *forecastModel();
 
-    Q_INVOKABLE void updateWeatherForCity(
-            const QString &cityName,
-            const QString &countryCode = QString(),
-            int limit = 5
-            );
+    // Q_INVOKABLE void updateWeatherForCity(
+    //         const QString &cityName,
+    //         const QString &countryCode = QString(),
+    //         int limit = 5
+    //         );
+
+    void updateWeatherForCity(
+        const QString &cityName,
+        const QString &countryCode = QString(),
+        int limit = 5
+        );
 
 signals:
     void weatherChanged();
