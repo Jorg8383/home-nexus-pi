@@ -11,7 +11,7 @@ Rectangle {
 
     required property string dayText
     required property string timeText
-    required property string icon
+    required property string weatherIcon
     required property real temperature
     required property real precipitationProbability
 
@@ -58,7 +58,7 @@ Rectangle {
 
         // Weather icon
         Image {
-            source: Style.assetsPath + WeatherIconMapper.fileName(root.icon)
+            source: Style.assetsPath + WeatherIconMapper.fileName(root.weatherIcon)
             fillMode: Image.PreserveAspectFit
             asynchronous: true
 

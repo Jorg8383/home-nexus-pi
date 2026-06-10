@@ -8,7 +8,7 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
     m_Loading(repository.loading()),
     m_ErrorMessage(repository.errorMessage())
 {
-    m_ForecastListModel.onForecastChanged(repository.forecast());
+    m_ForecastListModel.setForecast(repository.forecast());
 
     connect(
         &m_Repository,
@@ -21,7 +21,7 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
         &m_Repository,
         &WeatherRepository::forecastChanged,
         &m_ForecastListModel,
-        &ForecastListModel::onForecastChanged
+        &ForecastListModel::setForecast
         );
 
     connect(

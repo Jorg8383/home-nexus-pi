@@ -51,16 +51,16 @@ QHash<int, QByteArray> ForecastListModel::roleNames() const
 {
     QHash<int, QByteArray> mapping
         {
-            {ForecastRole::DayTextRole, "dayText"},
-            {ForecastRole::TimeTextRole, "timeText"},
-            {ForecastRole::TemperatureRole, "temperature"},
-            {ForecastRole::PrecipitationProbabilityRole, "precipitationProbability"},
-            {ForecastRole::WeatherIconRole, "icon"}
+            {DayTextRole, "dayText"},
+            {TimeTextRole, "timeText"},
+            {TemperatureRole, "temperature"},
+            {PrecipitationProbabilityRole, "precipitationProbability"},
+            {WeatherIconRole, "weatherIcon"}
         };
     return mapping;
 }
 
-void ForecastListModel::onForecastChanged(const ForecastData &forecast)
+void ForecastListModel::setForecast(const ForecastData &forecast)
 {
     beginResetModel();
     m_Forecast = forecast;
