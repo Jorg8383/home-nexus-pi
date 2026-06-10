@@ -59,7 +59,7 @@ QHash<int, QByteArray> ForecastListModel::roleNames() const
     return mapping;
 }
 
-void ForecastListModel::setForecast(const ForecastData &forecast)
+void ForecastListModel::onForecastChanged(const ForecastData &forecast)
 {
     beginResetModel();
     m_Forecast = forecast;

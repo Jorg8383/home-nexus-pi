@@ -23,7 +23,7 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
 public slots:
-    void setForecast(const ForecastData &forecast);
+    void onForecastChanged(const ForecastData &forecast);
 
 private:
     ForecastData m_Forecast;
