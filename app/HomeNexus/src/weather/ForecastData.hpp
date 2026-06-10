@@ -8,5 +8,6 @@
 struct ForecastData
 {
     QDateTime updatedTimestampUtc;
+    int timezone = 0.0;
     QList<ForecastEntry> entries;
 };

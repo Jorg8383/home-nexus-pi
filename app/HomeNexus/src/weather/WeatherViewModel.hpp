@@ -6,7 +6,6 @@
 
 #include "WeatherRepository.hpp"
 #include "ForecastListModel.hpp"
-#include "ForecastData.hpp"
 
 class WeatherViewModel : public QObject
 {

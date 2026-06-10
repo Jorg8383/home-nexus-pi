@@ -12,10 +12,11 @@ ForecastListModel::ForecastListModel(QObject *parent)
 
 int ForecastListModel::rowCount(const QModelIndex &parent) const
 {
+    // This is a flat list model. It has one row per forecast entry
     if (parent.isValid())
         return 0;
 
-    return m_Forecast.entries.size();
+    return static_cast<int>(m_Forecast.entries.size());
 }
 
 QVariant ForecastListModel::data(const QModelIndex &index, int role) const
@@ -27,14 +28,14 @@ QVariant ForecastListModel::data(const QModelIndex &index, int role) const
         return {};
 
     const ForecastEntry &entry = m_Forecast.entries.at(index.row());
-    const QDateTime localDateTime = entry.timeForecastUtc.toLocalTime();
+    const QDateTime localDateTime = entry.timeForecastUtc.addSecs(m_Forecast.timezone);
 
     switch (role)
     {
     case DayTextRole:
-        return localDateTime.toString(QStringLiteral("dddd"));
+        return QLocale().toString(localDateTime, QStringLiteral("dddd"));
     case TimeTextRole:
-        return localDateTime.toString(QStringLiteral("hh:mm"));
+        return QLocale().toString(localDateTime, QStringLiteral("HH:mm"));
     case TemperatureRole:
         return entry.temperature;
     case PrecipitationProbabilityRole:

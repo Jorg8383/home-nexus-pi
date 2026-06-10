@@ -180,6 +180,13 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
         tempForecast.entries.append(forecastEntry);
     }
 
+    QJsonObject cityObj;
+    if (!JsonReader::readObject(rootObj, QStringLiteral("city"), cityObj, context))
+        return false;
+
+    if (!JsonReader::readInt(cityObj, QStringLiteral("timezone"), tempForecast.timezone, context + QStringLiteral("timezone")))
+        return false;
+
     tempForecast.updatedTimestampUtc = QDateTime::currentDateTimeUtc();
     forecast = tempForecast;
     return true;

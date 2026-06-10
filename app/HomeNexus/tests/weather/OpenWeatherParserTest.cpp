@@ -107,6 +107,8 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.pop, 1.0);
 
     QCOMPARE(rainEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+
+    QCOMPARE(result.timezone, 7200);
 }
 
 //---------------------------------------------------------------------------
