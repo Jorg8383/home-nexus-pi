@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QAbstractListModel>
+#include <QDateTime>
 
 #include "WeatherRepository.hpp"
 #include "ForecastListModel.hpp"

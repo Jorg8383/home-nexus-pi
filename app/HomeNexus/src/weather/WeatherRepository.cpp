@@ -109,6 +109,9 @@ void WeatherRepository::onLoadingChanged(bool loading)
 
 void WeatherRepository::onErrorOccurred(const QString &message)
 {
+    if (m_ErrorMessage == message)
+        return;
+
     m_ErrorMessage = message;
     emit errorMessageChanged(m_ErrorMessage);
 }

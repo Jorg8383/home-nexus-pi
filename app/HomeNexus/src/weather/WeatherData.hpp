@@ -26,11 +26,11 @@ struct WeatherData
     // Wind direction, degrees (meteorological)
     int windDegrees = 0;
     // Time of data calculation, unix, UTC
-    QDateTime timestamp;
+    QDateTime timestampUtc;
     //  Shift in seconds from UTC
-    int timezone = 0.0;
+    int timezoneOffsetSeconds = 0.0;
     // Sunrise time, unix, UTC
-    QDateTime sunrise;
+    QDateTime sunriseUtc;
     // Sunset time, unix, UTC
-    QDateTime sunset;
+    QDateTime sunsetUtc;
 };

@@ -1,4 +1,5 @@
 #include "WeatherViewModel.hpp"
+#include <QLocale>
 
 WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *parent)
     : QObject{parent},
@@ -81,20 +82,20 @@ int WeatherViewModel::windDegrees() const
 
 QString WeatherViewModel::sunriseText() const
 {
-    return formatTime(m_WeatherData.sunrise);
+    return formatTime(m_WeatherData.sunriseUtc);
 }
 
 QString WeatherViewModel::sunsetText() const
 {
-    return formatTime(m_WeatherData.sunset);
+    return formatTime(m_WeatherData.sunsetUtc);
 }
 
 QString WeatherViewModel::lastUpdatedText() const
 {
-    if (!m_WeatherData.timestamp.isValid())
+    if (!m_WeatherData.timestampUtc.isValid())
         return {};
 
-    const QDateTime localDateTime = m_WeatherData.timestamp.addSecs(m_WeatherData.timezone);
+    const QDateTime localDateTime = m_WeatherData.timestampUtc.addSecs(m_WeatherData.timezoneOffsetSeconds);
 
     return QLocale().toString(localDateTime, QStringLiteral("dddd, HH:mm"));
 }
@@ -153,7 +154,7 @@ QString WeatherViewModel::formatTime(const QDateTime &dateTime) const
     if (!dateTime.isValid())
         return {};
 
-    const QDateTime localDateTime = dateTime.addSecs(m_WeatherData.timezone);
+    const QDateTime localDateTime = dateTime.addSecs(m_WeatherData.timezoneOffsetSeconds);
 
-    return localDateTime.time().toString(QStringLiteral("HH:mm"));
+    return QLocale().toString(localDateTime, QStringLiteral("HH:mm"));
 }

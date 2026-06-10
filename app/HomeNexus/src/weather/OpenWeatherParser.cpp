@@ -90,20 +90,20 @@ bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, WeatherData 
     qint64 sunriseUtc = 0;
     if (!JsonReader::readInt64(sysObj, QStringLiteral("sunrise"), sunriseUtc, context + QStringLiteral(".sys")))
         return false;
-    tempWeather.sunrise = QDateTime::fromSecsSinceEpoch(sunriseUtc, QTimeZone::UTC);
+    tempWeather.sunriseUtc = QDateTime::fromSecsSinceEpoch(sunriseUtc, QTimeZone::UTC);
 
     qint64 sunsetUtc = 0;
     if (!JsonReader::readInt64(sysObj, QStringLiteral("sunset"), sunsetUtc, context + QStringLiteral(".sys")))
         return false;
-    tempWeather.sunset = QDateTime::fromSecsSinceEpoch(sunsetUtc, QTimeZone::UTC);
+    tempWeather.sunsetUtc = QDateTime::fromSecsSinceEpoch(sunsetUtc, QTimeZone::UTC);
 
-    if (!JsonReader::readInt(rootObj, QStringLiteral("timezone"), tempWeather.timezone, context))
+    if (!JsonReader::readInt(rootObj, QStringLiteral("timezone"), tempWeather.timezoneOffsetSeconds, context))
         return false;
 
     qint64 dt = 0;
     if (!JsonReader::readInt64(rootObj, QStringLiteral("dt"), dt, context))
         return false;
-    tempWeather.timestamp = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
+    tempWeather.timestampUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
 
     weather = tempWeather;
     return true;
@@ -145,7 +145,7 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
         qint64 dt = 0;
         if (!JsonReader::readInt64(listItem, QStringLiteral("dt"), dt, context + QStringLiteral(".list[%1]").arg(i)))
             return false;
-        forecastEntry.timeForecastUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
+        forecastEntry.forecastTimestampUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
 
         if (!JsonReader::readDouble(listItem, QStringLiteral("pop"), forecastEntry.pop , context + QStringLiteral(".list[%1]").arg(i)))
             return false;

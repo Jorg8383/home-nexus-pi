@@ -67,10 +67,10 @@ void OpenWeatherParserTest::parsesValidCurrentWeatherData()
     QCOMPARE(result.humidity, 100);
     QCOMPARE(result.windSpeed, 1.89);
     QCOMPARE(result.windDegrees, 67);
-    QCOMPARE(result.timestamp, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
-    QCOMPARE(result.timezone, 7200);
-    QCOMPARE(result.sunrise, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
-    QCOMPARE(result.sunset, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
+    QCOMPARE(result.timestampUtc, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
+    QCOMPARE(result.timezoneOffsetSeconds, 7200);
+    QCOMPARE(result.sunriseUtc, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
+    QCOMPARE(result.sunsetUtc, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
 
 }
 
@@ -94,7 +94,7 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(firstEntry.humidity, 88);
     QCOMPARE(firstEntry.pop, 0.0);
 
-    QCOMPARE(firstEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
+    QCOMPARE(firstEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
 
     const ForecastEntry& rainEntry = result.entries.at(21);
 
@@ -106,7 +106,7 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.humidity, 63);
     QCOMPARE(rainEntry.pop, 1.0);
 
-    QCOMPARE(rainEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+    QCOMPARE(rainEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
 
     QCOMPARE(result.timezone, 7200);
 }
