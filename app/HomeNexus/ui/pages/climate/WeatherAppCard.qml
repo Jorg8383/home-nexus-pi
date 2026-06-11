@@ -8,10 +8,10 @@ import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 AppCard {
     id: root
 
-    property string location: "Mehrstetten"
-    property string description: "shower rain"
-    property string icon: "10d"
-    property real temperature: 8.3
+    property string location: weatherViewModel.city
+    property string description: weatherViewModel.weatherDescription
+    property string icon: weatherViewModel.weatherIcon
+    property real temperature: weatherViewModel.temperature
 
     padding: Style.appLayout.paddingXS
 

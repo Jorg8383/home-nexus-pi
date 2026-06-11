@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QTime>
+#include <QDateTime>
 #include <QString>
 
 struct ForecastEntry
@@ -17,6 +17,6 @@ struct ForecastEntry
     int humidity = 0;
     // Probability of precipitation. The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
     double pop = 0.0;
-    // Time of data forecasted
-    QDateTime timeForecastUtc;
+    // Date and time of data forecasted
+    QDateTime forecastTimestampUtc;
 };

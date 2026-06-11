@@ -5,7 +5,14 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QDebug>
+#include <QNetworkAccessManager>
+
 #include "AppConfig.hpp"
+#include "OpenWeatherClient.hpp"
+#include "GeoCodingClient.hpp"
+#include "WeatherService.hpp"
+#include "WeatherRepository.hpp"
+#include "WeatherViewModel.hpp"
 
 namespace
 {
@@ -56,9 +63,19 @@ int main(int argc, char *argv[])
         qCritical() << "Invalid application configuration";
     }
 
+    QNetworkAccessManager networkManager;
+
+    OpenWeatherClient weatherClient(networkManager, config);
+    GeoCodingClient geoCodingClient(networkManager, config);
+
+    WeatherService weatherService(geoCodingClient, weatherClient);
+    WeatherRepository weatherRepository(weatherService);
+    WeatherViewModel weatherViewModel(weatherRepository);
+
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
+    engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
 
     QObject::connect(
         &engine,
@@ -68,6 +85,12 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
 
     engine.loadFromModule("HomeNexus", "Main");
+
+    // TODO: this is just temporary and will later be triggered by user interaction
+    weatherViewModel.updateWeatherForCity(
+        config.city(),
+        config.countryCode()
+        );
 
     return app.exec();
 }

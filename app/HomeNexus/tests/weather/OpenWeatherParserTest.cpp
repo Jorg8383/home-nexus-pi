@@ -4,6 +4,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QDateTime>
+#include <QList>
 
 #include "OpenWeatherParser.hpp"
 
@@ -17,12 +18,14 @@ private:
 
     QByteArray m_jsonWeather;
     QByteArray m_jsonForecast;
+    QByteArray m_jsonGeoLocations;
 
     // Qt test cases are declared as private slots
 private slots:
     void initTestCase();
     void parsesValidCurrentWeatherData();
     void parsesValidForecastData();
+    void parsesValidGeoLocations();
 };
 
 //---------------------------------------------------------------------------
@@ -43,12 +46,13 @@ void OpenWeatherParserTest::initTestCase()
 {
     m_jsonWeather = loadTestFile(QStringLiteral("CurrentWeather.json"));
     m_jsonForecast = loadTestFile(QStringLiteral("Forecast.json"));
+    m_jsonGeoLocations = loadTestFile(QStringLiteral("GeoLocations.json"));
 }
 
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidCurrentWeatherData()
 {
-    CurrentWeather result;
+    WeatherData result;
     const auto success = OpenWeatherParser::parseCurrentWeather(m_jsonWeather, result);
 
     QVERIFY(success);
@@ -63,17 +67,17 @@ void OpenWeatherParserTest::parsesValidCurrentWeatherData()
     QCOMPARE(result.humidity, 100);
     QCOMPARE(result.windSpeed, 1.89);
     QCOMPARE(result.windDegrees, 67);
-    QCOMPARE(result.timestamp, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
-    QCOMPARE(result.timezone, 7200);
-    QCOMPARE(result.sunrise, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
-    QCOMPARE(result.sunset, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
+    QCOMPARE(result.timestampUtc, QDateTime::fromSecsSinceEpoch(1779559664, QTimeZone::UTC));
+    QCOMPARE(result.timezoneOffsetSeconds, 7200);
+    QCOMPARE(result.sunriseUtc, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
+    QCOMPARE(result.sunsetUtc, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
 
 }
 
 //---------------------------------------------------------------------------
 void OpenWeatherParserTest::parsesValidForecastData()
 {
-    WeatherForecast result;
+    ForecastData result;
     const auto success = OpenWeatherParser::parseForecast(m_jsonForecast, result);
 
     QVERIFY(success);
@@ -90,7 +94,7 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(firstEntry.humidity, 88);
     QCOMPARE(firstEntry.pop, 0.0);
 
-    QCOMPARE(firstEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
+    QCOMPARE(firstEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
 
     const ForecastEntry& rainEntry = result.entries.at(21);
 
@@ -102,7 +106,34 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.humidity, 63);
     QCOMPARE(rainEntry.pop, 1.0);
 
-    QCOMPARE(rainEntry.timeForecastUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+    QCOMPARE(rainEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+
+    QCOMPARE(result.timezone, 7200);
+}
+
+//---------------------------------------------------------------------------
+void OpenWeatherParserTest::parsesValidGeoLocations()
+{
+    QList<GeoLocation> locations;
+    const auto success = OpenWeatherParser::parseGeoLocations(m_jsonGeoLocations, locations);
+
+    QVERIFY(success);
+
+    QCOMPARE(locations.size(), 2);
+
+    const GeoLocation& firstLocation = locations.at(0);
+    QCOMPARE(firstLocation.cityName, QStringLiteral("Münsingen"));
+    QCOMPARE(firstLocation.country, QStringLiteral("CH"));
+    QCOMPARE(firstLocation.state, QStringLiteral("Bern"));
+    QCOMPARE(firstLocation.latitude, 46.8739775);
+    QCOMPARE(firstLocation.longitude, 7.5631943);
+
+    const GeoLocation& secondLocation = locations.at(1);
+    QCOMPARE(secondLocation.cityName, QStringLiteral("Münsingen"));
+    QCOMPARE(secondLocation.country, QStringLiteral("DE"));
+    QCOMPARE(secondLocation.state, QStringLiteral("Baden-Württemberg"));
+    QCOMPARE(secondLocation.latitude, 48.4128592);
+    QCOMPARE(secondLocation.longitude, 9.4947894);
 }
 //---------------------------------------------------------------------------
 

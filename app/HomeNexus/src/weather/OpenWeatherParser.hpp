@@ -1,15 +1,17 @@
 #pragma once
 
 #include <QByteArray>
-#include "CurrentWeather.hpp"
-#include "WeatherForecast.hpp"
+#include "WeatherData.hpp"
+#include "ForecastData.hpp"
+#include "GeoLocation.hpp"
 
 class OpenWeatherParser
 {
 public:
     OpenWeatherParser() = delete; // this class is not meant to be instantiated
 
-    static bool parseCurrentWeather(const QByteArray& json, CurrentWeather& weather);
-    static bool parseForecast(const QByteArray& json, WeatherForecast& forecast);
+    static bool parseCurrentWeather(const QByteArray& json, WeatherData& weather);
+    static bool parseForecast(const QByteArray& json, ForecastData& forecast);
+    static bool parseGeoLocations(const QByteArray& json, QList<GeoLocation>& locations);
 
 };

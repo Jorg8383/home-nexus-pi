@@ -19,7 +19,7 @@ void GeoCodingClient::fetchGeoLocations(const QString &cityName, const QString &
 
     QString locationQuery = cityName.trimmed();
 
-    if (cityName.isEmpty())
+    if (locationQuery.isEmpty())
     {
         emit errorOccurred(QStringLiteral("City name must not be emtpy"));
         return;

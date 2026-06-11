@@ -61,7 +61,7 @@ Page {
                 spacing: Style.appLayout.spacingM
                 clip: true
 
-                model: StaticForecastModel {}
+                model: weatherViewModel.forecastModel
 
                 delegate: ForecastDelegate {
                     height: forecastCard.height - 2 * Style.appLayout.paddingS

@@ -12,10 +12,10 @@
 
 using HomeNexusUtils::JsonReader;
 
-bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, CurrentWeather &weather)
+bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, WeatherData &weather)
 {
     const QString context{"CurrentWeather"};
-    CurrentWeather tempWeather;
+    WeatherData tempWeather;
     QJsonParseError parseError;
 
     const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
@@ -90,29 +90,29 @@ bool OpenWeatherParser::parseCurrentWeather(const QByteArray &json, CurrentWeath
     qint64 sunriseUtc = 0;
     if (!JsonReader::readInt64(sysObj, QStringLiteral("sunrise"), sunriseUtc, context + QStringLiteral(".sys")))
         return false;
-    tempWeather.sunrise = QDateTime::fromSecsSinceEpoch(sunriseUtc, QTimeZone::UTC);
+    tempWeather.sunriseUtc = QDateTime::fromSecsSinceEpoch(sunriseUtc, QTimeZone::UTC);
 
     qint64 sunsetUtc = 0;
     if (!JsonReader::readInt64(sysObj, QStringLiteral("sunset"), sunsetUtc, context + QStringLiteral(".sys")))
         return false;
-    tempWeather.sunset = QDateTime::fromSecsSinceEpoch(sunsetUtc, QTimeZone::UTC);
+    tempWeather.sunsetUtc = QDateTime::fromSecsSinceEpoch(sunsetUtc, QTimeZone::UTC);
 
-    if (!JsonReader::readInt(rootObj, QStringLiteral("timezone"), tempWeather.timezone, context))
+    if (!JsonReader::readInt(rootObj, QStringLiteral("timezone"), tempWeather.timezoneOffsetSeconds, context))
         return false;
 
     qint64 dt = 0;
     if (!JsonReader::readInt64(rootObj, QStringLiteral("dt"), dt, context))
         return false;
-    tempWeather.timestamp = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
+    tempWeather.timestampUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
 
     weather = tempWeather;
     return true;
 }
 
-bool OpenWeatherParser::parseForecast(const QByteArray &json, WeatherForecast &forecast)
+bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &forecast)
 {
     const QString context{"Forecast"};
-    WeatherForecast tempForecast;
+    ForecastData tempForecast;
     QJsonParseError parseError;
 
     const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
@@ -145,7 +145,7 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, WeatherForecast &f
         qint64 dt = 0;
         if (!JsonReader::readInt64(listItem, QStringLiteral("dt"), dt, context + QStringLiteral(".list[%1]").arg(i)))
             return false;
-        forecastEntry.timeForecastUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
+        forecastEntry.forecastTimestampUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
 
         if (!JsonReader::readDouble(listItem, QStringLiteral("pop"), forecastEntry.pop , context + QStringLiteral(".list[%1]").arg(i)))
             return false;
@@ -180,6 +180,64 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, WeatherForecast &f
         tempForecast.entries.append(forecastEntry);
     }
 
+    QJsonObject cityObj;
+    if (!JsonReader::readObject(rootObj, QStringLiteral("city"), cityObj, context))
+        return false;
+
+    if (!JsonReader::readInt(cityObj, QStringLiteral("timezone"), tempForecast.timezone, context + QStringLiteral("timezone")))
+        return false;
+
+    tempForecast.updatedTimestampUtc = QDateTime::currentDateTimeUtc();
     forecast = tempForecast;
+    return true;
+}
+
+bool OpenWeatherParser::parseGeoLocations(const QByteArray &json, QList<GeoLocation> &locations)
+{
+    QList<GeoLocation> parsedLocations;
+    QJsonParseError parseError;
+
+    const QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError)
+    {
+        qWarning() << "JSON geocoding parse error:" << parseError.errorString();
+        return false;
+    }
+    if (!doc.isArray())
+    {
+        qWarning() << "Expected JSON root in direct geocoding to be an array";
+        return false;
+    }
+
+    QJsonArray rootArr;
+    rootArr = doc.array();
+
+    for (int i = 0; i < rootArr.size(); ++i)
+    {
+        GeoLocation geoLocation;
+        QJsonObject locationObj;
+        if (!JsonReader::readObjectAt(rootArr, i, locationObj))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("name"), geoLocation.cityName, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("country"), geoLocation.country, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readString(locationObj, QStringLiteral("state"), geoLocation.state, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readDouble(locationObj, QStringLiteral("lat"), geoLocation.latitude, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        if (!JsonReader::readDouble(locationObj, QStringLiteral("lon"), geoLocation.longitude, QStringLiteral("location[%1]").arg(i)))
+            return false;
+
+        parsedLocations.append(geoLocation);
+    }
+
+    locations = parsedLocations;
     return true;
 }
