@@ -7,9 +7,8 @@ import HomeNexus
 AppCard {
     id: root
 
-    // Values later provided by the C++ backend
-    property real windSpeed: 3.98
-    property real windDirDegrees: 225
+    property real windSpeed: weatherViewModel.windSpeed
+    property real windDirDegrees: weatherViewModel.windDegrees
 
     padding: Style.appLayout.paddingXS
 
@@ -62,9 +61,9 @@ AppCard {
                 Layout.fillWidth: true
             }
 
-            // Wind speed
+            // Wind speed is provided in m/s and displayed in km/h
             Text {
-                text: Number(root.windSpeed).toFixed(1) + " m/s"
+                text: Number(root.windSpeed * 3.6).toFixed(1) + " km/h"
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeBody
                 horizontalAlignment: Text.AlignLeft
@@ -75,7 +74,6 @@ AppCard {
         }
 
         // Wind direction arrow
-
         Image {
             id: weatherIcon
             source: Style.assetsPath + "weather/wind-arrow-white.svg"

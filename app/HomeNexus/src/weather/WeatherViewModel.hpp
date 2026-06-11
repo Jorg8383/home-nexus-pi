@@ -11,6 +11,7 @@ class WeatherViewModel : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString city READ city NOTIFY weatherChanged)
     Q_PROPERTY(QString weatherMain READ weatherMain NOTIFY weatherChanged)
     Q_PROPERTY(QString weatherDescription READ weatherDescription NOTIFY weatherChanged)
     Q_PROPERTY(QString weatherIcon READ weatherIcon NOTIFY weatherChanged)
@@ -36,6 +37,7 @@ class WeatherViewModel : public QObject
 public:
     explicit WeatherViewModel(WeatherRepository &repository, QObject *parent = nullptr);
 
+    QString city() const;
     QString weatherMain() const;
     QString weatherDescription() const;
     QString weatherIcon() const;

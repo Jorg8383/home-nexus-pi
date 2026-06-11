@@ -7,15 +7,10 @@ import HomeNexus
 AppCard {
     id: root
 
-    property int sunrise: 1778817007 // Epoch Unix Timestamp
-    property int sunset: 1778870707 // Epoch Unix Timestamp
+    property string sunrise: weatherViewModel.sunriseText // Epoch Unix Timestamp
+    property string sunset: weatherViewModel.sunsetText // Epoch Unix Timestamp
 
     readonly property int iconSize: 32 // pixel
-
-    function timeFromUnixTimestamp(timestamp) {
-        const date = new Date(timestamp * 1000);
-        return Qt.formatTime(date, "hh:mm")
-    }
 
     padding: Style.appLayout.paddingXS
 
@@ -38,7 +33,7 @@ AppCard {
             }
 
             Text {
-                text: timeFromUnixTimestamp(root.sunrise)
+                text: root.sunrise
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeBody
                 horizontalAlignment: Text.AlignLeft
@@ -62,7 +57,7 @@ AppCard {
             }
 
             Text {
-                text: timeFromUnixTimestamp(root.sunset)
+                text: root.sunset
                 color: Style.appColors.textBright
                 font.pixelSize: Style.appTypography.fontSizeBody
                 horizontalAlignment: Text.AlignLeft

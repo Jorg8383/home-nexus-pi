@@ -89,6 +89,7 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
 
     // TODO: let the user later choose the location if multiple locations are returned
     const GeoLocation &location = locations.first();
+    m_CityName = location.cityName;
 
     updateWeatherForCoordinates(location.latitude, location.longitude);
 }
@@ -103,6 +104,8 @@ void WeatherService::onWeatherJsonReceived(const QByteArray &json)
         requestFinished();
         return;
     }
+
+    weather.cityName = m_CityName;
 
     emit weatherUpdated(weather);
     requestFinished();

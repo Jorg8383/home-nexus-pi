@@ -40,6 +40,11 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
         );
 }
 
+QString WeatherViewModel::city() const
+{
+    return m_WeatherData.cityName;
+}
+
 QString WeatherViewModel::weatherMain() const
 {
     return m_WeatherData.weatherMain;

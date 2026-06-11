@@ -38,6 +38,7 @@ private:
 private:
     GeoCodingClient &m_GeoCodingClient;
     OpenWeatherClient &m_WeatherClient;
+    QString m_CityName;
 
     bool m_Loading = false;
     int m_PendingRequests = 0;
