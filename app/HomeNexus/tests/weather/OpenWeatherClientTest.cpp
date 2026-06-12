@@ -1,6 +1,7 @@
 #include <QtTest/QtTest>
 
 #include "OpenWeatherClient.hpp"
+#include "AppConfig.hpp"
 
 class OpenWeatherClientTest : public QObject
 {
@@ -36,7 +37,7 @@ void OpenWeatherClientTest::canBeCreatedWithoutParent()
 void OpenWeatherClientTest::canBeCreatedWithParent()
 {
     QObject parent;
-    OpenWeatherClient client(m_NetworkAccessManager, m_Config);
+    OpenWeatherClient client(m_NetworkAccessManager, m_Config, &parent);
 
     QCOMPARE(client.parent(), &parent);
 }
