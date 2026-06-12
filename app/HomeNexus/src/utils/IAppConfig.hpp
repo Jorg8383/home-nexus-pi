@@ -1,21 +1,24 @@
 #pragma once
 
-#pragma once
-
 #include <QString>
-#include <QUrl>
 
-class IOpenWeatherConfig
+class IAppConfig
 {
 public:
-    virtual ~IOpenWeatherConfig() = default;
+    virtual ~IAppConfig() = default;
 
-    virtual bool hasApiKey() const = 0;
     virtual QString apiKey() const = 0;
     virtual QString units() const = 0;
     virtual QString language() const = 0;
     virtual QString city() const = 0;
     virtual QString countryCode() const = 0;
+
+    virtual bool hasApiKey() const = 0;
+    virtual bool configFileExists() const = 0;
+    virtual bool onlineWeatherEnabled() const = 0;
+
+    virtual QString weatherFallbackFilePath() const = 0;
+    virtual QString forecastFallbackFilePath() const = 0;
 
     virtual int requestTimeoutMs() const = 0;
     virtual int currentWeatherUpdateIntervalMs() const = 0;

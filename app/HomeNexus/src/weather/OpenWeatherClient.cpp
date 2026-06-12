@@ -8,8 +8,10 @@
 #include <QByteArray>
 #include <QScopeGuard>
 
+#include "IAppConfig.hpp"
 
-OpenWeatherClient::OpenWeatherClient(QNetworkAccessManager &networkManager, AppConfig &config, QObject *parent) :
+
+OpenWeatherClient::OpenWeatherClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent) :
     QObject(parent), m_NetworkManager(networkManager), m_Config(config)
 {
 }

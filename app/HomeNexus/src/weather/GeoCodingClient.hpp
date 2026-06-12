@@ -4,13 +4,13 @@
 #include <QString>
 #include <QByteArray>
 #include <QNetworkAccessManager>
-#include "AppConfig.hpp"
+#include "IAppConfig.hpp"
 
 class GeoCodingClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit GeoCodingClient(QNetworkAccessManager &networkManager, AppConfig &config, QObject *parent = nullptr);
+    explicit GeoCodingClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent = nullptr);
 
     void fetchGeoLocations(const QString& cityName, const QString& countryCode, int limit = 5);
 
@@ -20,5 +20,5 @@ signals:
 
 private:
     QNetworkAccessManager& m_NetworkManager;
-    AppConfig& m_Config;
+    const IAppConfig &m_Config;
 };

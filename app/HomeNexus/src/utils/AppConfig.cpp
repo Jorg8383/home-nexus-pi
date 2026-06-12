@@ -1,8 +1,10 @@
 #include "AppConfig.hpp"
 
+#include <QDir>
 #include <QDebug>
 #include <QFileInfo>
 #include <QSettings>
+#include <QCoreApplication>
 
 AppConfig::AppConfig(const QString &filePath)
 {
@@ -20,6 +22,16 @@ bool AppConfig::isValid() const
     return m_IsValid;
 }
 
+bool AppConfig::configFileExists() const
+{
+    return m_ConfigFileExists;
+}
+
+bool AppConfig::onlineWeatherEnabled() const
+{
+    return configFileExists() && hasApiKey();
+}
+
 bool AppConfig::hasApiKey() const
 {
     return !m_ApiKey.isEmpty();
@@ -27,7 +39,13 @@ bool AppConfig::hasApiKey() const
 
 void AppConfig::loadFromFile(const QString &filePath)
 {
-    m_ConfigFileExists = QFileInfo::exists(filePath);
+    const QDir appDir(QCoreApplication::applicationDirPath());
+
+    m_WeatherFallbackFilePath = appDir.filePath(QStringLiteral("data/weather/weather_fallback.json"));
+    m_ForecastFallbackFilePath = appDir.filePath((QStringLiteral("data/weather/forecast_fallback.json")));
+
+    const QFileInfo configFileInfo(filePath);
+    m_ConfigFileExists = configFileInfo.exists();
 
     if (!m_ConfigFileExists)
     {
@@ -179,6 +197,16 @@ QString AppConfig::city() const
 QString AppConfig::countryCode() const
 {
     return m_CountryCode;
+}
+
+QString AppConfig::weatherFallbackFilePath() const
+{
+    return m_WeatherFallbackFilePath;
+}
+
+QString AppConfig::forecastFallbackFilePath() const
+{
+    return m_ForecastFallbackFilePath;
 }
 
 int AppConfig::requestTimeoutMs() const

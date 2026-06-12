@@ -8,7 +8,7 @@
 #include <QByteArray>
 #include <algorithm> // std::clamp
 
-GeoCodingClient::GeoCodingClient(QNetworkAccessManager &networkManager, AppConfig &config, QObject *parent)
+GeoCodingClient::GeoCodingClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent)
     : QObject(parent), m_NetworkManager(networkManager), m_Config(config)
 {
 

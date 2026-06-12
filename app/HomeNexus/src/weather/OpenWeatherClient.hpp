@@ -6,13 +6,14 @@
 #include <QUrl>
 #include <QStringLiteral>
 #include <QNetworkAccessManager>
-#include <AppConfig.hpp>
+
+#include "IAppConfig.hpp"
 
 class OpenWeatherClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit OpenWeatherClient(QNetworkAccessManager &networkManager, AppConfig &config, QObject *parent = nullptr);
+    explicit OpenWeatherClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent = nullptr);
 
     void fetchWeather(double latitude, double longitude);
     void fetchForecast(double latitude, double longitude);
@@ -27,6 +28,6 @@ signals:
 
 private:
     QNetworkAccessManager& m_NetworkManager;
-    AppConfig& m_Config;
+    const IAppConfig &m_Config;
 
 };
