@@ -5,12 +5,13 @@
 
 #include "WeatherData.hpp"
 #include "ForecastData.hpp"
+#include "IAppConfig.hpp"
 
 class WeatherFallbackProvider : public QObject
 {
     Q_OBJECT
 public:
-    explicit WeatherFallbackProvider(QObject *parent = nullptr);
+    explicit WeatherFallbackProvider(IAppConfig &config, QObject *parent = nullptr);
 
     void loadData(const QString &weatherFilePath, const QString &forecastFilePath);
 
@@ -23,4 +24,6 @@ signals:
     void errorOccurred(const QString &errorMessage);
     void loadingFinished();
 
+private:
+    IAppConfig &m_Config;
 };

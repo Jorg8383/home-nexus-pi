@@ -5,8 +5,9 @@
 #include <QScopeGuard>
 #include "OpenWeatherParser.hpp"
 
-WeatherFallbackProvider::WeatherFallbackProvider(QObject *parent)
+WeatherFallbackProvider::WeatherFallbackProvider(IAppConfig &config, QObject *parent)
     : QObject{parent}
+    , m_Config(config)
 {}
 
 void WeatherFallbackProvider::loadData(const QString &weatherFilePath, const QString &forecastFilePath)
@@ -28,6 +29,7 @@ void WeatherFallbackProvider::loadData(const QString &weatherFilePath, const QSt
         emit errorOccurred(QStringLiteral("Failed to parse JSON file: %1").arg(weatherFilePath));
         return;
     }
+    weatherData.cityName = m_Config.city();
 
     QByteArray forecastRawData;
     if (!readJsonFile(forecastFilePath, forecastRawData, errorMessage))

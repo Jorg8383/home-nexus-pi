@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     GeoCodingClient geoCodingClient(networkManager, config);
 
     WeatherService weatherService(geoCodingClient, weatherClient);
-    WeatherFallbackProvider weatherFallback;
+    WeatherFallbackProvider weatherFallback(config);
     WeatherRepository weatherRepository(weatherService, weatherFallback, config);
     WeatherViewModel weatherViewModel(weatherRepository);
 
