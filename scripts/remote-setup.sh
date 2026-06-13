@@ -11,9 +11,12 @@ APP_REMOTE_DIR="${3:?Missing app remote directory}"
 APP_BINARY_NAME="${4:?Missing app binary name}"
 APP_CONFIG_FILE="${5:?Missing app config file path}"
 DEPLOY_CONFIG="${6:-0}"
+APP_DATA_REMOTE_DIR="${7:?Missing app data remote directory}"
 
 APP_BINARY_SRC="$(dirname "${QT_TARBALL}")/${APP_BINARY_NAME}"
 APP_CONFIG_SRC="$(dirname "${QT_TARBALL}")/homenexus.ini"
+APP_FALLBACK_WEATHER_SRC="$(dirname "${QT_TARBALL}")/weather_fallback.json"
+APP_FALLBACK_FORECAST_SRC="$(dirname "${QT_TARBALL}")/forecast_fallback.json"
 
 # ------------------------------------------------------------
 # Helper functions
@@ -34,6 +37,8 @@ die() {
 if [[ "${DEPLOY_CONFIG}" == "1" ]]; then
     [[ -f "${APP_CONFIG_SRC}" ]] || die "Config file not found: ${APP_CONFIG_SRC}"
 fi
+[[ -f "${APP_FALLBACK_WEATHER_SRC}" ]] || die "Fallback weather data not found: ${APP_FALLBACK_WEATHER_SRC}"
+[[ -f "${APP_FALLBACK_FORECAST_SRC}" ]] || die "Fallback forecast data not found: ${APP_FALLBACK_FORECAST_SRC}"
 
 # ------------------------------------------------------------
 # Remote setup
@@ -51,6 +56,11 @@ mkdir -p "${APP_REMOTE_DIR}"
 echo "==> Installing app binary"
 cp -f "${APP_BINARY_SRC}" "${APP_REMOTE_DIR}/"
 chmod +x "${APP_REMOTE_DIR}/${APP_BINARY_NAME}"
+
+echo "==> Copying fallback weather data"
+mkdir -p "${APP_DATA_REMOTE_DIR}"
+cp -f "${APP_FALLBACK_WEATHER_SRC}" "${APP_DATA_REMOTE_DIR}/weather_fallback.json"
+cp -f "${APP_FALLBACK_FORECAST_SRC}" "${APP_DATA_REMOTE_DIR}/forecast_fallback.json"
 
 if [[ "${DEPLOY_CONFIG}" == "1" ]]; then
     echo "==> Installing app config"

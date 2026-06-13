@@ -25,10 +25,16 @@ APP_LOCAL_PATH="${APP_LOCAL_PATH:-${ARTIFACTS_DIR}/appHomeNexus}"
 # Local config file. This should not be committed to Git.
 APP_CONFIG_LOCAL_PATH="${APP_CONFIG_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/config/homenexus.ini}"
 
+# Local fallback data for weather. These should be committed to Git as they are used when the app cannot fetch live data.
+APP_FALLBACK_CURRENT_LOCAL_PATH="${APP_FALLBACK_CURRENT_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/data/weather/weather_fallback.json}"
+APP_FALLBACK_FORECAST_LOCAL_PATH="${APP_FALLBACK_FORECAST_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/data/weather/forecast_fallback.json}"
+APP_DATA_REMOTE_DIR="${APP_DATA_REMOTE_DIR:-${APP_REMOTE_DIR}/data/weather}"
+
 QT_INSTALL_DIR="${QT_INSTALL_DIR:-/usr/local/qt6}"
 APP_REMOTE_DIR="${APP_REMOTE_DIR:-/home/${PI_USER}/app}"
 APP_CONFIG_REMOTE_DIR="${APP_CONFIG_REMOTE_DIR:-/etc/homenexus}"
 APP_CONFIG_REMOTE_FILE="${APP_CONFIG_REMOTE_FILE:-${APP_CONFIG_REMOTE_DIR}/homenexus.ini}"
+
 
 REMOTE_SETUP_SCRIPT="${REMOTE_SETUP_SCRIPT:-${SCRIPT_DIR}/remote-setup.sh}"
 REMOTE_SETUP_PATH="/home/${PI_USER}/remote-setup.sh"
@@ -61,6 +67,8 @@ require_command ssh
 require_file "${QT_TARBALL}"
 require_file "${APP_LOCAL_PATH}"
 require_file "${REMOTE_SETUP_SCRIPT}"
+require_file "${APP_FALLBACK_CURRENT_LOCAL_PATH}"
+require_file "${APP_FALLBACK_FORECAST_LOCAL_PATH}"
 
 # The config is optional. The app can start without it and use defaults.
 if [[ -f "${APP_CONFIG_LOCAL_PATH}" ]]; then
@@ -86,6 +94,10 @@ if [[ "${DEPLOY_CONFIG}" == "1" ]]; then
     scp "${SCP_OPTS[@]}" "${APP_CONFIG_LOCAL_PATH}" "${SSH_TARGET}:/home/${PI_USER}/homenexus.ini"
 fi
 
+echo "==> Copying fallback weather data to target"
+scp "${SCP_OPTS[@]}" "${APP_FALLBACK_CURRENT_LOCAL_PATH}" "${SSH_TARGET}:/home/${PI_USER}/weather_fallback.json"
+scp "${SCP_OPTS[@]}" "${APP_FALLBACK_FORECAST_LOCAL_PATH}" "${SSH_TARGET}:/home/${PI_USER}/forecast_fallback.json"
+
 echo "==> Copying remote setup script to target"
 scp "${SCP_OPTS[@]}" "${REMOTE_SETUP_SCRIPT}" "${SSH_TARGET}:${REMOTE_SETUP_PATH}"
 
@@ -101,5 +113,6 @@ ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" \
     "${APP_REMOTE_DIR}" \
     "$(basename "${APP_LOCAL_PATH}")" \
     "${APP_CONFIG_REMOTE_FILE}" \
-    "${DEPLOY_CONFIG}"
+    "${DEPLOY_CONFIG}" \
+    "${APP_DATA_REMOTE_DIR}"
 echo "==> Done"
