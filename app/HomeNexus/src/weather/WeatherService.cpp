@@ -97,7 +97,7 @@ void WeatherService::onWeatherJsonReceived(const QByteArray &json)
 {
     WeatherData weather;
 
-    if (!OpenWeatherParser::parseCurrentWeather(json, weather))
+    if (!OpenWeatherParser::parseWeather(json, weather))
     {
         emit errorOccurred(QStringLiteral("Failed to parse weather data"));
         requestFinished();
