@@ -12,8 +12,7 @@ AppConfig::AppConfig(const QString &filePath)
     m_IsValid = validate();
 
     if (!hasApiKey()) {
-        qWarning() << "No OpenWeather API key is configured."
-                   << "Consequently, online weather updates will be disabled and historic data will be displayed instead.";
+        qWarning() << "OpenWeather API key is missing.";
     }
 }
 
@@ -49,8 +48,7 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     if (!m_ConfigFileExists)
     {
-        qWarning() << "Config file does not exist:" << filePath
-                   << "Default values will be used instead.";
+        qWarning() << "Config file does not exist:" << filePath;
         return;
     }
 
