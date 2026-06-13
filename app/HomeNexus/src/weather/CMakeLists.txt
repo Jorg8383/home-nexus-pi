@@ -19,6 +19,8 @@ add_library(HomeNexusWeather STATIC
     ForecastListModel.cpp
     WeatherViewModel.hpp
     WeatherViewModel.cpp
+    WeatherFallbackProvider.hpp
+    WeatherFallbackProvider.cpp
 )
 
 target_link_libraries(HomeNexusWeather
