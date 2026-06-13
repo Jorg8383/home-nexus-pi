@@ -2,43 +2,42 @@
 #include "OpenWeatherParser.hpp"
 #include <algorithm>
 
-WeatherService::WeatherService(GeoCodingClient &geoCodingClient, OpenWeatherClient &weatherClient, QObject *parent)
-    : QObject(parent), m_GeoCodingClient(geoCodingClient), m_WeatherClient(weatherClient)
+WeatherService::WeatherService(GeoCodingClient &geoCodingClient,
+                               OpenWeatherClient &weatherClient,
+                               QObject *parent)
+    : QObject(parent)
+    , m_GeoCodingClient(geoCodingClient)
+    , m_WeatherClient(weatherClient)
 {
-    connect(
-        &m_GeoCodingClient,
-        &GeoCodingClient::geoLocationsReceived,
-        this,
-        &WeatherService::onGeoLocationsReceived
-        );
+    connect(&m_GeoCodingClient,
+            &GeoCodingClient::geoLocationsReceived,
+            this,
+            &WeatherService::onGeoLocationsReceived
+            );
 
-    connect(
-        &m_GeoCodingClient,
-        &GeoCodingClient::errorOccurred,
-        this,
-        &WeatherService::onClientErrorOccurred
-        );
+    connect(&m_GeoCodingClient,
+            &GeoCodingClient::errorOccurred,
+            this,
+            &WeatherService::onClientErrorOccurred
+            );
 
-    connect(
-        &m_WeatherClient,
-        &OpenWeatherClient::weatherReceived,
-        this,
-        &WeatherService::onWeatherJsonReceived
-        );
+    connect(&m_WeatherClient,
+            &OpenWeatherClient::weatherReceived,
+            this,
+            &WeatherService::onWeatherJsonReceived
+            );
 
-    connect(
-        &m_WeatherClient,
-        &OpenWeatherClient::forecastReceived,
-        this,
-        &WeatherService::onForecastJsonReceived
-        );
+    connect(&m_WeatherClient,
+            &OpenWeatherClient::forecastReceived,
+            this,
+            &WeatherService::onForecastJsonReceived
+            );
 
-    connect(
-        &m_WeatherClient,
-        &OpenWeatherClient::errorOccurred,
-        this,
-        &WeatherService::onClientErrorOccurred
-        );
+    connect(&m_WeatherClient,
+            &OpenWeatherClient::errorOccurred,
+            this,
+            &WeatherService::onClientErrorOccurred
+            );
 }
 
 void WeatherService::updateWeatherForCity(const QString &cityName, const QString &countryCode, int limit)
@@ -100,7 +99,7 @@ void WeatherService::onWeatherJsonReceived(const QByteArray &json)
 
     if (!OpenWeatherParser::parseCurrentWeather(json, weather))
     {
-        emit errorOccurred(QStringLiteral("Failed to parse current weather data"));
+        emit errorOccurred(QStringLiteral("Failed to parse weather data"));
         requestFinished();
         return;
     }

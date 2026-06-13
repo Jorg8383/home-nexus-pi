@@ -13,10 +13,16 @@ class WeatherService : public QObject
 {
     Q_OBJECT
 public:
-    explicit WeatherService(GeoCodingClient &geoCodingClient, OpenWeatherClient &weatherClient, QObject *parent = nullptr);
+    explicit WeatherService(GeoCodingClient &geoCodingClient,
+                            OpenWeatherClient &weatherClient,
+                            QObject *parent = nullptr);
 
-    void updateWeatherForCity(const QString &cityName, const QString &countryCode = QString(), int limit = 5);
-    void updateWeatherForCoordinates(const double latitude, const double longitude);
+    void updateWeatherForCity(const QString &cityName,
+                              const QString &countryCode = QString(),
+                              int limit = 5);
+
+    void updateWeatherForCoordinates(const double latitude,
+                                     const double longitude);
 
 signals:
     void weatherUpdated(const WeatherData &weather);
