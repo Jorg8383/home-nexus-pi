@@ -18,7 +18,7 @@ AppConfig::AppConfig(const QString &filePath)
 
 bool AppConfig::isValid() const
 {
-    return m_IsValid;
+    return configFileExists() && m_IsValid;
 }
 
 bool AppConfig::configFileExists() const

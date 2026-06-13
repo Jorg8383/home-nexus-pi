@@ -146,3 +146,26 @@ install(TARGETS appHomeNexus
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# Copy homenexus.example.ini to the build directory
+add_custom_command(
+    TARGET appHomeNexus POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_FILE_DIR:appHomeNexus>/config"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/config/homenexus.example.ini"
+            "$<TARGET_FILE_DIR:appHomeNexus>/config/homenexus.ini"
+)
+
+# Copy weather and forecast fallback json files to the build directory
+add_custom_command(
+    TARGET appHomeNexus POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_FILE_DIR:appHomeNexus>/data/weather"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/data/weather/weather_fallback.json"
+            "$<TARGET_FILE_DIR:appHomeNexus>/data/weather/weather_fallback.json"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/data/weather/forecast_fallback.json"
+            "$<TARGET_FILE_DIR:appHomeNexus>/data/weather/forecast_fallback.json"
+)
