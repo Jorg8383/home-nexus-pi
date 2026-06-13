@@ -34,10 +34,18 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
 
     connect(
         &m_Repository,
-        &WeatherRepository::errorMessageChanged,
+        &WeatherRepository::errorOccurred,
         this,
-        &WeatherViewModel::onErrorMessageChanged
+        &WeatherViewModel::onErrorOccurred
         );
+
+    connect(
+        &m_Repository,
+        &WeatherRepository::warningOccurred,
+        this,
+        &WeatherViewModel::onWarningOccurred
+        );
+
 }
 
 QString WeatherViewModel::city() const
@@ -120,6 +128,16 @@ bool WeatherViewModel::hasError() const
     return !m_ErrorMessage.isEmpty();
 }
 
+QString WeatherViewModel::warningMessage() const
+{
+    return m_WarningMessage;
+}
+
+bool WeatherViewModel::hasWarning() const
+{
+    return !m_WarningMessage.isEmpty();
+}
+
 ForecastListModel *WeatherViewModel::forecastModel()
 {
     return &m_ForecastListModel;
@@ -145,12 +163,21 @@ void WeatherViewModel::onLoadingChanged(bool loading)
     }
 }
 
-void WeatherViewModel::onErrorMessageChanged(const QString &message)
+void WeatherViewModel::onErrorOccurred(const QString &message)
 {
     if (m_ErrorMessage != message)
     {
         m_ErrorMessage = message;
-        emit errorMessageChanged();
+        emit errorChanged();
+    }
+}
+
+void WeatherViewModel::onWarningOccurred(const QString &message)
+{
+    if (m_WarningMessage != message)
+    {
+        m_WarningMessage = message;
+        emit warningChanged();
     }
 }
 

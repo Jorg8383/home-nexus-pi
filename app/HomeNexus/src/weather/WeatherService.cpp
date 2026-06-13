@@ -8,6 +8,7 @@ WeatherService::WeatherService(GeoCodingClient &geoCodingClient,
     : QObject(parent)
     , m_GeoCodingClient(geoCodingClient)
     , m_WeatherClient(weatherClient)
+    , m_PendingRequests(-1)
 {
     connect(&m_GeoCodingClient,
             &GeoCodingClient::geoLocationsReceived,
@@ -52,15 +53,12 @@ void WeatherService::updateWeatherForCity(const QString &cityName, const QString
         return;
     }
 
-    setLoading(true);
-
     m_GeoCodingClient.fetchGeoLocations(city, country, clampedLimit);
 }
 
 void WeatherService::updateWeatherForCoordinates(const double latitude, const double longitude)
 {
     m_PendingRequests = 2;
-    setLoading(true);
 
     m_WeatherClient.fetchWeather(latitude, longitude);
     m_WeatherClient.fetchForecast(latitude, longitude);
@@ -70,7 +68,6 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
 {
     if (json.trimmed().isEmpty())
     {
-        setLoading(false);
         emit errorOccurred(QStringLiteral("JSON geocoding response is empty"));
         return;
     }
@@ -79,7 +76,6 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
 
     if (!OpenWeatherParser::parseGeoLocations(json, locations))
     {
-        setLoading(false);
         emit errorOccurred(QStringLiteral("Failed to parse geo locations"));
         return;
     }
@@ -127,18 +123,9 @@ void WeatherService::onForecastJsonReceived(const QByteArray &json)
 
 void WeatherService::onClientErrorOccurred(const QString &message)
 {
-    m_PendingRequests = 0;
-    setLoading(false);
+    m_PendingRequests = -1;
     emit errorOccurred(message);
-}
-
-void WeatherService::setLoading(bool loading)
-{
-    if (m_Loading == loading)
-        return;
-
-    m_Loading = loading;
-    emit loadingChanged(m_Loading);
+    emit updateFinished();
 }
 
 void WeatherService::requestFinished()
@@ -147,5 +134,8 @@ void WeatherService::requestFinished()
         m_PendingRequests--;
 
     if (m_PendingRequests == 0)
-        setLoading(false);
+    {
+        emit updateFinished();
+        m_PendingRequests = -1;
+    }
 }

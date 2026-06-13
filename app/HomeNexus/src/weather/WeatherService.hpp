@@ -28,8 +28,8 @@ signals:
     void weatherUpdated(const WeatherData &weather);
     void forecastUpdated(const ForecastData &forecast);
     void geoLocationsUpdated(const QList<GeoLocation> &locations);
-    void loadingChanged(bool loading);
     void errorOccurred(const QString &message);
+    void updateFinished();
 
 private slots:
     void onGeoLocationsReceived(const QByteArray& json);
@@ -38,7 +38,6 @@ private slots:
     void onClientErrorOccurred(const QString &message);
 
 private:
-    void setLoading(bool loading);
     void requestFinished();
 
 private:
@@ -46,6 +45,5 @@ private:
     OpenWeatherClient &m_WeatherClient;
     QString m_CityName;
 
-    bool m_Loading = false;
     int m_PendingRequests = 0;
 };

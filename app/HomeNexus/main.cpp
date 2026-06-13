@@ -13,6 +13,7 @@
 #include "WeatherService.hpp"
 #include "WeatherRepository.hpp"
 #include "WeatherViewModel.hpp"
+#include "WeatherFallbackProvider.hpp"
 
 namespace
 {
@@ -69,7 +70,8 @@ int main(int argc, char *argv[])
     GeoCodingClient geoCodingClient(networkManager, config);
 
     WeatherService weatherService(geoCodingClient, weatherClient);
-    WeatherRepository weatherRepository(weatherService);
+    WeatherFallbackProvider weatherFallback;
+    WeatherRepository weatherRepository(weatherService, weatherFallback, config);
     WeatherViewModel weatherViewModel(weatherRepository);
 
     QQmlApplicationEngine engine;

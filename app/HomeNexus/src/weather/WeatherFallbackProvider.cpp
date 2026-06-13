@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QStringLiteral>
 #include <QByteArray>
+#include <QScopeGuard>
 #include "OpenWeatherParser.hpp"
 
 WeatherFallbackProvider::WeatherFallbackProvider(QObject *parent)
@@ -11,6 +12,8 @@ WeatherFallbackProvider::WeatherFallbackProvider(QObject *parent)
 void WeatherFallbackProvider::loadData(const QString &weatherFilePath, const QString &forecastFilePath)
 {
     QString errorMessage;
+
+    auto cleanup = qScopeGuard([this] { emit loadingFinished(); });
 
     QByteArray weatherRawData;
     if (!readJsonFile(weatherFilePath, weatherRawData, errorMessage))
@@ -64,7 +67,7 @@ bool WeatherFallbackProvider::readJsonFile(const QString &filePath, QByteArray &
 
     if (json.isEmpty())
     {
-        errorMessage = QStringLiteral("Fallback JSON file is emtpy: %1").arg(filePath);
+        errorMessage = QStringLiteral("Fallback JSON file is empty: %1").arg(filePath);
         return false;
     }
 

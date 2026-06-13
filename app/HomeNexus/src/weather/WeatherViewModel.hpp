@@ -29,8 +29,12 @@ class WeatherViewModel : public QObject
     Q_PROPERTY(QString lastUpdatedText READ lastUpdatedText NOTIFY weatherChanged)
 
     Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
-    Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
-    Q_PROPERTY(bool hasError READ hasError NOTIFY errorMessageChanged)
+
+    Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorChanged)
+    Q_PROPERTY(bool hasError READ hasError NOTIFY errorChanged)
+
+    Q_PROPERTY(QString warningMessage READ warningMessage NOTIFY warningChanged)
+    Q_PROPERTY(bool hasWarning READ hasWarning NOTIFY warningChanged)
 
     Q_PROPERTY(ForecastListModel *forecastModel READ forecastModel CONSTANT)
 
@@ -55,8 +59,12 @@ public:
     QString lastUpdatedText() const;
 
     bool loading() const;
+
     QString errorMessage() const;
     bool hasError() const;
+
+    QString warningMessage() const;
+    bool hasWarning() const;
 
     ForecastListModel *forecastModel();
 
@@ -75,12 +83,14 @@ public:
 signals:
     void weatherChanged();
     void loadingChanged();
-    void errorMessageChanged();
+    void errorChanged();
+    void warningChanged();
 
 private slots:
     void onWeatherChanged(const WeatherData &weatherData);
     void onLoadingChanged(bool loading);
-    void onErrorMessageChanged(const QString &message);
+    void onErrorOccurred(const QString &message);
+    void onWarningOccurred(const QString &message);
 
 private:
     QString formatTime(const QDateTime &dateTime) const;
@@ -93,4 +103,5 @@ private:
 
     bool m_Loading = false;
     QString m_ErrorMessage;
+    QString m_WarningMessage;
 };

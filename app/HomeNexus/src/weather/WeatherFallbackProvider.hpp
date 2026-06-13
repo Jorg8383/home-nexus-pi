@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QByteArray>
 
 #include "WeatherData.hpp"
 #include "ForecastData.hpp"
@@ -22,5 +21,6 @@ signals:
     void weatherLoaded(const WeatherData &weatherData);
     void forecastLoaded(const ForecastData &forecastData);
     void errorOccurred(const QString &errorMessage);
+    void loadingFinished();
 
 };

@@ -13,13 +13,18 @@ class OpenWeatherClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit OpenWeatherClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent = nullptr);
+    explicit OpenWeatherClient(QNetworkAccessManager &networkManager,
+                               const IAppConfig &config,
+                               QObject *parent = nullptr);
 
     void fetchWeather(double latitude, double longitude);
     void fetchForecast(double latitude, double longitude);
 
 private:
-    void sendRequest(const QString &endpoint, double latitude, double longitude, std::function<void(const QByteArray&)> onSuccess);
+    void sendRequest(const QString &endpoint,
+                     double latitude,
+                     double longitude,
+                     std::function<void(const QByteArray&)> onSuccess);
 
 signals:
     void weatherReceived(const QByteArray &json);
