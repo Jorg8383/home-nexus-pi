@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     if (!config.isValid())
     {
-        qCritical() << "Invalid application configuration";
+        qWarning() << "Invalid application configuration";
     }
 
     QNetworkAccessManager networkManager;
