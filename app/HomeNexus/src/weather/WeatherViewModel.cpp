@@ -9,8 +9,6 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
     m_Loading(repository.loading()),
     m_ErrorMessage(repository.errorMessage())
 {
-    m_ForecastListModel.setForecast(repository.forecast());
-
     connect(
         &m_Repository,
         &WeatherRepository::weatherChanged,
