@@ -10,6 +10,7 @@ target_link_libraries(OpenWeatherClientTest
         Qt6::Network
         HomeNexusWeather
         HomeNexusUtils
+        HomeNexusAppService
 )
 
 add_test(

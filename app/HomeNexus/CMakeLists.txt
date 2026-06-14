@@ -139,6 +139,7 @@ target_link_libraries(appHomeNexus
         Qt6::Quick
         HomeNexusWeather
         HomeNexusUtils
+        HomeNexusAppService
 )
 
 include(GNUInstallDirs)

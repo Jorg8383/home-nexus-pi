@@ -1,9 +1,7 @@
 add_library(HomeNexusUtils STATIC
     JsonReader.hpp
     JsonReader.cpp
-    IAppConfig.hpp
-    AppConfig.hpp
-    AppConfig.cpp
+
 )
 
 target_link_libraries(HomeNexusUtils

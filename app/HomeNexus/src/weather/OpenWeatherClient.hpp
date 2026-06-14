@@ -7,7 +7,7 @@
 #include <QStringLiteral>
 #include <QNetworkAccessManager>
 
-#include "IAppConfig.hpp"
+#include <IAppConfig.hpp>
 
 class OpenWeatherClient : public QObject
 {

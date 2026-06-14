@@ -26,6 +26,7 @@ add_library(HomeNexusWeather STATIC
 target_link_libraries(HomeNexusWeather
     PUBLIC
         Qt6::Core
+        HomeNexusAppService
     PRIVATE
         Qt6::Network
         HomeNexusUtils
