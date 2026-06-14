@@ -51,8 +51,8 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 columns: 2
-                rowSpacing: Style.appLayout.spacingL
-                columnSpacing: Style.appLayout.spacingL
+                rowSpacing: Style.appLayout.spacingXL
+                columnSpacing: Style.appLayout.spacingXL
 
 
                 AppMetricCard {
