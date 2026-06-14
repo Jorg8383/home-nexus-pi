@@ -73,34 +73,49 @@ ApplicationWindow {
         }
     }
 
-    StackLayout {
+
+    ColumnLayout {
         anchors.fill: parent
-        currentIndex: window.currentSectionIndex
+        spacing: 0
 
-        StackView {
-            id: homeStack
-            initialItem: HomeRootPage {}
+        AppWarningBanner {
+            Layout.fillWidth: true
+            hasWarning: weatherViewModel.hasWarning
+            message: weatherViewModel.warningMessage
         }
 
-        StackView {
-            id: climateStack
-            initialItem: ClimateRootPage {
-                stackView: climateStack
+        StackLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            currentIndex: window.currentSectionIndex
+
+            StackView {
+                id: homeStack
+                initialItem: HomeRootPage {}
             }
-        }
 
-        StackView {
-            id: plantsStack
-            initialItem: PlantsRootPage {
-                stackView: plantsStack
+            StackView {
+                id: climateStack
+                initialItem: ClimateRootPage {
+                    stackView: climateStack
+                }
             }
-        }
 
-        StackView {
-            id: settingsStack
-            initialItem: SettingsRootPage {
-                stackView: settingsStack
+            StackView {
+                id: plantsStack
+                initialItem: PlantsRootPage {
+                    stackView: plantsStack
+                }
+            }
+
+            StackView {
+                id: settingsStack
+                initialItem: SettingsRootPage {
+                    stackView: settingsStack
+                }
             }
         }
     }
+
 }

@@ -52,6 +52,7 @@ qt_add_qml_module(appHomeNexus
         ui/components/AppMetricCard.qml
         ui/components/ClimateSensorOverview.qml
         ui/components/AppTopicCard.qml
+        ui/components/AppWarningBanner.qml
         ui/data/StaticForecastModel.qml
         ui/data/StaticWeatherModel.qml
         ui/pages/home/HomeRootPage.qml
@@ -118,6 +119,7 @@ qt_add_qml_module(appHomeNexus
         assets/tabbar/plant-icon-dark.svg
         assets/tabbar/setting-icon-white.svg
         assets/tabbar/setting-icon-dark.svg
+        assets/warning-sign.svg
 )
 
 

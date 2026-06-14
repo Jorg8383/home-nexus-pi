@@ -26,4 +26,5 @@ QtObject {
     // Controls
     readonly property color buttonBackground: surfaceBright
     readonly property color buttonText: textDark
+    readonly property color warning: "#FFA300"
 }
