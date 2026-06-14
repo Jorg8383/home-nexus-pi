@@ -28,10 +28,10 @@ APP_CONFIG_LOCAL_PATH="${APP_CONFIG_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/config
 # Local fallback data for weather. These should be committed to Git as they are used when the app cannot fetch live data.
 APP_FALLBACK_CURRENT_LOCAL_PATH="${APP_FALLBACK_CURRENT_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/data/weather/weather_fallback.json}"
 APP_FALLBACK_FORECAST_LOCAL_PATH="${APP_FALLBACK_FORECAST_LOCAL_PATH:-${ROOT_DIR}/app/HomeNexus/data/weather/forecast_fallback.json}"
-APP_DATA_REMOTE_DIR="${APP_DATA_REMOTE_DIR:-${APP_REMOTE_DIR}/data/weather}"
 
 QT_INSTALL_DIR="${QT_INSTALL_DIR:-/usr/local/qt6}"
 APP_REMOTE_DIR="${APP_REMOTE_DIR:-/home/${PI_USER}/app}"
+APP_DATA_REMOTE_DIR="${APP_DATA_REMOTE_DIR:-${APP_REMOTE_DIR}/data/weather}"
 APP_CONFIG_REMOTE_DIR="${APP_CONFIG_REMOTE_DIR:-/etc/homenexus}"
 APP_CONFIG_REMOTE_FILE="${APP_CONFIG_REMOTE_FILE:-${APP_CONFIG_REMOTE_DIR}/homenexus.ini}"
 
@@ -114,5 +114,7 @@ ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" \
     "$(basename "${APP_LOCAL_PATH}")" \
     "${APP_CONFIG_REMOTE_FILE}" \
     "${DEPLOY_CONFIG}" \
-    "${APP_DATA_REMOTE_DIR}"
+    "${APP_DATA_REMOTE_DIR}" \
+    "${PI_USER}" \
+    "${PI_HOST}"
 echo "==> Done"
