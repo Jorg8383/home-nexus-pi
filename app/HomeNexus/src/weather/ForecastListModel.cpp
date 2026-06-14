@@ -28,7 +28,7 @@ QVariant ForecastListModel::data(const QModelIndex &index, int role) const
         return {};
 
     const ForecastEntry &entry = m_Forecast.entries.at(index.row());
-    const QDateTime localDateTime = entry.forecastTimestampUtc.addSecs(m_Forecast.timezone);
+    const QDateTime localDateTime = entry.forecastTimestampUtc;
 
     switch (role)
     {
