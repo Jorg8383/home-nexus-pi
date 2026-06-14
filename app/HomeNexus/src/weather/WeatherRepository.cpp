@@ -64,6 +64,19 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
             &WeatherRepository::onFallbackFinished
             );
 
+    m_LastCityName = m_AppConfig.city();
+    m_LastCountryCode = m_AppConfig.countryCode();
+
+    m_RefreshTimer.setInterval(std::chrono::minutes(15));
+    m_RefreshTimer.setSingleShot(false);
+
+    connect(&m_RefreshTimer,
+            &QTimer::timeout,
+            this,
+            &WeatherRepository::onRefreshWeatherData
+            );
+
+    m_RefreshTimer.start();
 }
 
 const WeatherData &WeatherRepository::weather() const
@@ -107,6 +120,20 @@ void WeatherRepository::updateWeatherForCoordinates(double latitude, double long
     m_WeatherService.updateWeatherForCoordinates(latitude, longitude);
 }
 
+void WeatherRepository::refreshIfStale()
+{
+    if (m_LastCityName.isEmpty())
+    {
+        qDebug() << "WeatherRepository::refreshIfStale() - last city name is empty";
+        return;
+    }
+
+    if (!isWeatherStale())
+        return;
+
+    updateWeatherForCity(m_LastCityName, m_LastCountryCode, 5);
+}
+
 void WeatherRepository::onWeatherUpdated(const WeatherData &weather)
 {
     m_WeatherData = weather;
@@ -133,6 +160,8 @@ void WeatherRepository::onUpdateFinished()
         return;
     }
     setLoading(false);
+    m_LastUpdateUtc = QDateTime::currentDateTimeUtc();
+    qDebug() << "WeatherRepository::onUpdateFinished invoked at: " << QDateTime::currentDateTime().toString();
 }
 
 void WeatherRepository::onFallbackFinished()
@@ -153,6 +182,18 @@ void WeatherRepository::onFallbackErrorOccurred(const QString &message)
 {
     setErrorMessage(message);
     qDebug() << message;
+}
+
+void WeatherRepository::onRefreshWeatherData()
+{
+    if (m_LastCityName.isEmpty())
+    {
+        qDebug() << "WeatherRepository::refreshIfStale() - last city name is empty";
+        return;
+    }
+
+    updateWeatherForCity(m_LastCityName, m_LastCountryCode, 5);
+    qDebug() << "WeatherRepository::onRefreshWeatherData invoked at: " << QDateTime::currentDateTime().toString();
 }
 
 void WeatherRepository::setLoading(bool loading)
@@ -196,12 +237,17 @@ bool WeatherRepository::prepareOnlineUpdate()
 
     if (!m_AppConfig.hasApiKey())
     {
-        emit warningOccurred(QStringLiteral("No OpenWeather API key configured. Loading fallback weather data instead"));
+        emit warningOccurred(QStringLiteral("No OpenWeather API key configured. Showing fallback weather data."));
         loadFallbackData();
         return false;
     }
 
     return true;
+}
+
+bool WeatherRepository::isWeatherStale() const
+{
+    return !m_LastUpdateUtc.isValid() || m_LastUpdateUtc.secsTo(QDateTime::currentDateTimeUtc()) > 3 * 60;
 }
 
 

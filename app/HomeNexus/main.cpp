@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QNetworkAccessManager>
+#include <QDateTime>
 
 #include "AppConfig.hpp"
 #include "OpenWeatherClient.hpp"
@@ -53,6 +54,9 @@ int main(int argc, char *argv[])
 
     const bool embeddedMode = parser.isSet(embeddedOption);
 
+    qDebug() << "CurrentDateTimeUtc: " << QDateTime::currentDateTimeUtc().toString();
+    qDebug() << "CurrentDateTimeLocal: " << QDateTime::currentDateTime().toString();
+
     const QString configFilePath =
         parser.isSet(configOption) ? parser.value(configOption) : defaultConfigFilePath();
     qInfo() << "Loading config from:" << configFilePath;
@@ -88,7 +92,6 @@ int main(int argc, char *argv[])
 
     engine.loadFromModule("HomeNexus", "Main");
 
-    // TODO: this is just temporary and will later be triggered by user interaction
     weatherViewModel.updateWeatherForCity(
         config.city(),
         config.countryCode()

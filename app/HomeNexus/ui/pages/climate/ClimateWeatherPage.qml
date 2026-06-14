@@ -70,4 +70,18 @@ Page {
         }
 
     }
+
+    Component.onCompleted: {
+        weatherViewModel.refreshIfNeeded()
+        console.log("ClimateWeatherPage - Component.onCompleted")
+    }
+
+    onVisibleChanged: {
+        if (visible)
+        {
+            weatherViewModel.refreshIfNeeded()
+            console.log("ClimateWeatherPage - onVisibleChanged")
+        }
+    }
+
 }

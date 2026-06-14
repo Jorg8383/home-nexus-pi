@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include <QTimer>
+#include <QDateTime>
 
 #include "WeatherService.hpp"
 #include "ForecastData.hpp"
@@ -31,6 +33,8 @@ public:
                               const QString &countryCode = QString(),
                               int limit = 5);
     void updateWeatherForCoordinates(double latitude, double longitude);
+    bool isWeatherStale() const;
+    void refreshIfStale();
 
 signals:
     void weatherChanged(const WeatherData &weather);
@@ -48,6 +52,7 @@ private slots:
     void onFallbackFinished();
     void onServiceErrorOccurred(const QString &message);
     void onFallbackErrorOccurred(const QString &message);
+    void onRefreshWeatherData();
 
 private:
     void setLoading(bool loading);
@@ -67,4 +72,9 @@ private:
     bool m_Loading = false;
     bool m_OnlineUpdateFailed = false;
     QString m_ErrorMessage;
+
+    QTimer m_RefreshTimer;
+    QDateTime m_LastUpdateUtc;
+    QString m_LastCityName;
+    QString m_LastCountryCode;
 };

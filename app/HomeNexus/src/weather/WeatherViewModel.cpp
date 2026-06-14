@@ -146,6 +146,11 @@ void WeatherViewModel::updateWeatherForCity(const QString &cityName, const QStri
     m_Repository.updateWeatherForCity(cityName, countryCode, limit);
 }
 
+void WeatherViewModel::refreshIfNeeded()
+{
+    m_Repository.refreshIfStale();
+}
+
 void WeatherViewModel::onWeatherChanged(const WeatherData &weatherData)
 {
     m_WeatherData = weatherData;
