@@ -2,6 +2,9 @@ add_library(HomeNexusAppService STATIC
     IAppConfig.hpp
     AppConfig.hpp
     AppConfig.cpp
+    AppNotificationTypes.hpp
+    AppNotificationCenter.hpp
+    AppNotificationCenter.cpp
 )
 
 target_link_libraries(HomeNexusAppService
