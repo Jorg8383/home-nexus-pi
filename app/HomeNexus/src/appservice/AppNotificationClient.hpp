@@ -5,9 +5,9 @@
 
 #include "AppNotificationTypes.hpp"
 #include "AppNotificationCenter.hpp"
+#include "IAppNotificationClient.hpp"
 
-
-class AppNotificationClient : public QObject
+class AppNotificationClient : public QObject, public IAppNotificationClient
 {
     Q_OBJECT
 
@@ -18,11 +18,11 @@ public:
     void setBannerNotification(
         AppNotificationTypes::Id id,
         const QString &message,
-        AppNotificationTypes::Severity severity);
+        AppNotificationTypes::Severity severity) override;
 
-    void clearBannerNotification(AppNotificationTypes::Id id);
+    void clearBannerNotification(AppNotificationTypes::Id id) override;
 
-    void showError(const QString &message);
+    void showError(const QString &message) override;
 
 private:
     AppNotificationCenter &m_Center;
