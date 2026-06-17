@@ -53,6 +53,7 @@ void WeatherService::updateWeatherForCity(const QString &cityName, const QString
         return;
     }
 
+    qWarning() << "WeatherService::updateWeatherForCity -> Updating weather for city: " << city;
     m_GeoCodingClient.fetchGeoLocations(city, country, clampedLimit);
 }
 
@@ -86,6 +87,10 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
     const GeoLocation &location = locations.first();
     m_CityName = location.cityName;
 
+    qWarning() << "WeatherService::onGeoLocationsReceived -> "
+               << "city: " << m_CityName << "latitude: "
+               << location.latitude << "longitude: "
+               << location.longitude;
     updateWeatherForCoordinates(location.latitude, location.longitude);
 }
 
