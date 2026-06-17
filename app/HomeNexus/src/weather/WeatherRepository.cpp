@@ -5,12 +5,14 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
                                      WeatherFallbackProvider &weatherFallback,
                                      IAppConfig &config,
                                      IAppNotificationClient &notificationClient,
+                                     NetworkStatus &networkStatus,
                                      QObject *parent)
     : QObject{parent}
     , m_WeatherService(weatherService)
     , m_WeatherFallback(weatherFallback)
     , m_AppConfig(config)
     , m_NotificationClient(notificationClient)
+    , m_NetworkStatus(networkStatus)
 {
     connect(&m_WeatherService,
             &WeatherService::weatherUpdated,
@@ -64,6 +66,12 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
             &WeatherFallbackProvider::loadingFinished,
             this,
             &WeatherRepository::onFallbackFinished
+            );
+
+    connect(&m_NetworkStatus,
+            &NetworkStatus::networkStatusChanged,
+            this,
+            &WeatherRepository::onNetworkStatusChanged
             );
 
     m_LastCityName = m_AppConfig.city();
@@ -212,6 +220,11 @@ void WeatherRepository::onRefreshWeatherData()
     qDebug() << "WeatherRepository::onRefreshWeatherData -> " << QDateTime::currentDateTime().toString();
 }
 
+void WeatherRepository::onNetworkStatusChanged()
+{
+    m_NetworkStatusOnline = m_NetworkStatus.hasInternetAccess();
+}
+
 void WeatherRepository::setLoading(bool loading)
 {
     if (m_Loading == loading)
@@ -231,6 +244,17 @@ bool WeatherRepository::prepareOnlineUpdate()
 {
     m_OnlineUpdateFailed = false;
     setLoading(true);
+
+    if (!m_NetworkStatusOnline)
+    {
+        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::NetworkOffline,
+                                                   AppNotificationTypes::Severity::Warning,
+                                                   QStringLiteral("No internet connection. Showing fallback weather data.")
+                                                   );
+        qDebug() << "WeatherRepository::prepareOnlineUpdate -> No internet connection";
+        loadFallbackData();
+        return false;
+    }
 
     if (!m_AppConfig.hasApiKey())
     {

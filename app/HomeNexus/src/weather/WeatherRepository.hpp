@@ -13,6 +13,7 @@
 #include "WeatherFallbackProvider.hpp"
 #include "IAppConfig.hpp"
 #include "IAppNotificationClient.hpp"
+#include "NetworkStatus.hpp"
 
 class WeatherRepository : public QObject
 {
@@ -22,6 +23,7 @@ public:
                                WeatherFallbackProvider &weatherFallback,
                                IAppConfig &config,
                                IAppNotificationClient &notificationClient,
+                               NetworkStatus &networkStatus,
                                QObject *parent = nullptr);
 
     const WeatherData &weather() const;
@@ -55,6 +57,7 @@ private slots:
     void onServiceErrorOccurred(const QString &message);
     void onFallbackErrorOccurred(const QString &message);
     void onRefreshWeatherData();
+    void onNetworkStatusChanged();
 
 private:
     void setLoading(bool loading);
@@ -62,6 +65,7 @@ private:
     bool prepareOnlineUpdate();
 
 private:
+    NetworkStatus &m_NetworkStatus;
     WeatherService &m_WeatherService;
     WeatherFallbackProvider &m_WeatherFallback;
     IAppConfig &m_AppConfig;
@@ -70,6 +74,7 @@ private:
     ForecastData m_ForecastData;
     QList<GeoLocation> m_GeoLocations;
 
+    bool m_NetworkStatusOnline = false;
     bool m_Loading = false;
     bool m_OnlineUpdateFailed = false;
     QString m_ErrorMessage;

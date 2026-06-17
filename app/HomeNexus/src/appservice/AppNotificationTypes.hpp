@@ -11,6 +11,7 @@ enum class Id
     Unknown = 0,
 
     ConfigFileNotFound,
+    NetworkOffline,
     WeatherMissingApiKey,
     WeatherUpdateFailed,
     WeatherInvalidLocation

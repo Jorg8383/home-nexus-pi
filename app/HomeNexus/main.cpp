@@ -16,9 +16,8 @@
 #include "WeatherRepository.hpp"
 #include "WeatherViewModel.hpp"
 #include "WeatherFallbackProvider.hpp"
-#include "AppNotificationTypes.hpp"
 #include "AppNotificationCenter.hpp"
-#include "IAppNotificationClient.hpp"
+#include "NetworkStatus.hpp"
 
 namespace
 {
@@ -69,6 +68,7 @@ int main(int argc, char *argv[])
     AppNotificationCenter appNotificationCenter;
     AppNotificationClient appNotificationClient(appNotificationCenter);
 
+    NetworkStatus networkStatus;
     AppConfig config(configFilePath, appNotificationClient);
 
     QNetworkAccessManager networkManager;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
     WeatherService weatherService(geoCodingClient, weatherClient);
     WeatherFallbackProvider weatherFallback(config);
-    WeatherRepository weatherRepository(weatherService, weatherFallback, config, appNotificationClient);
+    WeatherRepository weatherRepository(weatherService, weatherFallback, config, appNotificationClient, networkStatus);
     WeatherViewModel weatherViewModel(weatherRepository);
 
     QQmlApplicationEngine engine;
@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
     engine.rootContext()->setContextProperty("appNotificationCenter", &appNotificationCenter);
+
 
     QObject::connect(
         &engine,

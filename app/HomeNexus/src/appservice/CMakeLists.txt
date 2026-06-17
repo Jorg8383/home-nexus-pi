@@ -8,11 +8,15 @@ add_library(HomeNexusAppService STATIC
     AppNotificationClient.hpp
     AppNotificationClient.cpp
     IAppNotificationClient.hpp
+    NetworkStatus.hpp
+    NetworkStatus.cpp
 )
 
 target_link_libraries(HomeNexusAppService
     PUBLIC
         Qt6::Core
+    PRIVATE
+        Qt6::Network
 )
 
 target_include_directories(HomeNexusAppService
