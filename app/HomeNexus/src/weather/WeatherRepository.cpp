@@ -185,7 +185,7 @@ void WeatherRepository::onServiceErrorOccurred(const QString &message)
 
     m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherUpdateFailed,
                                                AppNotificationTypes::Severity::Warning,
-                                               QStringLiteral("Online weather update failed. Displaying fallback data."));
+                                               message);
 
     qDebug() << "WeatherRepository::onServiceErrorOccurred: " << message;
 }

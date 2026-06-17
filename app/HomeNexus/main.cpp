@@ -65,18 +65,13 @@ int main(int argc, char *argv[])
         parser.isSet(configOption) ? parser.value(configOption) : defaultConfigFilePath();
     qInfo() << "Loading config from:" << configFilePath;
 
-    AppConfig config(configFilePath);
-
-    if (!config.isValid())
-    {
-        qWarning() << "Invalid application configuration";
-    }
-
-    QNetworkAccessManager networkManager;
 
     AppNotificationCenter appNotificationCenter;
     AppNotificationClient appNotificationClient(appNotificationCenter);
 
+    AppConfig config(configFilePath, appNotificationClient);
+
+    QNetworkAccessManager networkManager;
 
     OpenWeatherClient weatherClient(networkManager, config);
     GeoCodingClient geoCodingClient(networkManager, config);

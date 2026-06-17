@@ -2,6 +2,8 @@
 
 #include "OpenWeatherClient.hpp"
 #include "AppConfig.hpp"
+#include"AppNotificationCenter.hpp"
+#include "AppNotificationClient.hpp"
 
 class OpenWeatherClientTest : public QObject
 {
@@ -17,14 +19,17 @@ private slots:
 private:
     QNetworkAccessManager m_NetworkAccessManager;
     AppConfig m_Config;
+    AppNotificationCenter m_NotificationCenter;
+    AppNotificationClient m_NotificationClient;
 };
 
 OpenWeatherClientTest::OpenWeatherClientTest(QObject *parent)
     : QObject(parent)
     , m_NetworkAccessManager(this)
-    , m_Config(QStringLiteral("testconfig.ini"))
+    , m_NotificationCenter(this)
+    , m_NotificationClient(m_NotificationCenter, this)
+    , m_Config(QStringLiteral("testconfig.ini"), m_NotificationClient)
 {
-
 }
 
 void OpenWeatherClientTest::canBeCreatedWithoutParent()
