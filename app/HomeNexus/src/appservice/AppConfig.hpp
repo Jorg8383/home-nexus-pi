@@ -5,11 +5,12 @@
 #include <QUrl>
 
 #include "IAppConfig.hpp"
+#include "IAppNotificationClient.hpp"
 
 class AppConfig final : public IAppConfig
 {
 public:
-    explicit AppConfig(const QString& filePath);
+    explicit AppConfig(const QString& filePath, IAppNotificationClient &notificationClient);
 
     AppConfig(const AppConfig &) = delete;
     AppConfig &operator=(const AppConfig &) = delete;
@@ -49,4 +50,6 @@ private:
     int m_RequestTimeoutMs = 5000;
     int m_CurrentWeatherUpdateIntervalMs = 600000;
     int m_ForecastUpdateIntervalMs = 1800000;
+
+    IAppNotificationClient &m_NotificationClient;
 };

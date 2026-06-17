@@ -5,14 +5,19 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QString>
+#include <QStringLiteral>
 
-AppConfig::AppConfig(const QString &filePath)
+#include "AppNotificationTypes.hpp"
+
+AppConfig::AppConfig(const QString &filePath, IAppNotificationClient &notificationClient)
+    :m_NotificationClient(notificationClient)
 {
     loadFromFile(filePath);
     m_IsValid = validate();
 
     if (!hasApiKey()) {
-        qWarning() << "AppConfig::AppConifg: OpenWeather API key is missing.";
+        qWarning() << "AppConfig::AppConifg -> OpenWeather API key is missing.";
     }
 }
 
@@ -39,6 +44,7 @@ bool AppConfig::hasApiKey() const
 void AppConfig::loadFromFile(const QString &filePath)
 {
     const QDir appDir(QCoreApplication::applicationDirPath());
+    const QString qWarningPrefix(QStringLiteral("AppConfig::loadFromFile -> "));
 
     m_WeatherFallbackFilePath = appDir.filePath(QStringLiteral("data/weather/weather_fallback.json"));
     m_ForecastFallbackFilePath = appDir.filePath((QStringLiteral("data/weather/forecast_fallback.json")));
@@ -48,7 +54,11 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     if (!m_ConfigFileExists)
     {
-        qWarning() << "Config file does not exist:" << filePath;
+        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::ConfigFileNotFound,
+                                                   AppNotificationTypes::Severity::Warning,
+                                                   QStringLiteral("Config file 'HomeNexus.ini' not found.")
+                                                   );
+        qWarning() << qWarningPrefix << "Config file does not exist:" << filePath;
         return;
     }
 
@@ -80,7 +90,8 @@ void AppConfig::loadFromFile(const QString &filePath)
     }
     else
     {
-        qWarning() << "Invalid integer config value:"
+        qWarning() << qWarningPrefix
+                   << "Invalid integer config value:"
                    << "openweather/requestTimeoutMs"
                    << "- using default:" << m_RequestTimeoutMs;
     }
@@ -98,7 +109,8 @@ void AppConfig::loadFromFile(const QString &filePath)
     }
     else
     {
-        qWarning() << "Invalid integer config value:"
+        qWarning() << qWarningPrefix
+                   << "Invalid integer config value:"
                    << "openweather/currentWeatherUpdateIntervalMs"
                    << "- using default:" << m_CurrentWeatherUpdateIntervalMs;
     }
@@ -115,7 +127,8 @@ void AppConfig::loadFromFile(const QString &filePath)
         m_ForecastUpdateIntervalMs = forecastInterval;
     }
     else {
-        qWarning() << "Invalid integer config value:"
+        qWarning() << qWarningPrefix
+                   << "Invalid integer config value:"
                    << "openweather/forecastUpdateIntervalMs"
                    << "- using default:" << m_ForecastUpdateIntervalMs;
     }
@@ -123,48 +136,52 @@ void AppConfig::loadFromFile(const QString &filePath)
 
 bool AppConfig::validate() const
 {
+    const QString qWarningPrefix(QStringLiteral("AppConfig::validate -> "));
+
     bool valid = true;
 
     if (m_Units.isEmpty())
     {
-        qWarning() << "Invalid config value: openweather/units";
+        qWarning() << qWarningPrefix << "Invalid config value: openweather/units";
         valid = false;
     }
 
     if (m_Language.isEmpty())
     {
-        qWarning() << "Invalid config value: openweather/language";
+        qWarning() << qWarningPrefix << "Invalid config value: openweather/language";
         valid = false;
     }
 
     if (m_City.isEmpty())
     {
-        qWarning() << "Invalid config value: openweather/city";
+        qWarning() << qWarningPrefix << "Invalid config value: openweather/city";
         valid = false;
     }
 
     if (m_CountryCode.isEmpty())
     {
-        qWarning() << "Invalid config value: openweather/countryCode";
+        qWarning() << qWarningPrefix << "Invalid config value: openweather/countryCode";
         valid = false;
     }
 
     if (m_RequestTimeoutMs <= 0)
     {
-        qWarning() << "Invalid config value: openweather/requestTimeoutMs";
+        qWarning() << qWarningPrefix << "Invalid config value: openweather/requestTimeoutMs";
         valid = false;
     }
 
     if (m_CurrentWeatherUpdateIntervalMs <= 0)
     {
-        qWarning() << "Invalid config value:"
+        qWarning() << qWarningPrefix
+                   << "Invalid config value:"
                    << "openweather/currentWeatherUpdateIntervalMs";
         valid = false;
     }
 
     if (m_ForecastUpdateIntervalMs <= 0)
     {
-        qWarning() << "Invalid config value:"
+        qWarning() << qWarningPrefix
+                   << "Invalid config value:"
                    << "openweather/forecastUpdateIntervalMs";
         valid = false;
     }

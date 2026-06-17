@@ -10,6 +10,7 @@ enum class Id
 {
     Unknown = 0,
 
+    ConfigFileNotFound,
     WeatherMissingApiKey,
     WeatherUpdateFailed,
     WeatherInvalidLocation
