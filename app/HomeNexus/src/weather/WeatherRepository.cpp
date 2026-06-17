@@ -74,6 +74,8 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
             &WeatherRepository::onNetworkStatusChanged
             );
 
+    onNetworkStatusChanged();
+
     m_LastCityName = m_AppConfig.city();
     m_LastCountryCode = m_AppConfig.countryCode();
 
@@ -177,6 +179,7 @@ void WeatherRepository::onUpdateFinished()
     m_LastUpdateUtc = QDateTime::currentDateTimeUtc();
     qDebug() << "WeatherRepository::onUpdateFinished -> " << QDateTime::currentDateTime().toString();
 
+    m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::NetworkOffline);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherUpdateFailed);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherMissingApiKey);
