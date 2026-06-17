@@ -6,12 +6,17 @@ Rectangle {
     id: root
 
     property string message: ""
-    property bool hasWarning: false
+    property bool hasNotification: false
+    property int severity: severityInfo
 
-    visible: root.hasWarning && root.message.length > 0
+    readonly property int severityInfo: 0
+    readonly property int severityWarning: 1
+    readonly property bool isWarning: root.severity === root.severityWarning
+
+    visible: root.hasNotification && root.message.length > 0
     implicitHeight: visible ? 25 : 0
 
-    color: Style.appColors.warning
+    color: root.isWarning ? Style.appColors.warning : Style.appColors.surfaceBright
 
     clip: true
 
@@ -25,6 +30,9 @@ Rectangle {
 
         Image {
             id: warningSign
+
+            visible: root.isWarning
+
             source: Style.assetsPath + "warning-sign.svg"
             height: contentRow.height - 10
             fillMode: Image.PreserveAspectFit

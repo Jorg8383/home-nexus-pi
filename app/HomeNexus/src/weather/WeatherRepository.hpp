@@ -12,6 +12,7 @@
 #include "GeoLocation.hpp"
 #include "WeatherFallbackProvider.hpp"
 #include "IAppConfig.hpp"
+#include "IAppNotificationClient.hpp"
 
 class WeatherRepository : public QObject
 {
@@ -20,6 +21,7 @@ public:
     explicit WeatherRepository(WeatherService &weatherService,
                                WeatherFallbackProvider &weatherFallback,
                                IAppConfig &config,
+                               IAppNotificationClient &notificationClient,
                                QObject *parent = nullptr);
 
     const WeatherData &weather() const;
@@ -57,14 +59,13 @@ private slots:
 private:
     void setLoading(bool loading);
     void loadFallbackData();
-    void clearErrorMessage();
-    void setErrorMessage(const QString &message);
     bool prepareOnlineUpdate();
 
 private:
     WeatherService &m_WeatherService;
     WeatherFallbackProvider &m_WeatherFallback;
     IAppConfig &m_AppConfig;
+    IAppNotificationClient &m_NotificationClient;
     WeatherData m_WeatherData;
     ForecastData m_ForecastData;
     QList<GeoLocation> m_GeoLocations;

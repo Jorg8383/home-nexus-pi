@@ -30,12 +30,6 @@ class WeatherViewModel : public QObject
 
     Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
 
-    Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorChanged)
-    Q_PROPERTY(bool hasError READ hasError NOTIFY errorChanged)
-
-    Q_PROPERTY(QString warningMessage READ warningMessage NOTIFY warningChanged)
-    Q_PROPERTY(bool hasWarning READ hasWarning NOTIFY warningChanged)
-
     Q_PROPERTY(ForecastListModel *forecastModel READ forecastModel CONSTANT)
 
 public:
@@ -60,12 +54,6 @@ public:
 
     bool loading() const;
 
-    QString errorMessage() const;
-    bool hasError() const;
-
-    QString warningMessage() const;
-    bool hasWarning() const;
-
     ForecastListModel *forecastModel();
 
     Q_INVOKABLE void updateWeatherForCity(
@@ -79,14 +67,10 @@ public:
 signals:
     void weatherChanged();
     void loadingChanged();
-    void errorChanged();
-    void warningChanged();
 
 private slots:
     void onWeatherChanged(const WeatherData &weatherData);
     void onLoadingChanged(bool loading);
-    void onErrorOccurred(const QString &message);
-    void onWarningOccurred(const QString &message);
 
 private:
     QString formatTime(const QDateTime &dateTime) const;
@@ -98,6 +82,4 @@ private:
     WeatherData m_WeatherData;
 
     bool m_Loading = false;
-    QString m_ErrorMessage;
-    QString m_WarningMessage;
 };

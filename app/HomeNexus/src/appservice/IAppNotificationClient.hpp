@@ -11,8 +11,8 @@ public:
 
     virtual void setBannerNotification(
         AppNotificationTypes::Id id,
-        const QString &message,
-        AppNotificationTypes::Severity severity) = 0;
+        AppNotificationTypes::Severity severity,
+        const QString &message) = 0;
 
     virtual void clearBannerNotification(AppNotificationTypes::Id id) = 0;
 

@@ -12,7 +12,7 @@ AppConfig::AppConfig(const QString &filePath)
     m_IsValid = validate();
 
     if (!hasApiKey()) {
-        qWarning() << "OpenWeather API key is missing.";
+        qWarning() << "AppConfig::AppConifg: OpenWeather API key is missing.";
     }
 }
 

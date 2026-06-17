@@ -17,8 +17,8 @@ public:
 
     void setBannerNotification(
         AppNotificationTypes::Id id,
-        const QString &message,
-        AppNotificationTypes::Severity severity) override;
+        AppNotificationTypes::Severity severity,
+        const QString &message) override;
 
     void clearBannerNotification(AppNotificationTypes::Id id) override;
 

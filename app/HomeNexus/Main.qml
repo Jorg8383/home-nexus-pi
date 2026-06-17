@@ -80,8 +80,9 @@ ApplicationWindow {
 
         AppWarningBanner {
             Layout.fillWidth: true
-            hasWarning: weatherViewModel.hasWarning
-            message: weatherViewModel.warningMessage
+            hasNotification: appNotificationCenter.hasBannerNotification
+            severity: appNotificationCenter.bannerSeverity
+            message: appNotificationCenter.bannerMessage
         }
 
         StackLayout {

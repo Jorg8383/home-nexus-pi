@@ -11,9 +11,8 @@ enum class Id
     Unknown = 0,
 
     WeatherMissingApiKey,
-    WeatherUsingFallbackData,
-    WeatherRequestFailed,
-    WeatherForecastRequestFailed
+    WeatherUpdateFailed,
+    WeatherInvalidLocation
 };
 Q_ENUM_NS(Id)
 

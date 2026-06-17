@@ -92,7 +92,7 @@ void AppNotificationCenter::clearError()
 
 void AppNotificationCenter::updateCurrentBannerNotification()
 {
-    // Remove stale ids from the order list.
+    // Remove stale IDs from the order list.
     m_BannerOrder.erase(
         std::remove_if(
             m_BannerOrder.begin(),

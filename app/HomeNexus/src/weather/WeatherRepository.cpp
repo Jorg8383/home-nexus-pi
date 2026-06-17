@@ -4,11 +4,13 @@
 WeatherRepository::WeatherRepository(WeatherService &weatherService,
                                      WeatherFallbackProvider &weatherFallback,
                                      IAppConfig &config,
+                                     IAppNotificationClient &notificationClient,
                                      QObject *parent)
     : QObject{parent}
     , m_WeatherService(weatherService)
     , m_WeatherFallback(weatherFallback)
     , m_AppConfig(config)
+    , m_NotificationClient(notificationClient)
 {
     connect(&m_WeatherService,
             &WeatherService::weatherUpdated,
@@ -124,7 +126,11 @@ void WeatherRepository::refreshIfStale()
 {
     if (m_LastCityName.isEmpty())
     {
-        qDebug() << "WeatherRepository::refreshIfStale() - last city name is empty";
+        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation,
+                                                   AppNotificationTypes::Severity::Warning,
+                                                   QStringLiteral("No location definied, cannot update weather data.")
+                                                   );
+        qDebug() << "WeatherRepository::refreshIfStale: last city name is empty";
         return;
     }
 
@@ -162,6 +168,10 @@ void WeatherRepository::onUpdateFinished()
     setLoading(false);
     m_LastUpdateUtc = QDateTime::currentDateTimeUtc();
     qDebug() << "WeatherRepository::onUpdateFinished invoked at: " << QDateTime::currentDateTime().toString();
+
+    m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherUpdateFailed);
+    m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation);
+    m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherMissingApiKey);
 }
 
 void WeatherRepository::onFallbackFinished()
@@ -173,14 +183,16 @@ void WeatherRepository::onServiceErrorOccurred(const QString &message)
 {
     m_OnlineUpdateFailed = true;
 
-    emit warningOccurred(QStringLiteral("Online weather update failed: %1").arg(message));
+    m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherUpdateFailed,
+                                               AppNotificationTypes::Severity::Warning,
+                                               QStringLiteral("Online weather update failed. Displaying fallback data."));
 
-    qDebug() << message;
+    qDebug() << "WeatherRepository::onServiceErrorOccurred: " << message;
 }
 
 void WeatherRepository::onFallbackErrorOccurred(const QString &message)
 {
-    setErrorMessage(message);
+    m_NotificationClient.showError(QStringLiteral("Could not load weather data: %1").arg(message));
     qDebug() << message;
 }
 
@@ -188,7 +200,11 @@ void WeatherRepository::onRefreshWeatherData()
 {
     if (m_LastCityName.isEmpty())
     {
-        qDebug() << "WeatherRepository::refreshIfStale() - last city name is empty";
+        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation,
+                                                   AppNotificationTypes::Severity::Warning,
+                                                   QStringLiteral("No location is defined, cannot update weather data.")
+                                                   );
+        qDebug() << "WeatherRepository::refreshIfStale: last city name is empty";
         return;
     }
 
@@ -211,33 +227,18 @@ void WeatherRepository::loadFallbackData()
                                m_AppConfig.forecastFallbackFilePath());
 }
 
-void WeatherRepository::clearErrorMessage()
-{
-    if (m_ErrorMessage.isEmpty())
-        return;
-
-    m_ErrorMessage.clear();
-    emit errorOccurred(m_ErrorMessage);
-}
-
-void WeatherRepository::setErrorMessage(const QString &message)
-{
-    if (m_ErrorMessage == message)
-        return;
-
-    m_ErrorMessage = message;
-    emit errorOccurred(m_ErrorMessage);
-}
-
 bool WeatherRepository::prepareOnlineUpdate()
 {
     m_OnlineUpdateFailed = false;
-    clearErrorMessage();
     setLoading(true);
 
     if (!m_AppConfig.hasApiKey())
     {
-        emit warningOccurred(QStringLiteral("No OpenWeather API key configured. Showing fallback weather data."));
+        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherMissingApiKey,
+                                                   AppNotificationTypes::Severity::Warning,
+                                                   QStringLiteral("OpenWeather API key is missing. Showing fallback weather data.")
+                                                   );
+        qDebug() << "WeatherRepository::prepareOnlineUpdate: OpenWeather API key is missing, loading fallback data";
         loadFallbackData();
         return false;
     }

@@ -4,10 +4,9 @@
 WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *parent)
     : QObject{parent},
     m_Repository(repository),
-    m_ForecastListModel(this),
+    m_ForecastListModel(this), // passing 'this' to the constructor of ForecastListModel
     m_WeatherData(repository.weather()),
-    m_Loading(repository.loading()),
-    m_ErrorMessage(repository.errorMessage())
+    m_Loading(repository.loading())
 {
     connect(
         &m_Repository,
@@ -29,21 +28,6 @@ WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *paren
         this,
         &WeatherViewModel::onLoadingChanged
         );
-
-    connect(
-        &m_Repository,
-        &WeatherRepository::errorOccurred,
-        this,
-        &WeatherViewModel::onErrorOccurred
-        );
-
-    connect(
-        &m_Repository,
-        &WeatherRepository::warningOccurred,
-        this,
-        &WeatherViewModel::onWarningOccurred
-        );
-
 }
 
 QString WeatherViewModel::city() const
@@ -116,26 +100,6 @@ bool WeatherViewModel::loading() const
     return m_Loading;
 }
 
-QString WeatherViewModel::errorMessage() const
-{
-    return m_ErrorMessage;
-}
-
-bool WeatherViewModel::hasError() const
-{
-    return !m_ErrorMessage.isEmpty();
-}
-
-QString WeatherViewModel::warningMessage() const
-{
-    return m_WarningMessage;
-}
-
-bool WeatherViewModel::hasWarning() const
-{
-    return !m_WarningMessage.isEmpty();
-}
-
 ForecastListModel *WeatherViewModel::forecastModel()
 {
     return &m_ForecastListModel;
@@ -163,24 +127,6 @@ void WeatherViewModel::onLoadingChanged(bool loading)
     {
         m_Loading = loading;
         emit loadingChanged();
-    }
-}
-
-void WeatherViewModel::onErrorOccurred(const QString &message)
-{
-    if (m_ErrorMessage != message)
-    {
-        m_ErrorMessage = message;
-        emit errorChanged();
-    }
-}
-
-void WeatherViewModel::onWarningOccurred(const QString &message)
-{
-    if (m_WarningMessage != message)
-    {
-        m_WarningMessage = message;
-        emit warningChanged();
     }
 }
 

@@ -9,12 +9,16 @@
 #include <QDateTime>
 
 #include "AppConfig.hpp"
+#include "AppNotificationClient.hpp"
 #include "OpenWeatherClient.hpp"
 #include "GeoCodingClient.hpp"
 #include "WeatherService.hpp"
 #include "WeatherRepository.hpp"
 #include "WeatherViewModel.hpp"
 #include "WeatherFallbackProvider.hpp"
+#include "AppNotificationTypes.hpp"
+#include "AppNotificationCenter.hpp"
+#include "IAppNotificationClient.hpp"
 
 namespace
 {
@@ -70,18 +74,23 @@ int main(int argc, char *argv[])
 
     QNetworkAccessManager networkManager;
 
+    AppNotificationCenter appNotificationCenter;
+    AppNotificationClient appNotificationClient(appNotificationCenter);
+
+
     OpenWeatherClient weatherClient(networkManager, config);
     GeoCodingClient geoCodingClient(networkManager, config);
 
     WeatherService weatherService(geoCodingClient, weatherClient);
     WeatherFallbackProvider weatherFallback(config);
-    WeatherRepository weatherRepository(weatherService, weatherFallback, config);
+    WeatherRepository weatherRepository(weatherService, weatherFallback, config, appNotificationClient);
     WeatherViewModel weatherViewModel(weatherRepository);
 
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
+    engine.rootContext()->setContextProperty("appNotificationCenter", &appNotificationCenter);
 
     QObject::connect(
         &engine,

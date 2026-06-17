@@ -10,8 +10,8 @@ AppNotificationClient::AppNotificationClient(AppNotificationCenter &center,
 
 void AppNotificationClient::setBannerNotification(
     AppNotificationTypes::Id id,
-    const QString &message,
-    AppNotificationTypes::Severity severity)
+    AppNotificationTypes::Severity severity,
+    const QString &message)
 {
     QMetaObject::invokeMethod(
         &m_Center,
