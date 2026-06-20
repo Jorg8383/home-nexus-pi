@@ -190,6 +190,19 @@ void WeatherRepository::onUpdateFinished()
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherMissingApiKey);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherLocationNotFound);
+
+    GeoLocation geoLocation;
+    if (! m_GeoLocations.empty())
+    {
+        geoLocation = m_GeoLocations.first();
+
+        if (geoLocation.cityName != m_LastCityName || geoLocation.country != m_LastCountryCode)
+        {
+            m_LastCityName = geoLocation.cityName.trimmed();
+            m_LastCountryCode = geoLocation.country.trimmed();
+            m_AppConfig.saveWeatherLocation(m_LastCityName, m_LastCountryCode);
+        }
+    }
 }
 
 void WeatherRepository::onFallbackFinished()

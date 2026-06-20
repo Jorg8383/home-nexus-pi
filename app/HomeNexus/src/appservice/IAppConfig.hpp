@@ -23,4 +23,6 @@ public:
     virtual int requestTimeoutMs() const = 0;
     virtual int currentWeatherUpdateIntervalMs() const = 0;
     virtual int forecastUpdateIntervalMs() const = 0;
+
+    virtual void saveWeatherLocation(const QString &city, const QString &country) = 0;
 };

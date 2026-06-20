@@ -7,6 +7,8 @@ struct WeatherData
 {
     // City name
     QString cityName;
+    // Country name
+    QString country;
     // Longitude of the location
     double longitude = 0.0;
     // Latitude of the location

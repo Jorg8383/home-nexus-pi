@@ -93,6 +93,7 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
     // TODO: let the user later choose the location if multiple locations are returned
     const GeoLocation &location = locations.first();
     m_CityName = location.cityName;
+    m_Country = location.country;
 
     qWarning() << "WeatherService::onGeoLocationsReceived -> "
                << "city: " << m_CityName << "latitude: "

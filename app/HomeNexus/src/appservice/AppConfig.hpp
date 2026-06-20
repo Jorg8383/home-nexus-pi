@@ -31,10 +31,13 @@ public:
     int requestTimeoutMs() const override;
     int currentWeatherUpdateIntervalMs() const override;
     int forecastUpdateIntervalMs() const override;
+    void saveWeatherLocation(const QString &city, const QString &country) override;
 
 private:
     void loadFromFile(const QString &filePath);
     bool validate() const;
+
+    QString m_FilePath;
 
     bool m_IsValid = false;
     bool m_ConfigFileExists = false;

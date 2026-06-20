@@ -11,14 +11,38 @@
 #include "AppNotificationTypes.hpp"
 
 AppConfig::AppConfig(const QString &filePath, IAppNotificationClient &notificationClient)
-    :m_NotificationClient(notificationClient)
+    :m_NotificationClient(notificationClient), m_FilePath(filePath)
 {
-    loadFromFile(filePath);
+    loadFromFile(m_FilePath);
     m_IsValid = validate();
 
     if (!hasApiKey()) {
         qWarning() << "AppConfig::AppConifg -> OpenWeather API key is missing.";
     }
+}
+
+void AppConfig::saveWeatherLocation(const QString &city, const QString &country)
+{
+    QSettings settings(m_FilePath, QSettings::IniFormat);
+
+    settings.beginGroup(QStringLiteral("openweather"));
+    settings.setValue(QStringLiteral("city"), city);
+    settings.setValue(QStringLiteral("countryCode"), country);
+    settings.endGroup();
+
+    settings.sync();
+
+    if (settings.status() != QSettings::NoError)
+    {
+        qWarning() << "AppConfig::saveWeatherLocation -> error occured while writing: " << m_FilePath;
+        return;
+    }
+
+    qWarning() << "AppConfig::saveWeatherLocation -> weather location updated."
+               << " City:" << city << "Country:" << country;
+
+    m_City = city;
+    m_CountryCode = country;
 }
 
 bool AppConfig::isValid() const
