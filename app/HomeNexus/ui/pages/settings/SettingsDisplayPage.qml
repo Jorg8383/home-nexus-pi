@@ -29,6 +29,7 @@ Page {
         anchors.margins: Style.appLayout.marginsXL
         spacing: Style.appLayout.spacingM
 
+        // Setting: background
         AppComboBoxCard {
             Layout.fillWidth: true
 
@@ -46,6 +47,18 @@ Page {
 
                 root.appWindow.backgroundMode = value
                 console.log("Background changed to:", value)
+            }
+        }
+
+        // Setting: metric untis
+        AppCheckBoxCard {
+            Layout.fillWidth: true
+
+            labelText: qsTr("Use metric units")
+            checked: true
+
+            onToogled: function(checked) {
+                console.log("Checkbox 'Use Metric units' toogled:", checked)
             }
         }
 

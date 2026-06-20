@@ -54,6 +54,7 @@ qt_add_qml_module(appHomeNexus
         ui/components/AppTopicCard.qml
         ui/components/AppWarningBanner.qml
         ui/components/AppComboBoxCard.qml
+        ui/components/AppCheckBoxCard.qml
         ui/data/StaticForecastModel.qml
         ui/data/StaticWeatherModel.qml
         ui/pages/home/HomeRootPage.qml
