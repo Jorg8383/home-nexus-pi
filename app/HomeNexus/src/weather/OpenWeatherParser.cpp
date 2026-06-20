@@ -226,9 +226,6 @@ bool OpenWeatherParser::parseGeoLocations(const QByteArray &json, QList<GeoLocat
         if (!JsonReader::readString(locationObj, QStringLiteral("country"), geoLocation.country, QStringLiteral("location[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readString(locationObj, QStringLiteral("state"), geoLocation.state, QStringLiteral("location[%1]").arg(i)))
-            return false;
-
         if (!JsonReader::readDouble(locationObj, QStringLiteral("lat"), geoLocation.latitude, QStringLiteral("location[%1]").arg(i)))
             return false;
 

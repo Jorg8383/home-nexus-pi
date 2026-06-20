@@ -124,14 +124,12 @@ void OpenWeatherParserTest::parsesValidGeoLocations()
     const GeoLocation& firstLocation = locations.at(0);
     QCOMPARE(firstLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(firstLocation.country, QStringLiteral("CH"));
-    QCOMPARE(firstLocation.state, QStringLiteral("Bern"));
     QCOMPARE(firstLocation.latitude, 46.8739775);
     QCOMPARE(firstLocation.longitude, 7.5631943);
 
     const GeoLocation& secondLocation = locations.at(1);
     QCOMPARE(secondLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(secondLocation.country, QStringLiteral("DE"));
-    QCOMPARE(secondLocation.state, QStringLiteral("Baden-Württemberg"));
     QCOMPARE(secondLocation.latitude, 48.4128592);
     QCOMPARE(secondLocation.longitude, 9.4947894);
 }
