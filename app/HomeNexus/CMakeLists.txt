@@ -53,6 +53,7 @@ qt_add_qml_module(appHomeNexus
         ui/components/ClimateSensorOverview.qml
         ui/components/AppTopicCard.qml
         ui/components/AppWarningBanner.qml
+        ui/components/AppComboBoxCard.qml
         ui/data/StaticForecastModel.qml
         ui/data/StaticWeatherModel.qml
         ui/pages/home/HomeRootPage.qml
