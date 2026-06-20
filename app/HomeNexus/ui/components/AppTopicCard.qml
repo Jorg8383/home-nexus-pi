@@ -10,6 +10,7 @@ AppCard {
     property url iconSource: ""
     property int iconSize: 100
     property int cardWidth: 220
+    property int fontSize: Style.appTypography.fontSizeTitle
 
     signal activated
 
@@ -34,7 +35,7 @@ AppCard {
         Label {
             text: root.title
             color: Style.appColors.textBright
-            font.pixelSize: Style.appTypography.fontSizeTitle
+            font.pixelSize: root.fontSize
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
 

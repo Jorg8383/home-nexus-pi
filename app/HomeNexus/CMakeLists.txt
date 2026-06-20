@@ -66,6 +66,13 @@ qt_add_qml_module(appHomeNexus
         ui/pages/climate/SunAppCard.qml
         ui/pages/plants/PlantsRootPage.qml
         ui/pages/settings/SettingsRootPage.qml
+        ui/pages/settings/SettingsNetworkPage.qml
+        ui/pages/settings/SettingsWeatherPage.qml
+        ui/pages/settings/SettingsSensorsPage.qml
+        ui/pages/settings/SettingsDisplayPage.qml
+        ui/pages/settings/SettingsNotificationPage.qml
+        ui/pages/settings/SettingsPlantPage.qml
+        ui/pages/settings/SettingsSystemPage.qml
         ui/theme/Style.qml
         ui/theme/AppColors.qml
         ui/theme/AppLayout.qml
@@ -120,6 +127,12 @@ qt_add_qml_module(appHomeNexus
         assets/tabbar/setting-icon-white.svg
         assets/tabbar/setting-icon-dark.svg
         assets/warning-sign.svg
+        assets/settings/wifi-icon-white.svg
+        assets/settings/settings-icon-white.svg
+        assets/settings/watering-icon-white.svg
+        assets/settings/notification-icon-white.svg
+        assets/settings/sensor-icon-white.svg
+        assets/settings/display-icon-white.svg
 )
 
 

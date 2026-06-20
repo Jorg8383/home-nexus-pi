@@ -32,7 +32,7 @@ Page {
         clip: true
 
         contentWidth: flickable.width
-        contentHeight: homeGrid.height
+        contentHeight: contentWrapper.height
 
         flickableDirection: Flickable.VerticalFlick
         boundsBehavior: Flickable.StopAtBounds
