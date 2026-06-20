@@ -55,6 +55,7 @@ private slots:
     void onUpdateFinished();
     void onFallbackFinished();
     void onServiceErrorOccurred(const QString &message);
+    void onServiceInfoOccurred(const QString &message);
     void onFallbackErrorOccurred(const QString &message);
     void onRefreshWeatherData();
     void onNetworkStatusChanged();

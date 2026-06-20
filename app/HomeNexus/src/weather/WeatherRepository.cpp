@@ -39,6 +39,12 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
             );
 
     connect(&m_WeatherService,
+            &WeatherService::infoOccurred,
+            this,
+            &WeatherRepository::onServiceInfoOccurred
+            );
+
+    connect(&m_WeatherService,
             &WeatherService::updateFinished,
             this,
             &WeatherRepository::onUpdateFinished
@@ -183,6 +189,7 @@ void WeatherRepository::onUpdateFinished()
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherUpdateFailed);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherInvalidLocation);
     m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherMissingApiKey);
+    m_NotificationClient.clearBannerNotification(AppNotificationTypes::Id::WeatherLocationNotFound);
 }
 
 void WeatherRepository::onFallbackFinished()
@@ -199,6 +206,15 @@ void WeatherRepository::onServiceErrorOccurred(const QString &message)
                                                message);
 
     qDebug() << "WeatherRepository::onServiceErrorOccurred -> " << message;
+}
+
+void WeatherRepository::onServiceInfoOccurred(const QString &message)
+{
+    m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::WeatherLocationNotFound,
+                                               AppNotificationTypes::Severity::Info,
+                                               message);
+
+    qDebug() << "WeatherRepository::onServiceInfoOccurred -> " << message;
 }
 
 void WeatherRepository::onFallbackErrorOccurred(const QString &message)

@@ -81,6 +81,13 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
         return;
     }
 
+    if (locations.isEmpty())
+    {
+        qWarning() << "WeatherService::onGeoLocationsReceived -> Received geo-location list is emtpy";
+        emit infoOccurred(QStringLiteral("No weather location found."));
+        return;
+    }
+
     emit geoLocationsUpdated(locations);
 
     // TODO: let the user later choose the location if multiple locations are returned

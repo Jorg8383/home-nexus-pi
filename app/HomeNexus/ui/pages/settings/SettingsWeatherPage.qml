@@ -8,12 +8,27 @@ Page {
     title: qsTr("Weather Settings")
     background: null
 
-    Image {
-        source: Style.assetsPath + "under-construction.svg"
-        height: 200
-        width: 200
-        fillMode: Image.PreserveAspectFit
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: Style.appLayout.marginsXL
+        spacing: Style.appLayout.spacingM
 
-        anchors.centerIn: parent
+        AppInputTextCard {
+            Layout.fillWidth: true
+
+            labelText: qsTr("Weather location")
+
+            debounceIntervalMs: 1500
+
+            onSubmitted: function(cityName) {
+                weatherViewModel.updateWeatherForCity(cityName, "", 5)
+                console.log("Weather location updated by user:", cityName)
+            }
+        }
+
+        // Invisble spacer item to push the visible elements to the top
+        Item {
+            Layout.fillHeight: true
+        }
     }
 }

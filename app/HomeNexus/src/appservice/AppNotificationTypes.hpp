@@ -14,7 +14,8 @@ enum class Id
     NetworkOffline,
     WeatherMissingApiKey,
     WeatherUpdateFailed,
-    WeatherInvalidLocation
+    WeatherInvalidLocation,
+    WeatherLocationNotFound
 };
 Q_ENUM_NS(Id)
 

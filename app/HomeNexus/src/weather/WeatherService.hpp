@@ -29,6 +29,7 @@ signals:
     void forecastUpdated(const ForecastData &forecast);
     void geoLocationsUpdated(const QList<GeoLocation> &locations);
     void errorOccurred(const QString &message);
+    void infoOccurred(const QString &message);
     void updateFinished();
 
 private slots:
