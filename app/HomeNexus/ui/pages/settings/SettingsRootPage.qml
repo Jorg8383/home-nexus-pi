@@ -66,7 +66,7 @@ Page {
                     iconSource: Style.assetsPath + "settings/display-icon-white.svg"
                     iconSize: homeGrid.preferredIconSize
                     fontSize: Style.appTypography.fontSizeSubtitle
-                    onActivated: root.stackView.push("SettingsDisplayPage.qml")
+                    onActivated: root.stackView.push("SettingsDisplayPage.qml", {appWindow: ApplicationWindow.window})
                 }
 
                 AppTopicCard {

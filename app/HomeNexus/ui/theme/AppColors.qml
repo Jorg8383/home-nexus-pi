@@ -11,6 +11,8 @@ QtObject {
     readonly property color textDark: "#FF202020"
     readonly property color textBright: "#FFE6E6E6"
 
+    readonly property color contentBackground: "#FF454545"
+
     // Header / footer
     readonly property color headerBackground: surfaceDark
     readonly property color footerBackground: surfaceBright

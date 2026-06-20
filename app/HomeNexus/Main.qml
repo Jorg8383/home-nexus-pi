@@ -1,3 +1,4 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
@@ -28,11 +29,31 @@ ApplicationWindow {
     }
 
     // ---- Background ------------------------------------------------
-    background: Image {
-        id: backgroundImage
-        source: Style.assetsPath + "BrushedMetal.jpg"
-        fillMode: Image.PreserveAspectCrop
+
+    Settings {
+        id: appSettings
+        category: "Appearance"
+
+        // non-volatil property via QSettings
+        property string backgroundMode: "brushedMetal"
     }
+
+    property alias backgroundMode: appSettings.backgroundMode
+
+    background: Item {
+        Rectangle {
+            anchors.fill: parent
+            color: Style.appColors.contentBackground
+        }
+
+        Image {
+            anchors.fill: parent
+            source: Style.assetsPath + "BrushedMetal.jpg"
+            fillMode: Image.PreserveAspectCrop
+            visible: window.backgroundMode === "brushedMetal"
+        }
+    }
+
     // ----- Header ---------------------------------------------------
     header: AppHeader {
         title: activeStack.currentItem
