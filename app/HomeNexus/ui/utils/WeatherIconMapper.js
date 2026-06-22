@@ -8,12 +8,13 @@ function fileName(openWeatherIcon) {
     case "01n":
         return "weather/clear-night.svg";
     case "02d":
-        return "weather/partly-cloudy-day.svg";
+        return "weather/mostly-clear-day.svg";
     case "02n":
-        return "weather/partly-cloudy-night.svg";
+        return "weather/mostly-clear-night.svg";
     case "03d":
+        return "weather/partly-cloudy-day.svg";
     case "03n":
-        return "weather/cloudy.svg";
+        return "weather/partly-cloudy-night.svg";
     case "04d":
     case "04n":
         return "weather/overcast.svg";

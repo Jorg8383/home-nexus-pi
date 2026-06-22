@@ -109,6 +109,8 @@ qt_add_qml_module(appHomeNexus
         assets/weather/wind-arrow-white.svg
         assets/weather/sunrise50x50.png
         assets/weather/sunset50x50.png
+        assets/weather/mostly-clear-day.svg
+        assets/weather/mostly-clear-night.svg
         assets/climate/humidity-white.svg
         assets/climate/propeller-white.svg
         assets/climate/temperature-high.svg
