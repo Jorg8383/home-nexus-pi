@@ -85,7 +85,7 @@ WeatherRepository::WeatherRepository(WeatherService &weatherService,
     m_LastCityName = m_AppConfig.city();
     m_LastCountryCode = m_AppConfig.countryCode();
 
-    m_RefreshTimer.setInterval(std::chrono::minutes(15));
+    m_RefreshTimer.setInterval(m_AppConfig.weatherUpdateIntervalMs());
     m_RefreshTimer.setSingleShot(false);
 
     connect(&m_RefreshTimer,
@@ -304,7 +304,8 @@ bool WeatherRepository::prepareOnlineUpdate()
 
 bool WeatherRepository::isWeatherStale() const
 {
-    return !m_LastUpdateUtc.isValid() || m_LastUpdateUtc.secsTo(QDateTime::currentDateTimeUtc()) > 3 * 60;
+    return !m_LastUpdateUtc.isValid() || (m_LastUpdateUtc.secsTo(QDateTime::currentDateTimeUtc())
+                  > m_AppConfig.weatherUpdateIntervalMs() / 1000);
 }
 
 

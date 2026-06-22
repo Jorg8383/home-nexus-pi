@@ -28,9 +28,7 @@ public:
     QString countryCode() const override;
     QString weatherFallbackFilePath() const override;
     QString forecastFallbackFilePath() const override;
-    int requestTimeoutMs() const override;
-    int currentWeatherUpdateIntervalMs() const override;
-    int forecastUpdateIntervalMs() const override;
+    int weatherUpdateIntervalMs() const override;
     void saveWeatherLocation(const QString &city, const QString &country) override;
 
 private:
@@ -50,9 +48,7 @@ private:
     QString m_WeatherFallbackFilePath;
     QString m_ForecastFallbackFilePath;
 
-    int m_RequestTimeoutMs = 5000;
-    int m_CurrentWeatherUpdateIntervalMs = 600000;
-    int m_ForecastUpdateIntervalMs = 1800000;
+    int m_WeatherUpdateIntervalMs = 600000;
 
     IAppNotificationClient &m_NotificationClient;
 };

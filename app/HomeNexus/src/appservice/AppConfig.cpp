@@ -103,59 +103,24 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     bool ok = false;
 
-    const int requestTimeout = settings
-                                   .value(QStringLiteral("openweather/requestTimeoutMs"),
-                                          m_RequestTimeoutMs)
-                                   .toInt(&ok);
-
-    if (ok)
-    {
-        m_RequestTimeoutMs = requestTimeout;
-    }
-    else
-    {
-        qWarning() << qWarningPrefix
-                   << "Invalid integer config value:"
-                   << "openweather/requestTimeoutMs"
-                   << "- using default:" << m_RequestTimeoutMs;
-    }
-
-    ok = false;
-
     const int currentWeatherInterval = settings
-                                           .value(QStringLiteral("openweather/currentWeatherUpdateIntervalMs"),
-                                                  m_CurrentWeatherUpdateIntervalMs)
+                                           .value(QStringLiteral("openweather/weatherUpdateIntervalMs"),
+                                                  m_WeatherUpdateIntervalMs)
                                            .toInt(&ok);
 
     if (ok)
     {
-        m_CurrentWeatherUpdateIntervalMs = currentWeatherInterval;
+        m_WeatherUpdateIntervalMs = currentWeatherInterval;
     }
     else
     {
         qWarning() << qWarningPrefix
                    << "Invalid integer config value:"
-                   << "openweather/currentWeatherUpdateIntervalMs"
-                   << "- using default:" << m_CurrentWeatherUpdateIntervalMs;
+                   << "openweather/weatherUpdateIntervalMs"
+                   << "- using default:" << m_WeatherUpdateIntervalMs;
     }
 
     ok = false;
-
-    const int forecastInterval = settings
-                                     .value(QStringLiteral("openweather/forecastUpdateIntervalMs"),
-                                            m_ForecastUpdateIntervalMs)
-                                     .toInt(&ok);
-
-    if (ok)
-    {
-        m_ForecastUpdateIntervalMs = forecastInterval;
-    }
-    else {
-        qWarning() << qWarningPrefix
-                   << "Invalid integer config value:"
-                   << "openweather/forecastUpdateIntervalMs"
-                   << "- using default:" << m_ForecastUpdateIntervalMs;
-    }
 }
 
 bool AppConfig::validate() const
@@ -188,25 +153,12 @@ bool AppConfig::validate() const
         valid = false;
     }
 
-    if (m_RequestTimeoutMs <= 0)
-    {
-        qWarning() << qWarningPrefix << "Invalid config value: openweather/requestTimeoutMs";
-        valid = false;
-    }
 
-    if (m_CurrentWeatherUpdateIntervalMs <= 0)
+    if (m_WeatherUpdateIntervalMs <= 0)
     {
         qWarning() << qWarningPrefix
                    << "Invalid config value:"
-                   << "openweather/currentWeatherUpdateIntervalMs";
-        valid = false;
-    }
-
-    if (m_ForecastUpdateIntervalMs <= 0)
-    {
-        qWarning() << qWarningPrefix
-                   << "Invalid config value:"
-                   << "openweather/forecastUpdateIntervalMs";
+                   << "openweather/weatherUpdateIntervalMs";
         valid = false;
     }
 
@@ -248,17 +200,7 @@ QString AppConfig::forecastFallbackFilePath() const
     return m_ForecastFallbackFilePath;
 }
 
-int AppConfig::requestTimeoutMs() const
+int AppConfig::weatherUpdateIntervalMs() const
 {
-    return m_RequestTimeoutMs;
-}
-
-int AppConfig::currentWeatherUpdateIntervalMs() const
-{
-    return m_CurrentWeatherUpdateIntervalMs;
-}
-
-int AppConfig::forecastUpdateIntervalMs() const
-{
-    return m_ForecastUpdateIntervalMs;
+    return m_WeatherUpdateIntervalMs;
 }
