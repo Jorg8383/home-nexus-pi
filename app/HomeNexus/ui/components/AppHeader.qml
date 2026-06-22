@@ -12,6 +12,16 @@ ToolBar {
 
     signal backRequested()
 
+    property date currentDateTime: new Date()
+
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+
+        onTriggered: root.currentDateTime = new Date()
+    }
+
     height: Style.appSizes.headerHeight
 
     // Customized HeaderToolButton
@@ -120,9 +130,22 @@ ToolBar {
             RowLayout {
                 anchors.fill: parent
                 anchors.rightMargin: Style.appLayout.spacingM
-                layoutDirection: Qt.RightToLeft
+                spacing: Style.appLayout.spacingM
+
+                Item {
+                    Layout.fillWidth: true
+                }
 
                 // Placeholder for future WiFi icons, etc
+
+                Text {
+                    text: Qt.formatTime(root.currentDateTime, "HH:mm")
+                    color: Style.appColors.headerText
+                    font.pixelSize: Style.appTypography.fontSizeBody
+                    verticalAlignment: Text.AlignVCenter
+
+                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                }
             }
         }
     }
