@@ -138,6 +138,8 @@ qt_add_qml_module(appHomeNexus
         assets/settings/notification-icon-white.svg
         assets/settings/sensor-icon-white.svg
         assets/settings/display-icon-white.svg
+        assets/header/wifi-offline-icon-white.svg
+        assets/header/wifi-online-icon-white.svg
 )
 
 

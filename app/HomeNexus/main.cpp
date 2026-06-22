@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
     engine.rootContext()->setContextProperty("appNotificationCenter", &appNotificationCenter);
+    engine.rootContext()->setContextProperty("networkStatus", &networkStatus);
 
 
     QObject::connect(

@@ -10,6 +10,10 @@ ToolBar {
     property string title: ""
     property bool backButtonVisible: false
 
+    readonly property string wifiIconFileName: networkStatus.hasInternetAccess
+                                               ? "wifi-online-icon-white.svg"
+                                               : "wifi-offline-icon-white.svg"
+
     signal backRequested()
 
     property date currentDateTime: new Date()
@@ -137,6 +141,16 @@ ToolBar {
                 }
 
                 // Placeholder for future WiFi icons, etc
+
+                Image {
+                    id: wifiIcon
+                    source: Style.assetsPath + "header/" + root.wifiIconFileName
+                    fillMode: Image.PreserveAspectFit
+
+                    Layout.preferredHeight: 22
+                    Layout.preferredWidth: 22
+                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                }
 
                 Text {
                     text: Qt.formatTime(root.currentDateTime, "HH:mm")
