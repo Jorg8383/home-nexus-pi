@@ -1,6 +1,8 @@
 // WeatherIconMapper.js
 .pragma library
 
+// Mapping weather icons-IDs from the OpenWeather API to icons from https://meteocons.com/
+
 function fileName(openWeatherIcon) {
     switch (openWeatherIcon) {
     case "01d":
@@ -16,8 +18,9 @@ function fileName(openWeatherIcon) {
     case "03n":
         return "weather/partly-cloudy-night.svg";
     case "04d":
+        return "weather/overcast-day.svg";
     case "04n":
-        return "weather/overcast.svg";
+        return "weather/overcast-night.svg";
     case "09d":
         return "weather/overcast-day-rain.svg";
     case "09n":
