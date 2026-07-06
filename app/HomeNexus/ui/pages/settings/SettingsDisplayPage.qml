@@ -51,16 +51,16 @@ Page {
         }
 
         // Setting: metric untis
-        AppCheckBoxCard {
-            Layout.fillWidth: true
+        // AppCheckBoxCard {
+        //     Layout.fillWidth: true
 
-            labelText: qsTr("Use metric units")
-            checked: true
+        //     labelText: qsTr("Use metric units")
+        //     checked: true
 
-            onToogled: function(checked) {
-                console.log("Checkbox 'Use Metric units' toogled:", checked)
-            }
-        }
+        //     onToogled: function(checked) {
+        //         console.log("Checkbox 'Use Metric units' toogled:", checked)
+        //     }
+        // }
 
         // Invisble spacer item to push the visible elements to the top
         Item {
