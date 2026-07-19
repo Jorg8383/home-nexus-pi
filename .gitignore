@@ -36,6 +36,7 @@ app/HomeNexus/.qtcreator/
 **/build/
 cmake-build-*/
 *build-*/
+*builds*/
 
 # ------------------------------------------------------------
 # CMake / Ninja

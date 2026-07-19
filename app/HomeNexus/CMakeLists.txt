@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Test
 )
 
-qt_standard_project_setup(REQUIRES 6.8)
+qt_standard_project_setup(REQUIRES 6.11)
 
 # Enable CTest integration, which also creates the BUILD_TESTING option
 include(CTest)
@@ -154,6 +154,11 @@ set_target_properties(appHomeNexus PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+
+target_compile_definitions(appHomeNexus
+    PRIVATE
+        $<$<CONFIG:Debug>:QT_QML_DEBUG>
 )
 
 target_link_libraries(appHomeNexus
