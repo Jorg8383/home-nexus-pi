@@ -5,6 +5,8 @@
     "cmake.configureSettings": {
         "CMAKE_PREFIX_PATH": "/home/strjo2/Qt/6.11.1/gcc_64"
     },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "cmake.debugConfig": {
         "environment": [
             {

@@ -1,0 +1,8 @@
+---
+Checks: >
+  -*,
+  clang-analyzer-*,
+  cppcoreguidelines-*
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file
