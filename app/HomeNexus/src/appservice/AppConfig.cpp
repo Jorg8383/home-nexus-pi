@@ -11,12 +11,13 @@
 #include "AppNotificationTypes.hpp"
 
 AppConfig::AppConfig(const QString &filePath, IAppNotificationClient &notificationClient)
-    :m_NotificationClient(notificationClient), m_FilePath(filePath)
+    : m_NotificationClient(notificationClient), m_FilePath(filePath)
 {
     loadFromFile(m_FilePath);
     m_IsValid = validate();
 
-    if (!hasApiKey()) {
+    if (!hasApiKey())
+    {
         qWarning() << "AppConfig::AppConifg -> OpenWeather API key is missing.";
     }
 }
@@ -34,12 +35,13 @@ void AppConfig::saveWeatherLocation(const QString &city, const QString &country)
 
     if (settings.status() != QSettings::NoError)
     {
-        qWarning() << "AppConfig::saveWeatherLocation -> error occured while writing: " << m_FilePath;
+        qWarning() << "AppConfig::saveWeatherLocation -> error occured while writing: "
+                   << m_FilePath;
         return;
     }
 
-    qWarning() << "AppConfig::saveWeatherLocation -> weather location updated."
-               << " City:" << city << "Country:" << country;
+    qWarning() << "AppConfig::saveWeatherLocation -> weather location updated." << " City:" << city
+               << "Country:" << country;
 
     m_City = city;
     m_CountryCode = country;
@@ -70,18 +72,20 @@ void AppConfig::loadFromFile(const QString &filePath)
     const QDir appDir(QCoreApplication::applicationDirPath());
     const QString qWarningPrefix(QStringLiteral("AppConfig::loadFromFile -> "));
 
-    m_WeatherFallbackFilePath = appDir.filePath(QStringLiteral("data/weather/weather_fallback.json"));
-    m_ForecastFallbackFilePath = appDir.filePath((QStringLiteral("data/weather/forecast_fallback.json")));
+    m_WeatherFallbackFilePath =
+        appDir.filePath(QStringLiteral("data/weather/weather_fallback.json"));
+    m_ForecastFallbackFilePath =
+        appDir.filePath((QStringLiteral("data/weather/forecast_fallback.json")));
 
     const QFileInfo configFileInfo(filePath);
     m_ConfigFileExists = configFileInfo.exists();
 
     if (!m_ConfigFileExists)
     {
-        m_NotificationClient.setBannerNotification(AppNotificationTypes::Id::ConfigFileNotFound,
-                                                   AppNotificationTypes::Severity::Warning,
-                                                   QStringLiteral("Config file 'HomeNexus.ini' not found.")
-                                                   );
+        m_NotificationClient.setBannerNotification(
+            AppNotificationTypes::Id::ConfigFileNotFound,
+            AppNotificationTypes::Severity::Warning,
+            QStringLiteral("Config file 'HomeNexus.ini' not found."));
         qWarning() << qWarningPrefix << "Config file does not exist:" << filePath;
         return;
     }
@@ -92,8 +96,8 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     m_Units = settings.value(QStringLiteral("openweather/units"), m_Units).toString().trimmed();
 
-    m_Language
-        = settings.value(QStringLiteral("openweather/language"), m_Language).toString().trimmed();
+    m_Language =
+        settings.value(QStringLiteral("openweather/language"), m_Language).toString().trimmed();
 
     m_City = settings.value(QStringLiteral("openweather/city"), m_City).toString().trimmed();
 
@@ -103,10 +107,10 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     bool ok = false;
 
-    const int currentWeatherInterval = settings
-                                           .value(QStringLiteral("openweather/weatherUpdateIntervalMs"),
-                                                  m_WeatherUpdateIntervalMs)
-                                           .toInt(&ok);
+    const int currentWeatherInterval =
+        settings
+            .value(QStringLiteral("openweather/weatherUpdateIntervalMs"), m_WeatherUpdateIntervalMs)
+            .toInt(&ok);
 
     if (ok)
     {
@@ -115,8 +119,7 @@ void AppConfig::loadFromFile(const QString &filePath)
     else
     {
         qWarning() << qWarningPrefix
-                   << "Invalid integer config value:"
-                   << "openweather/weatherUpdateIntervalMs"
+                   << "Invalid integer config value:" << "openweather/weatherUpdateIntervalMs"
                    << "- using default:" << m_WeatherUpdateIntervalMs;
     }
 
@@ -153,12 +156,10 @@ bool AppConfig::validate() const
         valid = false;
     }
 
-
     if (m_WeatherUpdateIntervalMs <= 0)
     {
         qWarning() << qWarningPrefix
-                   << "Invalid config value:"
-                   << "openweather/weatherUpdateIntervalMs";
+                   << "Invalid config value:" << "openweather/weatherUpdateIntervalMs";
         valid = false;
     }
 

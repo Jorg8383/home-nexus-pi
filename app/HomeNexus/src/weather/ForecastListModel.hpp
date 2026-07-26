@@ -27,5 +27,4 @@ public slots:
 
 private:
     ForecastData m_Forecast;
-
 };

@@ -10,7 +10,7 @@
 class AppConfig final : public IAppConfig
 {
 public:
-    explicit AppConfig(const QString& filePath, IAppNotificationClient &notificationClient);
+    explicit AppConfig(const QString &filePath, IAppNotificationClient &notificationClient);
 
     AppConfig(const AppConfig &) = delete;
     AppConfig &operator=(const AppConfig &) = delete;

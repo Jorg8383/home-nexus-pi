@@ -8,13 +8,12 @@
 
 #include "OpenWeatherParser.hpp"
 
-
 class OpenWeatherParserTest : public QObject
 {
     Q_OBJECT
 
 private:
-    QByteArray loadTestFile(const QString& fileName) const;
+    QByteArray loadTestFile(const QString &fileName) const;
 
     QByteArray m_jsonWeather;
     QByteArray m_jsonForecast;
@@ -29,12 +28,13 @@ private slots:
 };
 
 //---------------------------------------------------------------------------
-QByteArray OpenWeatherParserTest::loadTestFile(const QString& fileName) const
+QByteArray OpenWeatherParserTest::loadTestFile(const QString &fileName) const
 {
     QString filePath = QFINDTESTDATA(QStringLiteral("testdata/") + fileName);
     QFile file(filePath);
 
-    if (!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly))
+    {
         qFatal("Failed to open test file: %s", qPrintable(file.fileName()));
     }
 
@@ -71,7 +71,6 @@ void OpenWeatherParserTest::parsesValidCurrentWeatherData()
     QCOMPARE(result.timezoneOffsetSeconds, 7200);
     QCOMPARE(result.sunriseUtc, QDateTime::fromSecsSinceEpoch(1779507171, QTimeZone::UTC));
     QCOMPARE(result.sunsetUtc, QDateTime::fromSecsSinceEpoch(1779563065, QTimeZone::UTC));
-
 }
 
 //---------------------------------------------------------------------------
@@ -84,7 +83,7 @@ void OpenWeatherParserTest::parsesValidForecastData()
 
     QCOMPARE(result.entries.size(), 40);
 
-    const ForecastEntry& firstEntry = result.entries.at(0);
+    const ForecastEntry &firstEntry = result.entries.at(0);
 
     QCOMPARE(firstEntry.weatherMain, QStringLiteral("Clouds"));
     QCOMPARE(firstEntry.weatherDescription, QStringLiteral("overcast clouds"));
@@ -94,9 +93,10 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(firstEntry.humidity, 88);
     QCOMPARE(firstEntry.pop, 0.0);
 
-    QCOMPARE(firstEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
+    QCOMPARE(firstEntry.forecastTimestampUtc,
+             QDateTime(QDate(2026, 5, 24), QTime(21, 0, 0), QTimeZone::UTC));
 
-    const ForecastEntry& rainEntry = result.entries.at(21);
+    const ForecastEntry &rainEntry = result.entries.at(21);
 
     QCOMPARE(rainEntry.weatherMain, QStringLiteral("Rain"));
     QCOMPARE(rainEntry.weatherDescription, QStringLiteral("light rain"));
@@ -106,7 +106,8 @@ void OpenWeatherParserTest::parsesValidForecastData()
     QCOMPARE(rainEntry.humidity, 63);
     QCOMPARE(rainEntry.pop, 1.0);
 
-    QCOMPARE(rainEntry.forecastTimestampUtc, QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
+    QCOMPARE(rainEntry.forecastTimestampUtc,
+             QDateTime(QDate(2026, 5, 27), QTime(12, 0, 0), QTimeZone::UTC));
 
     QCOMPARE(result.timezone, 7200);
 }
@@ -121,13 +122,13 @@ void OpenWeatherParserTest::parsesValidGeoLocations()
 
     QCOMPARE(locations.size(), 2);
 
-    const GeoLocation& firstLocation = locations.at(0);
+    const GeoLocation &firstLocation = locations.at(0);
     QCOMPARE(firstLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(firstLocation.country, QStringLiteral("CH"));
     QCOMPARE(firstLocation.latitude, 46.8739775);
     QCOMPARE(firstLocation.longitude, 7.5631943);
 
-    const GeoLocation& secondLocation = locations.at(1);
+    const GeoLocation &secondLocation = locations.at(1);
     QCOMPARE(secondLocation.cityName, QStringLiteral("Münsingen"));
     QCOMPARE(secondLocation.country, QStringLiteral("DE"));
     QCOMPARE(secondLocation.latitude, 48.4128592);

@@ -12,13 +12,11 @@ class AppNotificationClient : public QObject, public IAppNotificationClient
     Q_OBJECT
 
 public:
-    explicit AppNotificationClient(AppNotificationCenter &center,
-                                   QObject *parent = nullptr);
+    explicit AppNotificationClient(AppNotificationCenter &center, QObject *parent = nullptr);
 
-    void setBannerNotification(
-        AppNotificationTypes::Id id,
-        AppNotificationTypes::Severity severity,
-        const QString &message) override;
+    void setBannerNotification(AppNotificationTypes::Id id,
+                               AppNotificationTypes::Severity severity,
+                               const QString &message) override;
 
     void clearBannerNotification(AppNotificationTypes::Id id) override;
 

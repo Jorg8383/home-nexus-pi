@@ -6,11 +6,12 @@
 #include "OpenWeatherParser.hpp"
 
 WeatherFallbackProvider::WeatherFallbackProvider(IAppConfig &config, QObject *parent)
-    : QObject{parent}
-    , m_Config(config)
-{}
+    : QObject{parent}, m_Config(config)
+{
+}
 
-void WeatherFallbackProvider::loadData(const QString &weatherFilePath, const QString &forecastFilePath)
+void WeatherFallbackProvider::loadData(const QString &weatherFilePath,
+                                       const QString &forecastFilePath)
 {
     QString errorMessage;
 
@@ -49,7 +50,9 @@ void WeatherFallbackProvider::loadData(const QString &weatherFilePath, const QSt
     emit forecastLoaded(forecastData);
 }
 
-bool WeatherFallbackProvider::readJsonFile(const QString &filePath, QByteArray &json, QString &errorMessage)
+bool WeatherFallbackProvider::readJsonFile(const QString &filePath,
+                                           QByteArray &json,
+                                           QString &errorMessage)
 {
     QFile file(filePath);
 

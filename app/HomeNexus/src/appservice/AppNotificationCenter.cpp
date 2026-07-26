@@ -1,10 +1,7 @@
 #include "AppNotificationCenter.hpp"
 #include <algorithm>
 
-AppNotificationCenter::AppNotificationCenter(QObject *parent)
-    : QObject(parent)
-{
-}
+AppNotificationCenter::AppNotificationCenter(QObject *parent) : QObject(parent) {}
 
 bool AppNotificationCenter::hasBannerNotification() const
 {
@@ -31,10 +28,9 @@ QString AppNotificationCenter::errorMessage() const
     return m_ErrorMessage;
 }
 
-void AppNotificationCenter::setBannerNotification(
-    AppNotificationTypes::Id id,
-    const QString &message,
-    AppNotificationTypes::Severity severity)
+void AppNotificationCenter::setBannerNotification(AppNotificationTypes::Id id,
+                                                  const QString &message,
+                                                  AppNotificationTypes::Severity severity)
 {
     if (id == AppNotificationTypes::Id::Unknown)
         return;
@@ -93,15 +89,11 @@ void AppNotificationCenter::clearError()
 void AppNotificationCenter::updateCurrentBannerNotification()
 {
     // Remove stale IDs from the order list.
-    m_BannerOrder.erase(
-        std::remove_if(
-            m_BannerOrder.begin(),
-            m_BannerOrder.end(),
-            [this](AppNotificationTypes::Id id)
-            {
-                return !m_BannerNotifications.contains(id);
-            }),
-        m_BannerOrder.end());
+    m_BannerOrder.erase(std::remove_if(m_BannerOrder.begin(),
+                                       m_BannerOrder.end(),
+                                       [this](AppNotificationTypes::Id id)
+                                       { return !m_BannerNotifications.contains(id); }),
+                        m_BannerOrder.end());
 
     AppNotificationTypes::Id newId = AppNotificationTypes::Id::Unknown;
 
@@ -144,9 +136,8 @@ void AppNotificationCenter::updateCurrentBannerNotification()
         newSeverity = notification.severity;
     }
 
-    if (m_CurrentBannerId == newId
-        && m_BannerMessage == newMessage
-        && m_BannerSeverity == newSeverity)
+    if (m_CurrentBannerId == newId && m_BannerMessage == newMessage &&
+        m_BannerSeverity == newSeverity)
     {
         return;
     }

@@ -37,10 +37,16 @@ bool OpenWeatherParser::parseWeather(const QByteArray &json, WeatherData &weathe
     if (!JsonReader::readObject(rootObj, QStringLiteral("coord"), coordObj, context))
         return false;
 
-    if (!JsonReader::readDouble(coordObj, QStringLiteral("lat"), tempWeather.latitude, context + QStringLiteral(".coord")))
+    if (!JsonReader::readDouble(coordObj,
+                                QStringLiteral("lat"),
+                                tempWeather.latitude,
+                                context + QStringLiteral(".coord")))
         return false;
 
-    if (!JsonReader::readDouble(coordObj, QStringLiteral("lon"), tempWeather.longitude, context + QStringLiteral(".coord")))
+    if (!JsonReader::readDouble(coordObj,
+                                QStringLiteral("lon"),
+                                tempWeather.longitude,
+                                context + QStringLiteral(".coord")))
         return false;
 
     QJsonArray weatherArr;
@@ -51,36 +57,60 @@ bool OpenWeatherParser::parseWeather(const QByteArray &json, WeatherData &weathe
     if (!JsonReader::readObjectAt(weatherArr, 0, weatherObj, context + QStringLiteral(".weather")))
         return false;
 
-    if (!JsonReader::readString(weatherObj, QStringLiteral("main"), tempWeather.weatherMain, context + QStringLiteral(".weather[0]")))
+    if (!JsonReader::readString(weatherObj,
+                                QStringLiteral("main"),
+                                tempWeather.weatherMain,
+                                context + QStringLiteral(".weather[0]")))
         return false;
 
-    if (!JsonReader::readString(weatherObj, QStringLiteral("description"), tempWeather.weatherDescription, context + QStringLiteral(".weather[0]")))
+    if (!JsonReader::readString(weatherObj,
+                                QStringLiteral("description"),
+                                tempWeather.weatherDescription,
+                                context + QStringLiteral(".weather[0]")))
         return false;
 
-    if (!JsonReader::readString(weatherObj, QStringLiteral("icon"), tempWeather.weatherIcon, context + QStringLiteral(".weather[0]")))
+    if (!JsonReader::readString(weatherObj,
+                                QStringLiteral("icon"),
+                                tempWeather.weatherIcon,
+                                context + QStringLiteral(".weather[0]")))
         return false;
 
     QJsonObject mainObj;
     if (!JsonReader::readObject(rootObj, QStringLiteral("main"), mainObj, context))
         return false;
 
-    if (!JsonReader::readDouble(mainObj, QStringLiteral("temp"), tempWeather.temperature, context + QStringLiteral(".main")))
+    if (!JsonReader::readDouble(mainObj,
+                                QStringLiteral("temp"),
+                                tempWeather.temperature,
+                                context + QStringLiteral(".main")))
         return false;
 
-    if (!JsonReader::readInt(mainObj, QStringLiteral("pressure"), tempWeather.pressure, context + QStringLiteral(".main")))
+    if (!JsonReader::readInt(mainObj,
+                             QStringLiteral("pressure"),
+                             tempWeather.pressure,
+                             context + QStringLiteral(".main")))
         return false;
 
-    if (!JsonReader::readInt(mainObj, QStringLiteral("humidity"), tempWeather.humidity, context + QStringLiteral(".main")))
+    if (!JsonReader::readInt(mainObj,
+                             QStringLiteral("humidity"),
+                             tempWeather.humidity,
+                             context + QStringLiteral(".main")))
         return false;
 
     QJsonObject windObj;
     if (!JsonReader::readObject(rootObj, QStringLiteral("wind"), windObj, context))
         return false;
 
-    if (!JsonReader::readDouble(windObj, QStringLiteral("speed"), tempWeather.windSpeed, context + QStringLiteral(".wind")))
+    if (!JsonReader::readDouble(windObj,
+                                QStringLiteral("speed"),
+                                tempWeather.windSpeed,
+                                context + QStringLiteral(".wind")))
         return false;
 
-    if (!JsonReader::readInt(windObj, QStringLiteral("deg"), tempWeather.windDegrees, context + QStringLiteral(".wind")))
+    if (!JsonReader::readInt(windObj,
+                             QStringLiteral("deg"),
+                             tempWeather.windDegrees,
+                             context + QStringLiteral(".wind")))
         return false;
 
     QJsonObject sysObj;
@@ -88,16 +118,19 @@ bool OpenWeatherParser::parseWeather(const QByteArray &json, WeatherData &weathe
         return false;
 
     qint64 sunriseUtc = 0;
-    if (!JsonReader::readInt64(sysObj, QStringLiteral("sunrise"), sunriseUtc, context + QStringLiteral(".sys")))
+    if (!JsonReader::readInt64(
+            sysObj, QStringLiteral("sunrise"), sunriseUtc, context + QStringLiteral(".sys")))
         return false;
     tempWeather.sunriseUtc = QDateTime::fromSecsSinceEpoch(sunriseUtc, QTimeZone::UTC);
 
     qint64 sunsetUtc = 0;
-    if (!JsonReader::readInt64(sysObj, QStringLiteral("sunset"), sunsetUtc, context + QStringLiteral(".sys")))
+    if (!JsonReader::readInt64(
+            sysObj, QStringLiteral("sunset"), sunsetUtc, context + QStringLiteral(".sys")))
         return false;
     tempWeather.sunsetUtc = QDateTime::fromSecsSinceEpoch(sunsetUtc, QTimeZone::UTC);
 
-    if (!JsonReader::readInt(rootObj, QStringLiteral("timezone"), tempWeather.timezoneOffsetSeconds, context))
+    if (!JsonReader::readInt(
+            rootObj, QStringLiteral("timezone"), tempWeather.timezoneOffsetSeconds, context))
         return false;
 
     qint64 dt = 0;
@@ -143,38 +176,64 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
             return false;
 
         qint64 dt = 0;
-        if (!JsonReader::readInt64(listItem, QStringLiteral("dt"), dt, context + QStringLiteral(".list[%1]").arg(i)))
+        if (!JsonReader::readInt64(
+                listItem, QStringLiteral("dt"), dt, context + QStringLiteral(".list[%1]").arg(i)))
             return false;
         forecastEntry.forecastTimestampUtc = QDateTime::fromSecsSinceEpoch(dt, QTimeZone::UTC);
 
-        if (!JsonReader::readDouble(listItem, QStringLiteral("pop"), forecastEntry.pop , context + QStringLiteral(".list[%1]").arg(i)))
+        if (!JsonReader::readDouble(listItem,
+                                    QStringLiteral("pop"),
+                                    forecastEntry.pop,
+                                    context + QStringLiteral(".list[%1]").arg(i)))
             return false;
 
         QJsonObject mainItem;
-        if (!JsonReader::readObject(listItem, QStringLiteral("main"), mainItem, context + QStringLiteral(".list[%1]").arg(i)))
+        if (!JsonReader::readObject(listItem,
+                                    QStringLiteral("main"),
+                                    mainItem,
+                                    context + QStringLiteral(".list[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readDouble(mainItem, QStringLiteral("temp"), forecastEntry.temperature, context + QStringLiteral(".list[%1]")))
+        if (!JsonReader::readDouble(mainItem,
+                                    QStringLiteral("temp"),
+                                    forecastEntry.temperature,
+                                    context + QStringLiteral(".list[%1]")))
             return false;
 
-        if (!JsonReader::readInt(mainItem, QStringLiteral("humidity"), forecastEntry.humidity, context + QStringLiteral(".list[%1]")))
+        if (!JsonReader::readInt(mainItem,
+                                 QStringLiteral("humidity"),
+                                 forecastEntry.humidity,
+                                 context + QStringLiteral(".list[%1]")))
             return false;
 
         QJsonArray weatherArr;
-        if (!JsonReader::readArray(listItem, QStringLiteral("weather"), weatherArr, context + QStringLiteral(".list[%1]").arg(i)))
+        if (!JsonReader::readArray(listItem,
+                                   QStringLiteral("weather"),
+                                   weatherArr,
+                                   context + QStringLiteral(".list[%1]").arg(i)))
             return false;
 
         QJsonObject weatherItem;
-        if (!JsonReader::readObjectAt(weatherArr, 0, weatherItem, context + QStringLiteral(".list[%1]").arg(i)))
+        if (!JsonReader::readObjectAt(
+                weatherArr, 0, weatherItem, context + QStringLiteral(".list[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readString(weatherItem, QStringLiteral("main"), forecastEntry.weatherMain, context + QStringLiteral(".list[%1].weather").arg(i)))
+        if (!JsonReader::readString(weatherItem,
+                                    QStringLiteral("main"),
+                                    forecastEntry.weatherMain,
+                                    context + QStringLiteral(".list[%1].weather").arg(i)))
             return false;
 
-        if (!JsonReader::readString(weatherItem, QStringLiteral("description"), forecastEntry.weatherDescription, context + QStringLiteral(".list[%1].weather").arg(i)))
+        if (!JsonReader::readString(weatherItem,
+                                    QStringLiteral("description"),
+                                    forecastEntry.weatherDescription,
+                                    context + QStringLiteral(".list[%1].weather").arg(i)))
             return false;
 
-        if (!JsonReader::readString(weatherItem, QStringLiteral("icon"), forecastEntry.weatherIcon, context + QStringLiteral(".list[%1].weather").arg(i)))
+        if (!JsonReader::readString(weatherItem,
+                                    QStringLiteral("icon"),
+                                    forecastEntry.weatherIcon,
+                                    context + QStringLiteral(".list[%1].weather").arg(i)))
             return false;
 
         tempForecast.entries.append(forecastEntry);
@@ -184,7 +243,10 @@ bool OpenWeatherParser::parseForecast(const QByteArray &json, ForecastData &fore
     if (!JsonReader::readObject(rootObj, QStringLiteral("city"), cityObj, context))
         return false;
 
-    if (!JsonReader::readInt(cityObj, QStringLiteral("timezone"), tempForecast.timezone, context + QStringLiteral("timezone")))
+    if (!JsonReader::readInt(cityObj,
+                             QStringLiteral("timezone"),
+                             tempForecast.timezone,
+                             context + QStringLiteral("timezone")))
         return false;
 
     tempForecast.updatedTimestampUtc = QDateTime::currentDateTimeUtc();
@@ -220,16 +282,28 @@ bool OpenWeatherParser::parseGeoLocations(const QByteArray &json, QList<GeoLocat
         if (!JsonReader::readObjectAt(rootArr, i, locationObj))
             return false;
 
-        if (!JsonReader::readString(locationObj, QStringLiteral("name"), geoLocation.cityName, QStringLiteral("location[%1]").arg(i)))
+        if (!JsonReader::readString(locationObj,
+                                    QStringLiteral("name"),
+                                    geoLocation.cityName,
+                                    QStringLiteral("location[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readString(locationObj, QStringLiteral("country"), geoLocation.country, QStringLiteral("location[%1]").arg(i)))
+        if (!JsonReader::readString(locationObj,
+                                    QStringLiteral("country"),
+                                    geoLocation.country,
+                                    QStringLiteral("location[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readDouble(locationObj, QStringLiteral("lat"), geoLocation.latitude, QStringLiteral("location[%1]").arg(i)))
+        if (!JsonReader::readDouble(locationObj,
+                                    QStringLiteral("lat"),
+                                    geoLocation.latitude,
+                                    QStringLiteral("location[%1]").arg(i)))
             return false;
 
-        if (!JsonReader::readDouble(locationObj, QStringLiteral("lon"), geoLocation.longitude, QStringLiteral("location[%1]").arg(i)))
+        if (!JsonReader::readDouble(locationObj,
+                                    QStringLiteral("lon"),
+                                    geoLocation.longitude,
+                                    QStringLiteral("location[%1]").arg(i)))
             return false;
 
         parsedLocations.append(geoLocation);

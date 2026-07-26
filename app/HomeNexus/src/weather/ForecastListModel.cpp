@@ -5,10 +5,7 @@
 #include <QByteArray>
 #include <QDebug>
 
-ForecastListModel::ForecastListModel(QObject *parent)
-    : QAbstractListModel(parent)
-{
-}
+ForecastListModel::ForecastListModel(QObject *parent) : QAbstractListModel(parent) {}
 
 int ForecastListModel::rowCount(const QModelIndex &parent) const
 {
@@ -32,31 +29,28 @@ QVariant ForecastListModel::data(const QModelIndex &index, int role) const
 
     switch (role)
     {
-    case DayTextRole:
-        return QLocale().toString(localDateTime, QStringLiteral("dddd"));
-    case TimeTextRole:
-        return QLocale().toString(localDateTime, QStringLiteral("HH:mm"));
-    case TemperatureRole:
-        return entry.temperature;
-    case PrecipitationProbabilityRole:
-        return entry.pop;
-    case WeatherIconRole:
-        return entry.weatherIcon;
-    default:
-        return {};
+        case DayTextRole:
+            return QLocale().toString(localDateTime, QStringLiteral("dddd"));
+        case TimeTextRole:
+            return QLocale().toString(localDateTime, QStringLiteral("HH:mm"));
+        case TemperatureRole:
+            return entry.temperature;
+        case PrecipitationProbabilityRole:
+            return entry.pop;
+        case WeatherIconRole:
+            return entry.weatherIcon;
+        default:
+            return {};
     }
 }
 
 QHash<int, QByteArray> ForecastListModel::roleNames() const
 {
-    QHash<int, QByteArray> mapping
-        {
-            {DayTextRole, "dayText"},
-            {TimeTextRole, "timeText"},
-            {TemperatureRole, "temperature"},
-            {PrecipitationProbabilityRole, "precipitationProbability"},
-            {WeatherIconRole, "weatherIcon"}
-        };
+    QHash<int, QByteArray> mapping{{DayTextRole, "dayText"},
+                                   {TimeTextRole, "timeText"},
+                                   {TemperatureRole, "temperature"},
+                                   {PrecipitationProbabilityRole, "precipitationProbability"},
+                                   {WeatherIconRole, "weatherIcon"}};
     return mapping;
 }
 

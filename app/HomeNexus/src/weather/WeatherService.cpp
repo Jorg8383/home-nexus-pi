@@ -5,43 +5,38 @@
 WeatherService::WeatherService(GeoCodingClient &geoCodingClient,
                                OpenWeatherClient &weatherClient,
                                QObject *parent)
-    : QObject(parent)
-    , m_GeoCodingClient(geoCodingClient)
-    , m_WeatherClient(weatherClient)
-    , m_PendingRequests(-1)
+    : QObject(parent), m_GeoCodingClient(geoCodingClient), m_WeatherClient(weatherClient),
+      m_PendingRequests(-1)
 {
     connect(&m_GeoCodingClient,
             &GeoCodingClient::geoLocationsReceived,
             this,
-            &WeatherService::onGeoLocationsReceived
-            );
+            &WeatherService::onGeoLocationsReceived);
 
     connect(&m_GeoCodingClient,
             &GeoCodingClient::errorOccurred,
             this,
-            &WeatherService::onClientErrorOccurred
-            );
+            &WeatherService::onClientErrorOccurred);
 
     connect(&m_WeatherClient,
             &OpenWeatherClient::weatherReceived,
             this,
-            &WeatherService::onWeatherJsonReceived
-            );
+            &WeatherService::onWeatherJsonReceived);
 
     connect(&m_WeatherClient,
             &OpenWeatherClient::forecastReceived,
             this,
-            &WeatherService::onForecastJsonReceived
-            );
+            &WeatherService::onForecastJsonReceived);
 
     connect(&m_WeatherClient,
             &OpenWeatherClient::errorOccurred,
             this,
-            &WeatherService::onClientErrorOccurred
-            );
+            &WeatherService::onClientErrorOccurred);
 }
 
-void WeatherService::updateWeatherForCity(const QString &cityName, const QString &countryCode, int limit)
+void WeatherService::updateWeatherForCity(const QString &cityName,
+                                          const QString &countryCode,
+                                          int limit)
 {
     const QString city = cityName.trimmed();
     const QString country = countryCode.trimmed().toUpper();
@@ -83,7 +78,8 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
 
     if (locations.isEmpty())
     {
-        qWarning() << "WeatherService::onGeoLocationsReceived -> Received geo-location list is emtpy";
+        qWarning()
+            << "WeatherService::onGeoLocationsReceived -> Received geo-location list is emtpy";
         emit infoOccurred(QStringLiteral("No weather location found."));
         return;
     }
@@ -95,10 +91,8 @@ void WeatherService::onGeoLocationsReceived(const QByteArray &json)
     m_CityName = location.cityName;
     m_Country = location.country;
 
-    qWarning() << "WeatherService::onGeoLocationsReceived -> "
-               << "city: " << m_CityName << "latitude: "
-               << location.latitude << "longitude: "
-               << location.longitude;
+    qWarning() << "WeatherService::onGeoLocationsReceived -> " << "city: " << m_CityName
+               << "latitude: " << location.latitude << "longitude: " << location.longitude;
     updateWeatherForCoordinates(location.latitude, location.longitude);
 }
 

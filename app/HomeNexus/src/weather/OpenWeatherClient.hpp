@@ -24,7 +24,7 @@ private:
     void sendRequest(const QString &endpoint,
                      double latitude,
                      double longitude,
-                     std::function<void(const QByteArray&)> onSuccess);
+                     std::function<void(const QByteArray &)> onSuccess);
 
 signals:
     void weatherReceived(const QByteArray &json);
@@ -32,7 +32,6 @@ signals:
     void errorOccurred(const QString &message);
 
 private:
-    QNetworkAccessManager& m_NetworkManager;
+    QNetworkAccessManager &m_NetworkManager;
     const IAppConfig &m_Config;
-
 };

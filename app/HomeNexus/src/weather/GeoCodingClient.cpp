@@ -8,15 +8,17 @@
 #include <QByteArray>
 #include <algorithm> // std::clamp
 
-GeoCodingClient::GeoCodingClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent)
+GeoCodingClient::GeoCodingClient(QNetworkAccessManager &networkManager,
+                                 const IAppConfig &config,
+                                 QObject *parent)
     : QObject(parent), m_NetworkManager(networkManager), m_Config(config)
 {
-
 }
 
-void GeoCodingClient::fetchGeoLocations(const QString &cityName, const QString &countryCode, int limit)
+void GeoCodingClient::fetchGeoLocations(const QString &cityName,
+                                        const QString &countryCode,
+                                        int limit)
 {
-
     QString locationQuery = cityName.trimmed();
 
     if (locationQuery.isEmpty())
@@ -45,19 +47,16 @@ void GeoCodingClient::fetchGeoLocations(const QString &cityName, const QString &
     }
 
     QNetworkRequest request(url);
-    request.setRawHeader(
-        QByteArrayLiteral("Accept"),
-        QByteArrayLiteral("application/json")
-        );
+    request.setRawHeader(QByteArrayLiteral("Accept"), QByteArrayLiteral("application/json"));
 
     QNetworkReply *reply = m_NetworkManager.get(request);
 
-    QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]()
+    QObject::connect(reply,
+                     &QNetworkReply::finished,
+                     this,
+                     [this, reply]()
                      {
-                         const auto cleanup = qScopeGuard([reply]
-                                                          {
-                                                              reply->deleteLater();
-                                                          });
+                         const auto cleanup = qScopeGuard([reply] { reply->deleteLater(); });
 
                          if (reply->error() != QNetworkReply::NoError)
                          {
@@ -65,7 +64,8 @@ void GeoCodingClient::fetchGeoLocations(const QString &cityName, const QString &
                              return;
                          }
 
-                         const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                         const int statusCode =
+                             reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
                          if (statusCode < 200 || statusCode >= 300)
                          {

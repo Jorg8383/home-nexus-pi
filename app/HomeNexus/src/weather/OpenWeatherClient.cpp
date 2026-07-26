@@ -10,41 +10,35 @@
 
 #include "IAppConfig.hpp"
 
-
-OpenWeatherClient::OpenWeatherClient(QNetworkAccessManager &networkManager, const IAppConfig &config, QObject *parent) :
-    QObject(parent), m_NetworkManager(networkManager), m_Config(config)
+OpenWeatherClient::OpenWeatherClient(QNetworkAccessManager &networkManager,
+                                     const IAppConfig &config,
+                                     QObject *parent)
+    : QObject(parent), m_NetworkManager(networkManager), m_Config(config)
 {
 }
 
 void OpenWeatherClient::fetchWeather(double latitude, double longitude)
 {
     QString urlString(QStringLiteral("https://api.openweathermap.org/data/2.5/weather"));
-    sendRequest(
-        urlString,
-        latitude,
-        longitude,
-        [this](const QByteArray &json)
-        {
-            emit weatherReceived(json);
-        }
-        );
+    sendRequest(urlString,
+                latitude,
+                longitude,
+                [this](const QByteArray &json) { emit weatherReceived(json); });
 }
 
 void OpenWeatherClient::fetchForecast(double latitude, double longitude)
 {
     QString urlString(QStringLiteral("https://api.openweathermap.org/data/2.5/forecast"));
-    sendRequest(
-        urlString,
-        latitude,
-        longitude,
-        [this](const QByteArray &json)
-        {
-            emit forecastReceived(json);
-        }
-        );
+    sendRequest(urlString,
+                latitude,
+                longitude,
+                [this](const QByteArray &json) { emit forecastReceived(json); });
 }
 
-void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, double longitude, std::function<void (const QByteArray &)> onSuccess)
+void OpenWeatherClient::sendRequest(const QString &endpoint,
+                                    double latitude,
+                                    double longitude,
+                                    std::function<void(const QByteArray &)> onSuccess)
 {
     QUrl url(endpoint);
 
@@ -63,10 +57,7 @@ void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, do
     }
 
     QNetworkRequest request(url);
-    request.setRawHeader(
-        QByteArrayLiteral("Accept"),
-        QByteArrayLiteral("application/json")
-        );
+    request.setRawHeader(QByteArrayLiteral("Accept"), QByteArrayLiteral("application/json"));
 
     QNetworkReply *reply = m_NetworkManager.get(request);
 
@@ -75,12 +66,12 @@ void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, do
     because the method fetchCurrentWeather will have gone out of scope by the time
     the signal QNetworkReplay::finished is emitted and invokes the lambda function.
     */
-    connect(reply, &QNetworkReply::finished, this, [this, reply, onSuccess]()
+    connect(reply,
+            &QNetworkReply::finished,
+            this,
+            [this, reply, onSuccess]()
             {
-                const auto cleanup = qScopeGuard([reply]
-                {
-                     reply->deleteLater();
-                });
+                const auto cleanup = qScopeGuard([reply] { reply->deleteLater(); });
 
                 if (reply->error() != QNetworkReply::NoError)
                 {
@@ -88,7 +79,8 @@ void OpenWeatherClient::sendRequest(const QString &endpoint, double latitude, do
                     return;
                 }
 
-                const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                const int statusCode =
+                    reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
                 if (statusCode < 200 || statusCode >= 300)
                 {

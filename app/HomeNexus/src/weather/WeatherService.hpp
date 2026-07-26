@@ -21,8 +21,7 @@ public:
                               const QString &countryCode = QString(),
                               int limit = 5);
 
-    void updateWeatherForCoordinates(const double latitude,
-                                     const double longitude);
+    void updateWeatherForCoordinates(const double latitude, const double longitude);
 
 signals:
     void weatherUpdated(const WeatherData &weather);
@@ -33,7 +32,7 @@ signals:
     void updateFinished();
 
 private slots:
-    void onGeoLocationsReceived(const QByteArray& json);
+    void onGeoLocationsReceived(const QByteArray &json);
     void onWeatherJsonReceived(const QByteArray &json);
     void onForecastJsonReceived(const QByteArray &json);
     void onClientErrorOccurred(const QString &message);

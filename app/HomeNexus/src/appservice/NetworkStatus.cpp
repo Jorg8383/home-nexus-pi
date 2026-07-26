@@ -2,12 +2,12 @@
 
 #include <QDebug>
 
-NetworkStatus::NetworkStatus(QObject *parent)
-    : QObject{parent}
+NetworkStatus::NetworkStatus(QObject *parent) : QObject{parent}
 {
     if (!QNetworkInformation::loadDefaultBackend())
     {
-        qWarning() << "NetworkStatus::NetworkStatus -> QNetworkInformation backend could not be loaded.";
+        qWarning()
+            << "NetworkStatus::NetworkStatus -> QNetworkInformation backend could not be loaded.";
         return;
     }
 
@@ -15,7 +15,8 @@ NetworkStatus::NetworkStatus(QObject *parent)
 
     if (!networkInformation)
     {
-        qWarning() << "NetworkStatus::NetworkStatus -> QNetworkInformation instance is not available.";
+        qWarning()
+            << "NetworkStatus::NetworkStatus -> QNetworkInformation instance is not available.";
         return;
     }
 
@@ -29,9 +30,9 @@ NetworkStatus::NetworkStatus(QObject *parent)
 
 bool NetworkStatus::hasNetworkConnection() const
 {
-    return m_Reachability == QNetworkInformation::Reachability::Local
-           || m_Reachability == QNetworkInformation::Reachability::Site
-           || m_Reachability == QNetworkInformation::Reachability::Online;
+    return m_Reachability == QNetworkInformation::Reachability::Local ||
+           m_Reachability == QNetworkInformation::Reachability::Site ||
+           m_Reachability == QNetworkInformation::Reachability::Online;
 }
 
 bool NetworkStatus::hasInternetAccess() const
@@ -45,20 +46,20 @@ QString NetworkStatus::statusText()
 
     switch (m_Reachability)
     {
-    case QNetworkInformation::Reachability::Unknown:
-        text = QStringLiteral("Network status unknown");
+        case QNetworkInformation::Reachability::Unknown:
+            text = QStringLiteral("Network status unknown");
 
-    case QNetworkInformation::Reachability::Disconnected:
-        text = QStringLiteral("No network connection");
+        case QNetworkInformation::Reachability::Disconnected:
+            text = QStringLiteral("No network connection");
 
-    case QNetworkInformation::Reachability::Local:
-        text = QStringLiteral("Connected to local network only");
+        case QNetworkInformation::Reachability::Local:
+            text = QStringLiteral("Connected to local network only");
 
-    case QNetworkInformation::Reachability::Site:
-        text = QStringLiteral("Connected to local site or intranet");
+        case QNetworkInformation::Reachability::Site:
+            text = QStringLiteral("Connected to local site or intranet");
 
-    case QNetworkInformation::Reachability::Online:
-        text = QStringLiteral("Online");
+        case QNetworkInformation::Reachability::Online:
+            text = QStringLiteral("Online");
     }
 
     return text;

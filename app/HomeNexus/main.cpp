@@ -26,7 +26,7 @@ namespace
         const QDir appDir(QCoreApplication::applicationDirPath());
         return appDir.filePath(QStringLiteral("config/homenexus.ini"));
     }
-}
+} // namespace
 
 int main(int argc, char *argv[])
 {
@@ -40,16 +40,13 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription(QStringLiteral("HomeNexus smart-home dashboard"));
     parser.addHelpOption();
 
-    QCommandLineOption embeddedOption(
-        QStringLiteral("embedded"),
-        QStringLiteral("Start the application in embedded mode")
-        );
+    QCommandLineOption embeddedOption(QStringLiteral("embedded"),
+                                      QStringLiteral("Start the application in embedded mode"));
 
-    QCommandLineOption configOption(
-        QStringList() << QStringLiteral("c") << QStringLiteral("config"),
-        QStringLiteral("Path to the HomeNexus .ini config file"),
-        QStringLiteral("file")
-        );
+    QCommandLineOption configOption(QStringList()
+                                        << QStringLiteral("c") << QStringLiteral("config"),
+                                    QStringLiteral("Path to the HomeNexus .ini config file"),
+                                    QStringLiteral("file"));
 
     parser.addOption(embeddedOption);
     parser.addOption(configOption);
@@ -64,7 +61,6 @@ int main(int argc, char *argv[])
         parser.isSet(configOption) ? parser.value(configOption) : defaultConfigFilePath();
     qInfo() << "Loading config from:" << configFilePath;
 
-
     AppNotificationCenter appNotificationCenter;
     AppNotificationClient appNotificationClient(appNotificationCenter);
 
@@ -78,7 +74,8 @@ int main(int argc, char *argv[])
 
     WeatherService weatherService(geoCodingClient, weatherClient);
     WeatherFallbackProvider weatherFallback(config);
-    WeatherRepository weatherRepository(weatherService, weatherFallback, config, appNotificationClient, networkStatus);
+    WeatherRepository weatherRepository(
+        weatherService, weatherFallback, config, appNotificationClient, networkStatus);
     WeatherViewModel weatherViewModel(weatherRepository);
 
     QQmlApplicationEngine engine;
@@ -87,7 +84,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
     engine.rootContext()->setContextProperty("appNotificationCenter", &appNotificationCenter);
     engine.rootContext()->setContextProperty("networkStatus", &networkStatus);
-
 
     QObject::connect(
         &engine,
@@ -98,10 +94,7 @@ int main(int argc, char *argv[])
 
     engine.loadFromModule("HomeNexus", "Main");
 
-    weatherViewModel.updateWeatherForCity(
-        config.city(),
-        config.countryCode()
-        );
+    weatherViewModel.updateWeatherForCity(config.city(), config.countryCode());
 
     return app.exec();
 }

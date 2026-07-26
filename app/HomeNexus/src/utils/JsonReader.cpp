@@ -1,6 +1,9 @@
 #include "JsonReader.hpp"
 
-bool HomeNexusUtils::JsonReader::readObject(const QJsonObject &parent, const QString &key, QJsonObject &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readObject(const QJsonObject &parent,
+                                            const QString &key,
+                                            QJsonObject &out,
+                                            const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -18,7 +21,10 @@ bool HomeNexusUtils::JsonReader::readObject(const QJsonObject &parent, const QSt
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readObjectAt(const QJsonArray &array, qsizetype index, QJsonObject &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readObjectAt(const QJsonArray &array,
+                                              qsizetype index,
+                                              QJsonObject &out,
+                                              const QString &context)
 {
     const QString path = QString("%1[%2]").arg(context).arg(index);
 
@@ -44,7 +50,10 @@ bool HomeNexusUtils::JsonReader::readObjectAt(const QJsonArray &array, qsizetype
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readArray(const QJsonObject &parent, const QString &key, QJsonArray &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readArray(const QJsonObject &parent,
+                                           const QString &key,
+                                           QJsonArray &out,
+                                           const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -64,7 +73,10 @@ bool HomeNexusUtils::JsonReader::readArray(const QJsonObject &parent, const QStr
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readDouble(const QJsonObject &parent, const QString &key, double &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readDouble(const QJsonObject &parent,
+                                            const QString &key,
+                                            double &out,
+                                            const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -84,7 +96,10 @@ bool HomeNexusUtils::JsonReader::readDouble(const QJsonObject &parent, const QSt
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readString(const QJsonObject &parent, const QString &key, QString &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readString(const QJsonObject &parent,
+                                            const QString &key,
+                                            QString &out,
+                                            const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -104,7 +119,10 @@ bool HomeNexusUtils::JsonReader::readString(const QJsonObject &parent, const QSt
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readBool(const QJsonObject &parent, const QString &key, bool &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readBool(const QJsonObject &parent,
+                                          const QString &key,
+                                          bool &out,
+                                          const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -124,7 +142,10 @@ bool HomeNexusUtils::JsonReader::readBool(const QJsonObject &parent, const QStri
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readInt(const QJsonObject &parent, const QString &key, int &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readInt(const QJsonObject &parent,
+                                         const QString &key,
+                                         int &out,
+                                         const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;
@@ -158,7 +179,10 @@ bool HomeNexusUtils::JsonReader::readInt(const QJsonObject &parent, const QStrin
     return true;
 }
 
-bool HomeNexusUtils::JsonReader::readInt64(const QJsonObject &parent, const QString &key, qint64 &out, const QString &context)
+bool HomeNexusUtils::JsonReader::readInt64(const QJsonObject &parent,
+                                           const QString &key,
+                                           qint64 &out,
+                                           const QString &context)
 {
     const QJsonValue value = parent.value(key);
     const QString path = context.isEmpty() ? key : context + "." + key;

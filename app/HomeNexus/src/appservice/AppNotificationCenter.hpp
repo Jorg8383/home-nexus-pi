@@ -11,7 +11,8 @@ class AppNotificationCenter : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool hasBannerNotification READ hasBannerNotification NOTIFY bannerNotificationChanged)
+    Q_PROPERTY(
+        bool hasBannerNotification READ hasBannerNotification NOTIFY bannerNotificationChanged)
     Q_PROPERTY(QString bannerMessage READ bannerMessage NOTIFY bannerNotificationChanged)
     Q_PROPERTY(int bannerSeverity READ bannerSeverity NOTIFY bannerNotificationChanged)
 

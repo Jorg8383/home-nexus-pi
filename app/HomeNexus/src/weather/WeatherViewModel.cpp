@@ -2,32 +2,24 @@
 #include <QLocale>
 
 WeatherViewModel::WeatherViewModel(WeatherRepository &repository, QObject *parent)
-    : QObject{parent},
-    m_Repository(repository),
-    m_ForecastListModel(this), // passing 'this' to the constructor of ForecastListModel
-    m_WeatherData(repository.weather()),
-    m_Loading(repository.loading())
+    : QObject{parent}, m_Repository(repository),
+      m_ForecastListModel(this), // passing 'this' to the constructor of ForecastListModel
+      m_WeatherData(repository.weather()), m_Loading(repository.loading())
 {
-    connect(
-        &m_Repository,
-        &WeatherRepository::weatherChanged,
-        this,
-        &WeatherViewModel::onWeatherChanged
-        );
+    connect(&m_Repository,
+            &WeatherRepository::weatherChanged,
+            this,
+            &WeatherViewModel::onWeatherChanged);
 
-    connect(
-        &m_Repository,
-        &WeatherRepository::forecastChanged,
-        &m_ForecastListModel,
-        &ForecastListModel::setForecast
-        );
+    connect(&m_Repository,
+            &WeatherRepository::forecastChanged,
+            &m_ForecastListModel,
+            &ForecastListModel::setForecast);
 
-    connect(
-        &m_Repository,
-        &WeatherRepository::loadingChanged,
-        this,
-        &WeatherViewModel::onLoadingChanged
-        );
+    connect(&m_Repository,
+            &WeatherRepository::loadingChanged,
+            this,
+            &WeatherViewModel::onLoadingChanged);
 }
 
 QString WeatherViewModel::city() const
@@ -90,7 +82,8 @@ QString WeatherViewModel::lastUpdatedText() const
     if (!m_WeatherData.timestampUtc.isValid())
         return {};
 
-    const QDateTime localDateTime = m_WeatherData.timestampUtc.addSecs(m_WeatherData.timezoneOffsetSeconds);
+    const QDateTime localDateTime =
+        m_WeatherData.timestampUtc.addSecs(m_WeatherData.timezoneOffsetSeconds);
 
     return QLocale().toString(localDateTime, QStringLiteral("dddd, HH:mm"));
 }
@@ -105,7 +98,9 @@ ForecastListModel *WeatherViewModel::forecastModel()
     return &m_ForecastListModel;
 }
 
-void WeatherViewModel::updateWeatherForCity(const QString &cityName, const QString &countryCode, int limit)
+void WeatherViewModel::updateWeatherForCity(const QString &cityName,
+                                            const QString &countryCode,
+                                            int limit)
 {
     m_Repository.updateWeatherForCity(cityName, countryCode, limit);
 }

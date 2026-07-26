@@ -25,6 +25,5 @@ signals:
 private:
     void updateReachability(QNetworkInformation::Reachability reachability);
 
-    QNetworkInformation::Reachability m_Reachability =
-        QNetworkInformation::Reachability::Unknown;
+    QNetworkInformation::Reachability m_Reachability = QNetworkInformation::Reachability::Unknown;
 };

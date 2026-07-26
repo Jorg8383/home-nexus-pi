@@ -9,10 +9,9 @@ class IAppNotificationClient
 public:
     virtual ~IAppNotificationClient() = default;
 
-    virtual void setBannerNotification(
-        AppNotificationTypes::Id id,
-        AppNotificationTypes::Severity severity,
-        const QString &message) = 0;
+    virtual void setBannerNotification(AppNotificationTypes::Id id,
+                                       AppNotificationTypes::Severity severity,
+                                       const QString &message) = 0;
 
     virtual void clearBannerNotification(AppNotificationTypes::Id id) = 0;
 
