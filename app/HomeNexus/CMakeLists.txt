@@ -5,6 +5,8 @@ project(HomeNexus VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(QT_SKIP_AUTO_QML_PLUGIN_INCLUSION ON)
+
 find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Core
@@ -142,6 +144,10 @@ qt_add_qml_module(appHomeNexus
         assets/settings/display-icon-white.svg
         assets/header/wifi-offline-icon-white.svg
         assets/header/wifi-online-icon-white.svg
+)
+
+set_target_properties(appHomeNexus PROPERTIES
+    QT_QML_MODULE_NO_IMPORT_SCAN TRUE
 )
 
 
