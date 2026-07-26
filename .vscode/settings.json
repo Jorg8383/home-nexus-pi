@@ -1,3 +1,24 @@
 {
-    "cmake.sourceDirectory": "C:/Projects/home-nexus-pi/app/HomeNexus"
+    "cmake.sourceDirectory": "${workspaceFolder}/app/HomeNexus",
+    "cmake.buildDirectory": "${workspaceFolder}/app/HomeNexus/builds/${buildKit}/${buildType}",
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.configureSettings": {
+        "CMAKE_PREFIX_PATH": "/home/strjo2/Qt/6.11.1/gcc_64"
+    },
+    "cmake.debugConfig": {
+        "environment": [
+            {
+                "name": "XCURSOR_SIZE",
+                "value": "16"
+            }
+        ]
+    },
+	"files.exclude": {
+        "**/build/**": true,
+        "**/builds/**": true
+    },
+
+    "search.exclude": {
+        "artifacts/**": true
+    }
 }

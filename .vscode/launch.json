@@ -14,7 +14,7 @@
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/app/HomeNexus",
             "environment": [
                 {
                     "name": "XCURSOR_SIZE",
