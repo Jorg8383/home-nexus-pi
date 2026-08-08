@@ -24,6 +24,8 @@
             "visualizerFile": "${command:qt-cpp.natvis}",
             "showDisplayString": true,
             "args": [
+                "--config",
+                "${workspaceFolder}/app/HomeNexus/config/homenexus.ini",
                 "-qmljsdebugger=host:localhost,port:${command:qt-qml.debugPort},block,services:DebugMessages,QmlDebugger,V8Debugger"
             ],
             "linux": {
