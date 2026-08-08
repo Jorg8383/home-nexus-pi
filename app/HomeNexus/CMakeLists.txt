@@ -45,6 +45,9 @@ set_source_files_properties(
 qt_add_qml_module(appHomeNexus
     URI HomeNexus
     VERSION 1.0
+    SOURCES
+        src/qml/NetworkStatusForeign.hpp
+        src/qml/AppNotificationCenterForeign.hpp
     QML_FILES
         Main.qml
         ui/components/AppHeader.qml
@@ -150,6 +153,11 @@ set_target_properties(appHomeNexus PROPERTIES
     QT_QML_MODULE_NO_IMPORT_SCAN TRUE
 )
 
+target_include_directories(appHomeNexus
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/qml
+)
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -170,6 +178,7 @@ target_compile_definitions(appHomeNexus
 target_link_libraries(appHomeNexus
     PRIVATE
         Qt6::Quick
+        Qt6::Qml
         HomeNexusWeather
         HomeNexusUtils
         HomeNexusAppService

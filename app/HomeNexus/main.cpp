@@ -18,6 +18,8 @@
 #include "WeatherFallbackProvider.hpp"
 #include "AppNotificationCenter.hpp"
 #include "NetworkStatus.hpp"
+#include "AppNotificationCenterForeign.hpp"
+#include "NetworkStatusForeign.hpp"
 
 namespace
 {
@@ -78,12 +80,13 @@ int main(int argc, char *argv[])
         weatherService, weatherFallback, config, appNotificationClient, networkStatus);
     WeatherViewModel weatherViewModel(weatherRepository);
 
+    AppNotificationCenterForeign::setInstance(&appNotificationCenter);
+    NetworkStatusForeign::setInstance(&networkStatus);
+
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
-    engine.rootContext()->setContextProperty("appNotificationCenter", &appNotificationCenter);
-    engine.rootContext()->setContextProperty("networkStatus", &networkStatus);
 
     QObject::connect(
         &engine,

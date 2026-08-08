@@ -101,9 +101,9 @@ ApplicationWindow {
 
         AppWarningBanner {
             Layout.fillWidth: true
-            hasNotification: appNotificationCenter.hasBannerNotification
-            severity: appNotificationCenter.bannerSeverity
-            message: appNotificationCenter.bannerMessage
+            hasNotification: AppNotificationCenter.hasBannerNotification
+            severity: AppNotificationCenter.bannerSeverity
+            message: AppNotificationCenter.bannerMessage
         }
 
         StackLayout {

@@ -28,3 +28,6 @@ target_compile_features(HomeNexusAppService
     PUBLIC
         cxx_std_17
 )
+
+# Export moc metatypes so QML_FOREIGN singletons in the app module resolve correctly.
+qt_extract_metatypes(HomeNexusAppService)

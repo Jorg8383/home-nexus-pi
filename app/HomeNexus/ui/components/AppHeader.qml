@@ -10,7 +10,7 @@ ToolBar {
     property string title: ""
     property bool backButtonVisible: false
 
-    readonly property string wifiIconFileName: networkStatus.hasInternetAccess
+    readonly property string wifiIconFileName: NetworkStatus.hasInternetAccess
                                                ? "wifi-online-icon-white.svg"
                                                : "wifi-offline-icon-white.svg"
 
