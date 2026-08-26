@@ -8,6 +8,11 @@
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "cmake.debugConfig": {
+        "args": [
+            "--config",
+            "${workspaceFolder}/app/HomeNexus/config/homenexus.ini"
+        ],
+        "cwd": "${workspaceFolder}/app/HomeNexus",
         "environment": [
             {
                 "name": "XCURSOR_SIZE",
