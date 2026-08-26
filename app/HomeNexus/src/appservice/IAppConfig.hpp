@@ -5,7 +5,13 @@
 class IAppConfig
 {
 public:
+    IAppConfig() = default;
     virtual ~IAppConfig() = default;
+
+    IAppConfig(const IAppConfig &) = delete;
+    IAppConfig &operator=(const IAppConfig &) = delete;
+    IAppConfig(IAppConfig &&) = delete;
+    IAppConfig &operator=(IAppConfig &&) = delete;
 
     virtual QString apiKey() const = 0;
     virtual QString units() const = 0;

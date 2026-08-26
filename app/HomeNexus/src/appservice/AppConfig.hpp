@@ -11,9 +11,12 @@ class AppConfig final : public IAppConfig
 {
 public:
     explicit AppConfig(const QString &filePath, IAppNotificationClient &notificationClient);
+    ~AppConfig() override = default;
 
     AppConfig(const AppConfig &) = delete;
     AppConfig &operator=(const AppConfig &) = delete;
+    AppConfig(AppConfig &&) = delete;
+    AppConfig &operator=(AppConfig &&) = delete;
 
     bool isValid() const;
 

@@ -7,7 +7,13 @@
 class IAppNotificationClient
 {
 public:
+    IAppNotificationClient() = default;
     virtual ~IAppNotificationClient() = default;
+
+    IAppNotificationClient(const IAppNotificationClient &) = delete;
+    IAppNotificationClient &operator=(const IAppNotificationClient &) = delete;
+    IAppNotificationClient(IAppNotificationClient &&) = delete;
+    IAppNotificationClient &operator=(IAppNotificationClient &&) = delete;
 
     virtual void setBannerNotification(AppNotificationTypes::Id id,
                                        AppNotificationTypes::Severity severity,
