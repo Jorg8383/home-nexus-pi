@@ -294,6 +294,7 @@ bool WeatherRepository::prepareOnlineUpdate()
 
 bool WeatherRepository::isWeatherStale() const
 {
-    return !m_LastUpdateUtc.isValid() || (m_LastUpdateUtc.secsTo(QDateTime::currentDateTimeUtc()) >
-                                          m_AppConfig.weatherUpdateIntervalMs() / 1000);
+    return !m_LastUpdateUtc.isValid() ||
+           m_LastUpdateUtc.msecsTo(QDateTime::currentDateTimeUtc()) >
+               m_AppConfig.weatherUpdateIntervalMs();
 }
