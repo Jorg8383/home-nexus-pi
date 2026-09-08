@@ -8,6 +8,12 @@
 #include <QByteArray>
 #include <algorithm> // std::clamp
 
+namespace
+{
+constexpr int HttpOkMin = 200;
+constexpr int HttpOkEnd = 300;
+}
+
 GeoCodingClient::GeoCodingClient(QNetworkAccessManager &networkManager,
                                  const IAppConfig &config,
                                  QObject *parent)
@@ -69,7 +75,7 @@ void GeoCodingClient::fetchGeoLocations(const QString &cityName,
                          const int statusCode =
                              reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-                         if (statusCode < 200 || statusCode >= 300)
+                         if (statusCode < HttpOkMin || statusCode >= HttpOkEnd)
                          {
                              emit errorOccurred(QStringLiteral("HTTP error: %1").arg(statusCode));
                              return;
