@@ -38,6 +38,8 @@ private:
     void loadFromFile(const QString &filePath);
     bool validate() const;
 
+    static constexpr int DefaultWeatherUpdateIntervalMs = 600000;
+
     QString m_FilePath;
 
     bool m_IsValid = false;
@@ -51,7 +53,7 @@ private:
     QString m_WeatherFallbackFilePath;
     QString m_ForecastFallbackFilePath;
 
-    int m_WeatherUpdateIntervalMs = 600000;
+    int m_WeatherUpdateIntervalMs = DefaultWeatherUpdateIntervalMs;
 
     IAppNotificationClient &m_NotificationClient;
 };
