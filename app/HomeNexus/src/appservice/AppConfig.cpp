@@ -11,14 +11,13 @@
 #include "AppNotificationTypes.hpp"
 
 AppConfig::AppConfig(const QString &filePath, IAppNotificationClient &notificationClient)
-    : m_NotificationClient(notificationClient), m_FilePath(filePath)
+    : m_FilePath(filePath), m_NotificationClient(notificationClient)
 {
     loadFromFile(m_FilePath);
-    m_IsValid = validate();
 
     if (!hasApiKey())
     {
-        qWarning() << "AppConfig::AppConifg -> OpenWeather API key is missing.";
+        qWarning() << "AppConfig::AppConfig -> OpenWeather API key is missing.";
     }
 }
 
@@ -82,6 +81,7 @@ void AppConfig::loadFromFile(const QString &filePath)
 
     if (!m_ConfigFileExists)
     {
+        m_IsValid = false;
         m_NotificationClient.setBannerNotification(
             AppNotificationTypes::Id::ConfigFileNotFound,
             AppNotificationTypes::Severity::Warning,
@@ -124,6 +124,8 @@ void AppConfig::loadFromFile(const QString &filePath)
     }
 
     ok = false;
+
+    m_IsValid = validate();
 }
 
 bool AppConfig::validate() const
