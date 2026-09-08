@@ -27,17 +27,17 @@ QVariant ForecastListModel::data(const QModelIndex &index, int role) const
     const ForecastEntry &entry = m_Forecast.entries.at(index.row());
     const QDateTime localDateTime = entry.forecastTimestampUtc;
 
-    switch (role)
+    switch (static_cast<ForecastRole>(role))
     {
-        case DayTextRole:
+        case ForecastRole::DayTextRole:
             return QLocale().toString(localDateTime, QStringLiteral("dddd"));
-        case TimeTextRole:
+        case ForecastRole::TimeTextRole:
             return QLocale().toString(localDateTime, QStringLiteral("HH:mm"));
-        case TemperatureRole:
+        case ForecastRole::TemperatureRole:
             return entry.temperature;
-        case PrecipitationProbabilityRole:
+        case ForecastRole::PrecipitationProbabilityRole:
             return entry.pop;
-        case WeatherIconRole:
+        case ForecastRole::WeatherIconRole:
             return entry.weatherIcon;
         default:
             return {};
@@ -46,12 +46,13 @@ QVariant ForecastListModel::data(const QModelIndex &index, int role) const
 
 QHash<int, QByteArray> ForecastListModel::roleNames() const
 {
-    QHash<int, QByteArray> mapping{{DayTextRole, "dayText"},
-                                   {TimeTextRole, "timeText"},
-                                   {TemperatureRole, "temperature"},
-                                   {PrecipitationProbabilityRole, "precipitationProbability"},
-                                   {WeatherIconRole, "weatherIcon"}};
-    return mapping;
+    return {
+        {static_cast<int>(ForecastRole::DayTextRole), "dayText"},
+        {static_cast<int>(ForecastRole::TimeTextRole), "timeText"},
+        {static_cast<int>(ForecastRole::TemperatureRole), "temperature"},
+        {static_cast<int>(ForecastRole::PrecipitationProbabilityRole), "precipitationProbability"},
+        {static_cast<int>(ForecastRole::WeatherIconRole), "weatherIcon"},
+    };
 }
 
 void ForecastListModel::setForecast(const ForecastData &forecast)

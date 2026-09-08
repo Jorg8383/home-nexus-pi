@@ -7,7 +7,7 @@ class ForecastListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    enum ForecastRole
+    enum class ForecastRole : int
     {
         DayTextRole = Qt::UserRole + 1,
         TimeTextRole,
