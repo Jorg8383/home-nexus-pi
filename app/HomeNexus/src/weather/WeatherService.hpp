@@ -8,6 +8,7 @@
 #include "WeatherData.hpp"
 #include "ForecastData.hpp"
 #include "GeoLocation.hpp"
+#include "WeatherConstants.hpp"
 
 class WeatherService : public QObject
 {
@@ -19,7 +20,7 @@ public:
 
     void updateWeatherForCity(const QString &cityName,
                               const QString &countryCode = QString(),
-                              int limit = 5);
+                              int limit = WeatherConstants::MaxLocationResults);
 
     void updateWeatherForCoordinates(const double latitude, const double longitude);
 

@@ -40,7 +40,9 @@ void WeatherService::updateWeatherForCity(const QString &cityName,
 {
     const QString city = cityName.trimmed();
     const QString country = countryCode.trimmed().toUpper();
-    const int clampedLimit = std::clamp(limit, 1, 5);
+    const int clampedLimit = std::clamp(limit,
+                                       WeatherConstants::MinLocationResults,
+                                       WeatherConstants::MaxLocationResults);
 
     if (city.isEmpty())
     {

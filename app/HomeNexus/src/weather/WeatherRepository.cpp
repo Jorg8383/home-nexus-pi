@@ -136,7 +136,9 @@ void WeatherRepository::refreshIfStale()
     if (!isWeatherStale())
         return;
 
-    updateWeatherForCity(m_LastCityName, m_LastCountryCode, 5);
+    updateWeatherForCity(m_LastCityName,
+                         m_LastCountryCode,
+                         WeatherConstants::MaxLocationResults);
 }
 
 void WeatherRepository::onWeatherUpdated(const WeatherData &weather)
@@ -232,7 +234,9 @@ void WeatherRepository::onRefreshWeatherData()
         return;
     }
 
-    updateWeatherForCity(m_LastCityName, m_LastCountryCode, 5);
+    updateWeatherForCity(m_LastCityName,
+                         m_LastCountryCode,
+                         WeatherConstants::MaxLocationResults);
     qDebug() << "WeatherRepository::onRefreshWeatherData -> "
              << QDateTime::currentDateTime().toString();
 }

@@ -31,7 +31,9 @@ void GeoCodingClient::fetchGeoLocations(const QString &cityName,
         locationQuery += QStringLiteral(",") + countryCode.trimmed();
     }
 
-    limit = std::clamp(limit, 1, 5);
+    limit = std::clamp(limit,
+                       WeatherConstants::MinLocationResults,
+                       WeatherConstants::MaxLocationResults);
 
     QUrl url(QStringLiteral("https://api.openweathermap.org/geo/1.0/direct"));
     QUrlQuery query;

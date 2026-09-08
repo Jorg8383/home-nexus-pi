@@ -10,6 +10,7 @@
 #include "ForecastData.hpp"
 #include "WeatherData.hpp"
 #include "GeoLocation.hpp"
+#include "WeatherConstants.hpp"
 #include "WeatherFallbackProvider.hpp"
 #include "IAppConfig.hpp"
 #include "IAppNotificationClient.hpp"
@@ -35,7 +36,7 @@ public:
 
     void updateWeatherForCity(const QString &cityName,
                               const QString &countryCode = QString(),
-                              int limit = 5);
+                              int limit = WeatherConstants::MaxLocationResults);
     void updateWeatherForCoordinates(double latitude, double longitude);
     bool isWeatherStale() const;
     void refreshIfStale();

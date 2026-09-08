@@ -21,7 +21,7 @@ Page {
             debounceIntervalMs: 1500
 
             onSubmitted: function(cityName) {
-                weatherViewModel.updateWeatherForCity(cityName, "", 5)
+                weatherViewModel.updateWeatherForCity(cityName)
                 console.log("Weather location updated by user:", cityName)
             }
         }

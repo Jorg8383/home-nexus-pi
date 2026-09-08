@@ -4,7 +4,9 @@
 #include <QString>
 #include <QByteArray>
 #include <QNetworkAccessManager>
+
 #include "IAppConfig.hpp"
+#include "WeatherConstants.hpp"
 
 class GeoCodingClient : public QObject
 {
@@ -14,7 +16,9 @@ public:
                              const IAppConfig &config,
                              QObject *parent = nullptr);
 
-    void fetchGeoLocations(const QString &cityName, const QString &countryCode, int limit = 5);
+    void fetchGeoLocations(const QString &cityName,
+                           const QString &countryCode,
+                           int limit = WeatherConstants::MaxLocationResults);
 
 signals:
     void geoLocationsReceived(const QByteArray &json);

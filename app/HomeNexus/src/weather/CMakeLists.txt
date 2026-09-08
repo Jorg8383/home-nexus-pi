@@ -6,6 +6,7 @@ add_library(HomeNexusWeather STATIC
     WeatherData.hpp
     ForecastEntry.hpp
     ForecastData.hpp
+    WeatherConstants.hpp
     OpenWeatherClient.hpp
     OpenWeatherClient.cpp
     GeoCodingClient.hpp

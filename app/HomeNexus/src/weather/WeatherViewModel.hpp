@@ -6,6 +6,7 @@
 
 #include "WeatherRepository.hpp"
 #include "ForecastListModel.hpp"
+#include "WeatherConstants.hpp"
 
 class WeatherViewModel : public QObject
 {
@@ -58,7 +59,7 @@ public:
 
     Q_INVOKABLE void updateWeatherForCity(const QString &cityName,
                                           const QString &countryCode = QString(),
-                                          int limit = 5);
+                                          int limit = WeatherConstants::MaxLocationResults);
 
     Q_INVOKABLE void refreshIfNeeded();
 
