@@ -15,6 +15,14 @@ applyTo: "**/*.{cpp,h,hpp}"
 - Use `QStringLiteral` and `QByteArrayLiteral` for fixed Qt string and byte-array literals.
 - Keep dependencies explicit. Pass required, non-owning collaborators by reference and ensure they outlive the receiving object.
 
+## Design principles (SOLID)
+
+- Single responsibility: keep each backend static library focused on a single concern, keep view-models thin and free of transport or persistence logic, and keep QML foreign wrappers free of service behavior.
+- Open/closed: extend behavior by adding new implementations of an `I`-prefixed interface or injecting a different collaborator, not by editing stable types or growing conditional branches in existing ones.
+- Liskov substitution: any implementation of an `I`-interface must honor the interface's contract, including its error and signal semantics; give polymorphic bases virtual destructors and mark overrides `override`.
+- Interface segregation: expose narrow, role-specific interfaces to QML and to collaborators; prefer several focused interfaces over one broad interface that forces clients to depend on members they do not use.
+- Dependency inversion: depend on `I`-prefixed abstractions passed by reference, and construct concrete types at composition points such as `main.cpp` rather than deep in domain code.
+
 ## QObject ownership and lifetime
 
 - Give every owned `QObject` an unambiguous lifetime: use Qt parent-child ownership or stack ownership, following the nearby implementation.
