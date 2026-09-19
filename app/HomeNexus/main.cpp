@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    engine.rootContext()->setContextProperty("embeddedMode", embeddedMode);
+    engine.setInitialProperties({{QStringLiteral("embeddedMode"), embeddedMode}});
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
 
     QObject::connect(

@@ -12,21 +12,17 @@ import "ui/pages/settings"
 
 ApplicationWindow {
     id: window
+
+    required property bool embeddedMode
+
     width: 800
     height: 480
     visible: true
 
     // ---- Mode-dependent window behaviour ---------------------------
-    visibility: embeddedMode ? Window.FullScreen : Window.Windowed
-    flags: embeddedMode ? Qt.FramelessWindowHint : Qt.Window
-    title: embeddedMode ? "" : "Home-Nexus-Pi"
-
-    Component.onCompleted: {
-        if (embeddedMode)
-            showFullScreen()
-        else
-            showNormal()
-    }
+    visibility: window.embeddedMode ? Window.FullScreen : Window.Windowed
+    flags: window.embeddedMode ? Qt.FramelessWindowHint : Qt.Window
+    title: window.embeddedMode ? "" : "Home-Nexus-Pi"
 
     // ---- Background ------------------------------------------------
 
