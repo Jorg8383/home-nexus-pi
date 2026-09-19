@@ -52,14 +52,16 @@ ApplicationWindow {
 
     // ----- Header ---------------------------------------------------
     header: AppHeader {
-        title: activeStack.currentItem
-               && activeStack.currentItem.title !== ""
-               ? activeStack.currentItem.title
-               : "Home-Nexus-Pi"
+        title: {
+            const currentPage = window.activeStack.currentItem as Page
+            return currentPage && currentPage.title !== ""
+                    ? currentPage.title
+                    : qsTr("Home-Nexus-Pi")
+        }
 
-        backButtonVisible: activeStack.depth > 1
+        backButtonVisible: window.activeStack.depth > 1
 
-        onBackRequested: activeStack.pop()
+        onBackRequested: window.activeStack.pop()
     }
 
     // ----- Footer ---------------------------------------------------
