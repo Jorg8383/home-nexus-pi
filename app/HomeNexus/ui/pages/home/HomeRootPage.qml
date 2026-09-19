@@ -13,14 +13,14 @@ Page {
     background: null
 
     property real temperatureIndoor: 22.0
-    property real temperatureOutdoor: weatherViewModel.temperature
+    property real temperatureOutdoor: WeatherViewModel.temperature
     property real temperatureGreenhouse: 30.0
     property real airQualityIndoor: 60.0
     property real airQualityGreenhouse: 210.0
     property real humidityIndoor: 40.939
     property real humidityGreenhouse: 68.34
-    property real windSpeed: weatherViewModel.windSpeed
-    property string weatherIcon: weatherViewModel.weatherIcon
+    property real windSpeed: WeatherViewModel.windSpeed
+    property string weatherIcon: WeatherViewModel.weatherIcon
 
 
     Flickable {

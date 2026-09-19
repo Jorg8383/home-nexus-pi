@@ -7,8 +7,8 @@ import HomeNexus
 AppCard {
     id: root
 
-    property string sunrise: weatherViewModel.sunriseText // Epoch Unix Timestamp
-    property string sunset: weatherViewModel.sunsetText // Epoch Unix Timestamp
+    property string sunrise: WeatherViewModel.sunriseText // Epoch Unix Timestamp
+    property string sunset: WeatherViewModel.sunsetText // Epoch Unix Timestamp
 
     readonly property int iconSize: 32 // pixel
 

@@ -1,6 +1,5 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include <QDir>
@@ -20,6 +19,7 @@
 #include "NetworkStatus.hpp"
 #include "AppNotificationCenterForeign.hpp"
 #include "NetworkStatusForeign.hpp"
+#include "WeatherViewModelForeign.hpp"
 
 namespace
 {
@@ -82,11 +82,11 @@ int main(int argc, char *argv[])
 
     AppNotificationCenterForeign::setInstance(&appNotificationCenter);
     NetworkStatusForeign::setInstance(&networkStatus);
+    WeatherViewModelForeign::setInstance(&weatherViewModel);
 
     QQmlApplicationEngine engine;
 
     engine.setInitialProperties({{QStringLiteral("embeddedMode"), embeddedMode}});
-    engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
 
     QObject::connect(
         &engine,

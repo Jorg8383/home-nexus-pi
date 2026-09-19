@@ -7,8 +7,8 @@ import HomeNexus
 AppCard {
     id: root
 
-    property real windSpeed: weatherViewModel.windSpeed
-    property real windDirDegrees: weatherViewModel.windDegrees
+    property real windSpeed: WeatherViewModel.windSpeed
+    property real windDirDegrees: WeatherViewModel.windDegrees
 
     padding: Style.appLayout.paddingXS
 

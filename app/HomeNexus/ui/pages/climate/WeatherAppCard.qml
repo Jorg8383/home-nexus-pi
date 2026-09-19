@@ -8,10 +8,10 @@ import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 AppCard {
     id: root
 
-    property string location: weatherViewModel.city
-    property string description: weatherViewModel.weatherDescription
-    property string icon: weatherViewModel.weatherIcon
-    property real temperature: weatherViewModel.temperature
+    property string location: WeatherViewModel.city
+    property string description: WeatherViewModel.weatherDescription
+    property string icon: WeatherViewModel.weatherIcon
+    property real temperature: WeatherViewModel.temperature
 
     padding: Style.appLayout.paddingXS
 

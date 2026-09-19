@@ -48,6 +48,7 @@ qt_add_qml_module(appHomeNexus
     SOURCES
         src/qml/NetworkStatusForeign.hpp
         src/qml/AppNotificationCenterForeign.hpp
+        src/qml/WeatherViewModelForeign.hpp
     QML_FILES
         Main.qml
         ui/components/AppHeader.qml

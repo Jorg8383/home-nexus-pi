@@ -1,10 +1,9 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import HomeNexus
-
-
-import "../../utils/WeatherIconMapper.js" as WeatherIconMapper
 
 Page {
     id: root
@@ -61,7 +60,7 @@ Page {
                 spacing: Style.appLayout.spacingM
                 clip: true
 
-                model: weatherViewModel.forecastModel
+                model: WeatherViewModel.forecastModel
 
                 delegate: ForecastDelegate {
                     height: forecastCard.height - 2 * Style.appLayout.paddingS
@@ -72,14 +71,14 @@ Page {
     }
 
     Component.onCompleted: {
-        weatherViewModel.refreshIfNeeded()
+        WeatherViewModel.refreshIfNeeded()
         console.log("ClimateWeatherPage - Component.onCompleted")
     }
 
     onVisibleChanged: {
         if (visible)
         {
-            weatherViewModel.refreshIfNeeded()
+            WeatherViewModel.refreshIfNeeded()
             console.log("ClimateWeatherPage - onVisibleChanged")
         }
     }

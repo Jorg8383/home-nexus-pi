@@ -43,3 +43,5 @@ target_compile_features(HomeNexusWeather
     PUBLIC
         cxx_std_17
 )
+
+qt_extract_metatypes(HomeNexusWeather)
