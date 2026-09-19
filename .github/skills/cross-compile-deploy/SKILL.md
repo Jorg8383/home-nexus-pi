@@ -58,6 +58,16 @@ Build and deploy to the Pi (probes SSH reachability first):
 python3 scripts/pipeline.py --deploy
 ```
 
+Build, deploy, and launch HomeNexus as a systemd service:
+
+```bash
+python3 scripts/pipeline.py --deploy --launch
+```
+
+`--launch` requires `--deploy`. It installs and enables `homenexus.service`,
+stops any manually launched `appHomeNexus` process, and verifies that the new
+service is active. Subsequent boots start the service automatically.
+
 Toolchain / SDK change (e.g. edited `Dockerfile.sdk` or a `cmake/*.cmake`):
 
 ```bash
@@ -96,6 +106,11 @@ powered on and on the network, the host/port are correct, and key-based auth is
 configured. `deploy.sh` then performs its own `require_file` checks for config and
 fallback data.
 
+With `--launch`, `remote-setup.sh` additionally requires `systemctl` and `pkill`
+on the target. Service installation and control use the existing explicit `sudo`
+path. Plain `--deploy` continues to install files without starting or restarting
+the application.
+
 ## Troubleshooting
 
 - **`base image qtcrossbuild:latest not found`** — the SDK stage has not run; use
@@ -109,6 +124,9 @@ fallback data.
 - **Cannot reach the Pi over SSH** — verify power/network, `PI_HOST`/`PI_PORT`, and
   that your SSH key is authorized (the probe uses `BatchMode=yes`, so password auth
   will fail fast by design).
+- **Service failed to start** — inspect it with
+  `ssh "$PI_USER@$PI_HOST" sudo systemctl status homenexus.service` and view logs
+  with `ssh "$PI_USER@$PI_HOST" sudo journalctl -u homenexus.service -n 100`.
 
 ## Validation
 

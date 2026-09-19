@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run stale HomeNexus cross-build stages and optionally deploy to the Pi."""
+"""Run stale HomeNexus cross-build stages, deploy, and optionally launch."""
 
 from __future__ import annotations
 
@@ -99,11 +99,16 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     parser = PipelineArgumentParser(
         description=(
             "Run the three-stage cross-build (sysroot -> SDK -> app), rebuilding "
-            "only stale stages, then optionally deploy to the Raspberry Pi."
+            "only stale stages, then optionally deploy and launch on the Raspberry Pi."
         )
     )
     parser.add_argument(
         "--deploy", action="store_true", help="deploy after a successful build"
+    )
+    parser.add_argument(
+        "--launch",
+        action="store_true",
+        help="launch the app as a systemd service after deployment",
     )
     parser.add_argument(
         "--force",
@@ -167,6 +172,8 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         parser.error("BUILD_OPENCV must be ON or OFF")
     if not args.build_type:
         parser.error("--build-type must not be empty")
+    if args.launch and not args.deploy:
+        parser.error("--launch requires --deploy")
     return args
 
 
@@ -376,7 +383,9 @@ def decide_stages(
     return sysroot, sdk, app
 
 
-def print_plan(stages: Sequence[Stage], config: Config, deploy: bool) -> None:
+def print_plan(
+    stages: Sequence[Stage], config: Config, deploy: bool, launch: bool
+) -> None:
     """Print the ordered build and deploy plan."""
     print("==============================================================")
     print(" Cross-build plan")
@@ -388,6 +397,8 @@ def print_plan(stages: Sequence[Stage], config: Config, deploy: bool) -> None:
             print(f"    {stage.name:<8} skip")
     if deploy:
         print(f"    deploy   RUN   (target {config.ssh_target}:{config.pi_port})")
+    if launch:
+        print("    launch   RUN   (systemd service after deployment)")
 
 
 def stage_environment(**updates: str) -> dict[str, str]:
@@ -451,7 +462,7 @@ def establish_state_baseline(
         state["APP_BUILD_TYPE"] = config.build_type
 
 
-def deploy(config: Config, assume_yes: bool) -> None:
+def deploy(config: Config, assume_yes: bool, launch: bool) -> None:
     """Verify artifacts and SSH reachability, then run the existing deploy script."""
     if not config.app_binary.is_file():
         raise PipelineError(
@@ -496,9 +507,13 @@ def deploy(config: Config, assume_yes: bool) -> None:
             PI_USER=config.pi_user,
             PI_HOST=config.pi_host,
             PI_PORT=config.pi_port,
+            LAUNCH_APP="1" if launch else "0",
         ),
     )
-    print("==> Deploy finished successfully")
+    if launch:
+        print("==> Deploy and launch finished successfully")
+    else:
+        print("==> Deploy finished successfully")
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -512,7 +527,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         stages = decide_stages(
             config, state, git_ok, forced_stages(args.force)
         )
-        print_plan(stages, config, args.deploy)
+        print_plan(stages, config, args.deploy, args.launch)
         if args.dry_run:
             print("==> Dry run: no stages executed")
             return 0
@@ -526,7 +541,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             print("==> Build up to date; nothing rebuilt")
 
         if args.deploy:
-            deploy(config, args.yes)
+            deploy(config, args.yes, args.launch)
     except PipelineError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

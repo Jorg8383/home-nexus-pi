@@ -8,6 +8,7 @@ set -euo pipefail
 PI_USER="${PI_USER:-strjo2}"
 PI_HOST="${PI_HOST:-192.168.178.36}"
 PI_PORT="${PI_PORT:-22}"
+LAUNCH_APP="${LAUNCH_APP:-0}"
 
 SSH_TARGET="${PI_USER}@${PI_HOST}"
 SSH_OPTS=(-p "${PI_PORT}")
@@ -70,6 +71,10 @@ require_file "${REMOTE_SETUP_SCRIPT}"
 require_file "${APP_FALLBACK_CURRENT_LOCAL_PATH}"
 require_file "${APP_FALLBACK_FORECAST_LOCAL_PATH}"
 
+if [[ "${LAUNCH_APP}" != "0" && "${LAUNCH_APP}" != "1" ]]; then
+    die "LAUNCH_APP must be 0 or 1"
+fi
+
 # The config is optional. The app can start without it and use defaults.
 if [[ -f "${APP_CONFIG_LOCAL_PATH}" ]]; then
     DEPLOY_CONFIG="1"
@@ -106,7 +111,7 @@ scp "${SCP_OPTS[@]}" "${REMOTE_SETUP_SCRIPT}" "${SSH_TARGET}:${REMOTE_SETUP_PATH
 # ------------------------------------------------------------
 
 echo "==> Executing remote setup"
-ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" \
+printf -v REMOTE_SETUP_COMMAND '%q ' \
     bash "${REMOTE_SETUP_PATH}" \
     "/home/${PI_USER}/$(basename "${QT_TARBALL}")" \
     "${QT_INSTALL_DIR}" \
@@ -116,5 +121,8 @@ ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" \
     "${DEPLOY_CONFIG}" \
     "${APP_DATA_REMOTE_DIR}" \
     "${PI_USER}" \
-    "${PI_HOST}"
+    "${PI_HOST}" \
+    "${LAUNCH_APP}"
+printf '%s\n' "${REMOTE_SETUP_COMMAND}" \
+    | ssh "${SSH_OPTS[@]}" "${SSH_TARGET}" bash
 echo "==> Done"

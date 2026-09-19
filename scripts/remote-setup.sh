@@ -14,6 +14,10 @@ DEPLOY_CONFIG="${6:-0}"
 APP_DATA_REMOTE_DIR="${7:?Missing app data remote directory}"
 PI_USER="${8:?Missing Raspberry Pi username}"
 PI_HOST="${9:?Missing Raspberry Pi IP address}"
+LAUNCH_APP="${10:-0}"
+
+APP_SERVICE_NAME="homenexus.service"
+APP_SERVICE_PATH="/etc/systemd/system/${APP_SERVICE_NAME}"
 
 APP_BINARY_SRC="$(dirname "${QT_TARBALL}")/${APP_BINARY_NAME}"
 APP_CONFIG_SRC="$(dirname "${QT_TARBALL}")/homenexus.ini"
@@ -41,6 +45,15 @@ if [[ "${DEPLOY_CONFIG}" == "1" ]]; then
 fi
 [[ -f "${APP_FALLBACK_WEATHER_SRC}" ]] || die "Fallback weather data not found: ${APP_FALLBACK_WEATHER_SRC}"
 [[ -f "${APP_FALLBACK_FORECAST_SRC}" ]] || die "Fallback forecast data not found: ${APP_FALLBACK_FORECAST_SRC}"
+
+if [[ "${LAUNCH_APP}" != "0" && "${LAUNCH_APP}" != "1" ]]; then
+    die "LAUNCH_APP must be 0 or 1"
+fi
+
+if [[ "${LAUNCH_APP}" == "1" ]]; then
+    command -v systemctl >/dev/null 2>&1 || die "systemctl not found on target"
+    command -v pkill >/dev/null 2>&1 || die "pkill not found on target"
+fi
 
 # ------------------------------------------------------------
 # Remote setup
@@ -92,6 +105,38 @@ EOF
 
 chmod +x "${APP_REMOTE_DIR}/run-app.sh"
 
+if [[ "${LAUNCH_APP}" == "1" ]]; then
+    echo "==> Installing systemd service"
+    cat > "${APP_REMOTE_DIR}/${APP_SERVICE_NAME}" <<EOF
+[Unit]
+Description=HomeNexus touchscreen dashboard
+After=graphical.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=${PI_USER}
+WorkingDirectory=${APP_REMOTE_DIR}
+Environment=DISPLAY=:0
+ExecStart=${APP_REMOTE_DIR}/run-app.sh
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target
+EOF
+    sudo install -m 0644 "${APP_REMOTE_DIR}/${APP_SERVICE_NAME}" "${APP_SERVICE_PATH}"
+    rm -f "${APP_REMOTE_DIR}/${APP_SERVICE_NAME}"
+
+    echo "==> Starting HomeNexus service"
+    sudo systemctl stop "${APP_SERVICE_NAME}" >/dev/null 2>&1 || true
+    pkill -u "${PI_USER}" -x "${APP_BINARY_NAME}" >/dev/null 2>&1 || true
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now "${APP_SERVICE_NAME}"
+    sudo systemctl is-active --quiet "${APP_SERVICE_NAME}" \
+        || die "${APP_SERVICE_NAME} failed to start"
+fi
+
 echo "==> Deployment finished"
 echo "Qt installed in: ${QT_INSTALL_DIR}"
 echo "App installed in: ${APP_REMOTE_DIR}"
@@ -101,3 +146,7 @@ echo "Connect to the Raspberry Pi with: ssh ${PI_USER}@${PI_HOST}"
 echo ""
 echo "Start app with: ${APP_REMOTE_DIR}/run-app.sh"
 echo ""
+
+if [[ "${LAUNCH_APP}" == "1" ]]; then
+    echo "HomeNexus service is active and enabled"
+fi
